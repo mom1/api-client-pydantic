@@ -1,0 +1,102 @@
+# -*- coding: utf-8; mode: python -*-
+import emoji
+
+
+ignore_regexps = [
+    r'(🔀|:twisted_rightwards_arrows:|[Mm]erge)',
+    r'(⏪|:rewind:|[Rr]evert)',
+    r'(🚨|:rotating_light:)',
+    r'(🚧|:construction:)',
+    r'(💚|:green_heart:)',
+    r'(📝|:memo:)\s*(Update CHANGELOG\.md)',
+]
+
+section_regexps = [
+    ('Новое ✨', [
+        r"""(?x)^([nN]ew:?|[Ff]eat:?|
+          ✨|:sparkles:
+        )\s*([^\n]*)$""",
+    ]),
+    ('Изменения ♻️', [
+        r"""(?x)^([cC]hg:?
+          |🗃|:card_file_box:
+          |✏️|:pencil[2]?:
+          |🔥|:fire:
+          |⚡️|:zap:
+          |🎨|:art:
+          |👽|:alien:
+          |💥|:boom:
+          |🔧|:wrench:
+          |🏷️|:label:
+          |♻️|:recycle:
+          |🚸|:children_crossing:
+          )\s*([^\n]*)$""",
+    ]),
+    ('Баги 🐛', [
+        r"""(?x)^([fF]ix:?
+          |🐛|:bug:
+        )\s*([^\n]*)$""",
+    ]),
+    ('Зависимости ⬆️', [
+        r"""(?x)^(
+          ⬆️|:arrow_up:|
+          ⬇️|:arrow_down:|
+          ➕|:heavy_plus_sign:|
+          ➖|:heavy_minus_sign:|
+          📌|:pushpin:
+        )\s*([^\n]*)$""",
+    ]),
+    ('Документация 📝', [r'^(📝|:memo:)\s*([^\n]*)$']),
+    ('Другое 🌱', None),  # Match all lines
+]
+
+body_process = ReSub(r'((^|\n)[A-Z]\w+(-\w+)*: .*(\n\s+.*)*)+$', r'') | strip
+
+subject_process = (strip
+                   | TextProc(emoji.demojize)
+                   | ReSub(r':arrow_up:', '⬆️')
+                   | ReSub(r':arrow_down:', '⬇️')
+                   | ReSub(r':heavy_plus_sign:', '➕')
+                   | ReSub(r':heavy_minus_sign:', '➖')
+                   | ReSub(r'^(:(\w+):)?\s*([^\n@]*)(@[a-z]+\s+)*$', r'\3')
+                   | ucfirst | final_dot)
+
+tag_filter_regexp = r'^v[0-9]+\.[0-9]+(\.[0-9]+)?$'
+unreleased_version_label = '(unreleased)'
+output_engine = mustache('./markdown.tpl')  # Путь к шаблону
+include_merge = True
+
+OUTPUT_FILE = 'CHANGELOG.md'
+release_title = r'\#\#\#\#\sRelease\snotes\sfor'
+REV = r'v[0-9]+\.[0-9]+(\.[0-9]+)?'
+DATE = r'\([0-9]+-[0-9]{2}-[0-9]{2}\)'
+INSERT_POINT_REGEX = r"""(?isx)
+^
+(
+  \s*%(release_title)s\s`\(%(label_unreleased)s\)`\s+%(date)s\s*(\n|\r\n|\r)
+)
+
+(                                                              ## Match all between Release notes and release rev
+    (
+      (?!
+         (?<=(\n|\r))                                          ## look back for newline
+         %(release_title)s\s`(%(rev)s)`\s+%(date)s(\n|\r\n|\r) ## release with date
+      )
+      .
+    )*
+)
+
+(?P<tail>%(release_title)s\s`(?P<rev>%(rev)s)`\s+%(date)s)
+""" % {
+    'rev': REV,
+    'date': DATE,
+    'release_title': release_title,
+    'label_unreleased': unreleased_version_label.strip('()'),
+}
+
+revs = [
+    Caret(FileFirstRegexMatch(OUTPUT_FILE, INSERT_POINT_REGEX)),
+    'HEAD',
+]
+
+publish = FileRegexSubst(OUTPUT_FILE, INSERT_POINT_REGEX, r'\2\o\g<tail>')
