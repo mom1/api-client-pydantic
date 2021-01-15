@@ -274,6 +274,9 @@ category = "dev"
 optional = false
 python-versions = "*"
 
+[package.dependencies]
+pystache = {version = "*", optional = true, markers = "extra == \"Mustache\""}
+
 [package.extras]
 Mako = ["mako"]
 Mustache = ["pystache"]
@@ -560,6 +563,14 @@ optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
+name = "pystache"
+version = "0.5.4"
+description = "Mustache for Python"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "pytest"
 version = "6.2.1"
 description = "pytest: simple powerful testing with Python"
@@ -794,7 +805,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "33473165e55bc16df4089d071e41437cd549552e7257165074fb54cbec0d41ab"
+content-hash = "50d266740efd31c0d79cd9a744198bae74321af297d05e77dcadd85af1ff7f9e"
 
 [metadata.files]
 api-client = [
@@ -1092,6 +1103,9 @@ pygments = [
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
+]
+pystache = [
+    {file = "pystache-0.5.4.tar.gz", hash = "sha256:f7bbc265fb957b4d6c7c042b336563179444ab313fb93a719759111eabd3b85a"},
 ]
 pytest = [
     {file = "pytest-6.2.1-py3-none-any.whl", hash = "sha256:1969f797a1a0dbd8ccf0fecc80262312729afea9c17f1d70ebf85c5e76c6f7c8"},

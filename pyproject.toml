@@ -54,7 +54,7 @@ flake8-quotes = "^3.2"
 pep8-naming = "^0.11"
 mccabe = "^0.6"
 # changelog
-gitchangelog = "^3.0"
+gitchangelog = {version = "^3.0", extras = ["Mustache"]}
 emoji = "^0.6"
 # debug
 ipdb = "^0.13"
