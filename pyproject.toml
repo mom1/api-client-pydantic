@@ -41,7 +41,6 @@ vcrpy = "^4.1"
 # formating
 yapf = "^0.30"
 isort = "^5.7"
-pre-commit = "^2.9"
 # linting
 flake8 = "^3.8"
 flake8-broken-line = "^0.3"
