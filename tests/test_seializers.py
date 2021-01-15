@@ -53,7 +53,7 @@ def unserialized():
         'accountHolder': {
             'address': {
                 'houseNumber': '12B',
-                'postCode': 'SW11 1AP'
+                'postCode': 'SW11 1AP',
             },
             'dob': '1980-02-28',
             'firstName': 'John',

@@ -7,7 +7,7 @@ from apiclient import (
 )
 from apiclient.exceptions import UnexpectedError
 
-from .client import Account, AccountPage, Client, ClientWithPydantic, User
+from .client import Client, ClientWithPydantic, User
 
 
 def test_client_response(cassette):

@@ -13,7 +13,12 @@ api_client_vcr = vcr.VCR(
     match_on=['uri', 'method', 'query'],
 )
 
-error_cassette_vcr = vcr.VCR(serializer='yaml', cassette_library_dir=VCR_CASSETTE_DIR, record_mode='once', match_on=['uri'])
+error_cassette_vcr = vcr.VCR(
+    serializer='yaml',
+    cassette_library_dir=VCR_CASSETTE_DIR,
+    record_mode='once',
+    match_on=['uri'],
+)
 
 
 @pytest.fixture
