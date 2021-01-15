@@ -58,6 +58,7 @@ gitchangelog = "^3.0"
 emoji = "^0.6"
 # debug
 ipdb = "^0.13"
+safety = "^1.10.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
