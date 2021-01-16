@@ -3,13 +3,12 @@ name: Changelog
 
 on:
   push:
-    paths-ignore:
-      - CHANGELOG.md
     branches:
       - master
 
 jobs:
   test:
+    if: "! contains(toJSON(github.event.commits.*.message), ':memo: Update CHANGELOG.md')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
