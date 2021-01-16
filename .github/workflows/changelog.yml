@@ -5,7 +5,7 @@ on:
     branches:
       - main
 jobs:
-  test:
+  changelog:
     if: "! contains(toJSON(github.event.head_commit.message), ':memo: Update CHANGELOG.md')"
     runs-on: ubuntu-latest
     steps:
