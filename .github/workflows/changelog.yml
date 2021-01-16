@@ -1,0 +1,40 @@
+---
+name: Changelog
+
+on:
+  push:
+    paths-ignore:
+      - CHANGELOG.md
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: "3.8"
+      - name: Install poetry
+        run: |
+          curl -sSL "https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py" | python
+          # Adding `poetry` to `$PATH`:
+          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+      - name: Set up cache
+        uses: actions/cache@v1
+        with:
+          path: .venv
+          key: venv-${{ hashFiles('poetry.lock') }}
+      - name: Install dependencies
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install
+      - name: Generate changelog
+        run: |
+          poetry run gitchangelog
+          git config --local user.name "$GITHUB_ACTOR"
+          git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          'git commit -m ":memo: Update CHANGELOG.md"'
+          git push
