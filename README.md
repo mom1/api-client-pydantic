@@ -22,7 +22,7 @@ pip install api-client-pydantic
 The following decorators have been provided to validate request data and converting json straight to pydantic class.
 
 ```python
-from api_client_pydantic import serialize, serialize_all_methods, serialize_request, serialize_response
+from apiclient_pydantic import serialize, serialize_all_methods, serialize_request, serialize_response
 
 # serialize incoming kwargs
 @serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: dict = None)
@@ -77,7 +77,7 @@ into the required dict for the endpoint:
 5. For more convenient use, you can wrap all APIClient methods with `@serialize_all_methods`.
    ```python
    from apiclient import APIClient
-   from api_client_pydantic import serialize_all_methods
+   from apiclient_pydantic import serialize_all_methods
    from typing import List
 
     from .models import Account, AccountHolder

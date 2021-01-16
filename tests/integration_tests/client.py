@@ -3,7 +3,7 @@ from typing import List, Optional
 from apiclient import APIClient, endpoint, paginated, retry_request
 from pydantic import BaseModel, Field
 
-from api_client_pydantic import serialize_all_methods
+from apiclient_pydantic import serialize_all_methods
 
 
 def by_query_params_callable(response, prev_params):

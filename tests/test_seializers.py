@@ -6,7 +6,7 @@ import pytest
 from apiclient import APIClient
 from pydantic import BaseModel, Field
 
-from api_client_pydantic import serialize, serialize_all_methods
+from apiclient_pydantic import serialize, serialize_all_methods
 
 
 class Address(BaseModel):

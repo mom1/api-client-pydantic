@@ -23,7 +23,7 @@ classifiers = [
 include = ['AUTHORS']
 exclude = ['setup.cfg']
 packages = [
-    { include = 'api_client_pydantic' },
+    { include = 'apiclient_pydantic' },
 ]
 
 [tool.poetry.dependencies]
