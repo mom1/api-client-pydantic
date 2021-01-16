@@ -30,7 +30,7 @@ jobs:
           poetry install
       - name: Generate changelog
         run: |
-          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+          git fetch origin
           poetry run gitchangelog
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
