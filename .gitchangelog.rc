@@ -74,7 +74,7 @@ INSERT_POINT_REGEX = r"""(?isx)
 ^
 (
   \s*%(release_title)s\s`\(%(label_unreleased)s\)`\s+%(date)s\s*(\n|\r\n|\r)
-)
+)?
 
 (                                                              ## Match all between Release notes and release rev
     (
@@ -84,7 +84,7 @@ INSERT_POINT_REGEX = r"""(?isx)
       )
       .
     )*
-)
+)?
 
 (?P<tail>%(release_title)s\s`(?P<rev>%(rev)s)`\s+%(date)s)
 """ % {
