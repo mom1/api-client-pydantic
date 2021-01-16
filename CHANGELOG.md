@@ -1,6 +1,14 @@
 
 #### Release notes for `(unreleased)` (2021-01-16)
 
+##### Other 🌱
+
+- Move api_client_pydantic to apiclient_pydantic.
+  now import `from apiclient_pydantic import *`
+
+
+#### Release notes for `v0.1.1` (2021-01-16)
+
 ##### Changes ♻️
 
 - Auto generate changelog.
