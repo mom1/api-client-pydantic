@@ -1,5 +1,5 @@
 ---
-name: misspell
+name: Misspell
 
 on:
   workflow_dispatch:
