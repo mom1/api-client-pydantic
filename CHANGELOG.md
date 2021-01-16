@@ -1,31 +1,31 @@
 
 #### Release notes for `(unreleased)` (2021-01-15)
 
-##### Документация 📝
+##### Documentation 📝
 
 - Prepare for generate CHANGELOG.md.
 
 
 #### Release notes for `v0.1.0` (2021-01-15)
 
-##### Новое ✨
+##### New ✨
 
 - Basic functionality.
 
-##### Изменения ♻️
+##### Changes ♻️
 
 - Configs.
 
-##### Зависимости ⬆️
+##### Dependencies ⬆️
 
 - ➕ dependencies and pyproject.
 
-##### Документация 📝
+##### Documentation 📝
 
 - Common files.
 - Init readme.
 
-##### Другое 🌱
+##### Other 🌱
 
 - CI Actions.
 - Add tests.

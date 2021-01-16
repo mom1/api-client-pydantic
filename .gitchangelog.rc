@@ -12,12 +12,12 @@ ignore_regexps = [
 ]
 
 section_regexps = [
-    ('Новое ✨', [
+    ('New ✨', [
         r"""(?x)^([nN]ew:?|[Ff]eat:?|
           ✨|:sparkles:
         )\s*([^\n]*)$""",
     ]),
-    ('Изменения ♻️', [
+    ('Changes ♻️', [
         r"""(?x)^([cC]hg:?
           |🗃|:card_file_box:
           |✏️|:pencil[2]?:
@@ -32,12 +32,12 @@ section_regexps = [
           |🚸|:children_crossing:
           )\s*([^\n]*)$""",
     ]),
-    ('Баги 🐛', [
+    ('Bugs 🐛', [
         r"""(?x)^([fF]ix:?
           |🐛|:bug:
         )\s*([^\n]*)$""",
     ]),
-    ('Зависимости ⬆️', [
+    ('Dependencies ⬆️', [
         r"""(?x)^(
           ⬆️|:arrow_up:|
           ⬇️|:arrow_down:|
@@ -46,8 +46,8 @@ section_regexps = [
           📌|:pushpin:
         )\s*([^\n]*)$""",
     ]),
-    ('Документация 📝', [r'^(📝|:memo:)\s*([^\n]*)$']),
-    ('Другое 🌱', None),  # Match all lines
+    ('Documentation 📝', [r'^(📝|:memo:)\s*([^\n]*)$']),
+    ('Other 🌱', None),  # Match all lines
 ]
 
 body_process = ReSub(r'((^|\n)[A-Z]\w+(-\w+)*: .*(\n\s+.*)*)+$', r'') | strip
