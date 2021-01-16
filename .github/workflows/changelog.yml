@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
@@ -30,10 +32,9 @@ jobs:
           poetry install
       - name: Generate changelog
         run: |
-          git fetch origin
-          poetry run gitchangelog
           git config --local user.name "$GITHUB_ACTOR"
           git config --local user.email "$GITHUB_ACTOR@users.noreply.github.com"
+          poetry run gitchangelog
           git add CHANGELOG.md
           git commit -m ":memo: Update CHANGELOG.md"
           git push
