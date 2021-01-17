@@ -1,8 +1,13 @@
 
-#### Release notes for `(unreleased)` (2021-01-16)
+#### Release notes for `(unreleased)` (2021-01-17)
+
+##### Changes ♻️
+
+- Publish job.
 
 ##### Other 🌱
 
+- Bumping version from 0.1.0 to 1.0.0.
 - Move api_client_pydantic to apiclient_pydantic.
   now import `from apiclient_pydantic import *`
 
