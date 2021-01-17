@@ -1,6 +1,6 @@
 [[package]]
 name = "api-client"
-version = "1.2.1"
+version = "1.2.2"
 description = "Separate the high level client implementation from the underlying CRUD."
 category = "main"
 optional = false
@@ -805,11 +805,11 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "50d266740efd31c0d79cd9a744198bae74321af297d05e77dcadd85af1ff7f9e"
+content-hash = "c78851e248dc927a314c798f665d25f1ed33450731f4c383c48169e498df1db3"
 
 [metadata.files]
 api-client = [
-    {file = "api-client-1.2.1.tar.gz", hash = "sha256:bcc3a3546c4403a1212590686749b03b7f142ebffe575323de659034c06006a8"},
+    {file = "api-client-1.2.2.tar.gz", hash = "sha256:fc00ca2596c34e9c02a56a0450a5598382f6f295c8cb62da88567480eb962324"},
 ]
 appnope = [
     {file = "appnope-0.1.2-py2.py3-none-any.whl", hash = "sha256:93aa393e9d6c54c5cd570ccadd8edad61ea0c4b9ea7a01409020c9aa019eb442"},

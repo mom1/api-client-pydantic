@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "api-client-pydantic"
-version = "0.1.0"
+version = "1.0.0"
 description = "API Client extension for validate and transform requests / responses using pydantic."
 authors = ["MaxST <mstolpasov@gmail.com>"]
 license = "MIT"
@@ -21,14 +21,13 @@ classifiers = [
     'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
 ]
 include = ['AUTHORS']
-exclude = ['setup.cfg']
 packages = [
     { include = 'apiclient_pydantic' },
 ]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-api-client = "^1.2"
+api-client = ">1.2.1"
 pydantic = "^1.7"
 
 [tool.poetry.dev-dependencies]
@@ -58,7 +57,7 @@ gitchangelog = {version = "^3.0", extras = ["Mustache"]}
 emoji = "^0.6"
 # debug
 ipdb = "^0.13"
-safety = "^1.10.3"
+safety = "^1.10"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
