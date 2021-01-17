@@ -1,3 +1,10 @@
+#### Release notes for `(unreleased)` (2021-01-17)
+
+##### Other 🌱
+
+- Bumping version from 1.0.0 to 1.0.1.
+
+
 #### Release notes for `v1.0.0` (2021-01-17)
 
 ##### Changes ♻️
