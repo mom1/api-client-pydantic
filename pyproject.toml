@@ -33,7 +33,7 @@ pydantic = "^1.7"
 [tool.poetry.dev-dependencies]
 # tests
 pytest = "^6.2"
-pytest-cov = "^2.10"
+pytest-cov = "^2.11"
 pytest-env = "^0.6"
 requests-mock = "^1.8"
 vcrpy = "^4.1"
