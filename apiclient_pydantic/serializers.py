@@ -13,16 +13,16 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: di
         if not schema:
             map_schemas = {
                 arg_name: arg_type
-                for arg_name, arg_type in get_type_hints(func).items() if arg_name not in ('return', 'endpoint')
+                for arg_name, arg_type in get_type_hints(func).items() if arg_name != 'return'
             }
 
         @wraps(func)
-        def wrap(endpoint: str, *args, **kwargs):
+        def wrap(*args, **kwargs):
             if schema:
                 instance = data = parse_obj_as(schema, kwargs)
                 if isinstance(instance, BaseModel):
                     data = instance.dict(**extra_kw)
-                return func(endpoint, data, *args)
+                return func(*args, data)
             elif map_schemas:
                 data, origin_kwargs = {}, {}
                 for arg_name, arg_type in map_schemas.items():
@@ -32,8 +32,9 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: di
                         val = kwargs.get(arg_name)
                         if val is not None:
                             origin_kwargs[arg_name] = val
-                return func(endpoint, **{**origin_kwargs, **data})
-            return func(endpoint, *args, **kwargs)
+                new_kwargs = {**origin_kwargs, **data} or kwargs
+                return func(*args, **new_kwargs)
+            return func(*args, **kwargs)
 
         return wrap
 
