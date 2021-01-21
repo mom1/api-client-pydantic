@@ -13,7 +13,7 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: di
         if not schema:
             map_schemas = {
                 arg_name: arg_type
-                for arg_name, arg_type in get_type_hints(func).items() if arg_name not in ('return', 'endpoint')
+                for arg_name, arg_type in get_type_hints(func).items() if arg_name != 'return'
             }
 
         @wraps(func)
