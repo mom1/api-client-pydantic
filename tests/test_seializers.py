@@ -73,11 +73,15 @@ def serialized(unserialized):
 
 def test_serialize_request(unserialized, serialized):
     @serialize()
-    def decorated_func(endpoint: str, data: Account):
+    def decorated_func(endpoint: str, custom: str, data: Account):
         return data
 
     @serialize()
     def decorated_func_args(endpoint: str, custom: str, data: Account):
+        return custom
+
+    @serialize()
+    def decorated_func_kwargs(endpoint: str, data: Account, custom: str = 'tests'):
         return custom
 
     @serialize(Account)
@@ -92,6 +96,9 @@ def test_serialize_request(unserialized, serialized):
     assert got == serialized.dict(by_alias=True, exclude_none=True)
 
     text = decorated_func_args('', custom='test', **unserialized)
+    assert text == 'test'
+
+    text = decorated_func_kwargs('', custom='test', **unserialized)
     assert text == 'test'
 
     got = decorated_func_schema('', **unserialized)
