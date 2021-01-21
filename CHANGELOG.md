@@ -1,6 +1,10 @@
 
 #### Release notes for `(unreleased)` (2021-01-21)
 
+##### Changes ♻️
+
+- Refactoring use args and kwargs.
+
 ##### Dependencies ⬆️
 
 - ⬆️ Bump pytest-cov from 2.11.0 to 2.11.1.
