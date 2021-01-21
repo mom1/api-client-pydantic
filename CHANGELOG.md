@@ -1,5 +1,5 @@
 
-#### Release notes for `(unreleased)` (2021-01-21)
+#### Release notes for `v1.0.2` (2021-01-21)
 
 ##### Changes ♻️
 
