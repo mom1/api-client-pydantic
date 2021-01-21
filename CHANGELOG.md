@@ -1,8 +1,13 @@
 
-#### Release notes for `(unreleased)` (2021-01-19)
+#### Release notes for `(unreleased)` (2021-01-21)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump pytest-cov from 2.11.0 to 2.11.1.
+  Bumps [pytest-cov](https://github.com/pytest-dev/pytest-cov) from 2.11.0 to 2.11.1.
+  - [Release notes](https://github.com/pytest-dev/pytest-cov/releases)
+  - [Changelog](https://github.com/pytest-dev/pytest-cov/blob/master/CHANGELOG.rst)
+  - [Commits](https://github.com/pytest-dev/pytest-cov/compare/v2.11.0...v2.11.1)
 - ⬆️ Bump pytest-cov from 2.10.1 to 2.11.0.
   Bumps [pytest-cov](https://github.com/pytest-dev/pytest-cov) from 2.10.1 to 2.11.0.
   - [Release notes](https://github.com/pytest-dev/pytest-cov/releases)
