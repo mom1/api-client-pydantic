@@ -41,4 +41,4 @@ jobs:
           poetry run gitchangelog
           git add CHANGELOG.md
           git commit -m ":memo: Update CHANGELOG.md"
-          git push
+          git push origin HEAD:main
