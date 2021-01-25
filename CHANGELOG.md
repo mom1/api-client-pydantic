@@ -1,3 +1,14 @@
+#### Release notes for `(unreleased)` (2021-01-25)
+
+##### Dependencies ⬆️
+
+- ⬆️ Bump emoji from 0.6.0 to 1.1.0.
+  Bumps [emoji](https://github.com/carpedm20/emoji) from 0.6.0 to 1.1.0.
+  - [Release notes](https://github.com/carpedm20/emoji/releases)
+  - [Changelog](https://github.com/carpedm20/emoji/blob/master/CHANGES.md)
+  - [Commits](https://github.com/carpedm20/emoji/commits/v.1.1.0)
+
+
 #### Release notes for `v1.0.2` (2021-01-21)
 
 ##### Changes ♻️
