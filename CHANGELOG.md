@@ -1,7 +1,13 @@
-#### Release notes for `(unreleased)` (2021-01-25)
+
+#### Release notes for `(unreleased)` (2021-01-26)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump pytest from 6.2.1 to 6.2.2.
+  Bumps [pytest](https://github.com/pytest-dev/pytest) from 6.2.1 to 6.2.2.
+  - [Release notes](https://github.com/pytest-dev/pytest/releases)
+  - [Changelog](https://github.com/pytest-dev/pytest/blob/master/CHANGELOG.rst)
+  - [Commits](https://github.com/pytest-dev/pytest/compare/6.2.1...6.2.2)
 - ⬆️ Bump emoji from 0.6.0 to 1.1.0.
   Bumps [emoji](https://github.com/carpedm20/emoji) from 0.6.0 to 1.1.0.
   - [Release notes](https://github.com/carpedm20/emoji/releases)
