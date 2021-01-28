@@ -126,7 +126,7 @@ pipenv = ["pipenv"]
 
 [[package]]
 name = "emoji"
-version = "1.1.0"
+version = "1.2.0"
 description = "Emoji for Python"
 category = "dev"
 optional = false
@@ -805,7 +805,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "f3c978661284e3a78b5b028a504bc658ee9444e09c2bd5fa5e3a6082f59124f5"
+content-hash = "408940b94978aeb468c105b47917bc3aec0b3f5ab8e6bc490c95fd609263db92"
 
 [metadata.files]
 api-client = [
@@ -903,8 +903,8 @@ dparse = [
     {file = "dparse-0.5.1.tar.gz", hash = "sha256:a1b5f169102e1c894f9a7d5ccf6f9402a836a5d24be80a986c7ce9eaed78f367"},
 ]
 emoji = [
-    {file = "emoji-1.1.0-py3-none-any.whl", hash = "sha256:153fbf06eb5a111ca2b0c04f6f14ec3be434946a302f7892bf4c30446e050381"},
-    {file = "emoji-1.1.0.tar.gz", hash = "sha256:87c934907deb25e9621b0c48cac2051ad932636ad5946c4de6ba0f5f45a61fcd"},
+    {file = "emoji-1.2.0-py3-none-any.whl", hash = "sha256:6b19b65da8d6f30551eead1705539cc0eadcd9e33a6ecbc421a29b87f96287eb"},
+    {file = "emoji-1.2.0.tar.gz", hash = "sha256:496f432058567985838c13d67dde84ca081614a8286c0b9cdc7d63dfa89d51a3"},
 ]
 eradicate = [
     {file = "eradicate-2.0.0.tar.gz", hash = "sha256:27434596f2c5314cc9b31410c93d8f7e8885747399773cd088d3adea647a60c8"},
