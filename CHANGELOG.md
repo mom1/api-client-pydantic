@@ -1,8 +1,17 @@
 
-#### Release notes for `(unreleased)` (2021-01-26)
+#### Release notes for `(unreleased)` (2021-02-04)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump api-client from 1.2.2 to 1.3.0.
+  Bumps [api-client](https://github.com/MikeWooster/api-client) from 1.2.2 to 1.3.0.
+  - [Release notes](https://github.com/MikeWooster/api-client/releases)
+  - [Commits](https://github.com/MikeWooster/api-client/compare/v1.2.2...v1.3.0)
+- ⬆️ Bump emoji from 1.1.0 to 1.2.0.
+  Bumps [emoji](https://github.com/carpedm20/emoji) from 1.1.0 to 1.2.0.
+  - [Release notes](https://github.com/carpedm20/emoji/releases)
+  - [Changelog](https://github.com/carpedm20/emoji/blob/master/CHANGES.md)
+  - [Commits](https://github.com/carpedm20/emoji/compare/v.1.1.0...v.1.2.0)
 - ⬆️ Bump pytest from 6.2.1 to 6.2.2.
   Bumps [pytest](https://github.com/pytest-dev/pytest) from 6.2.1 to 6.2.2.
   - [Release notes](https://github.com/pytest-dev/pytest/releases)
