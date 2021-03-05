@@ -1,8 +1,12 @@
 
-#### Release notes for `(unreleased)` (2021-02-04)
+#### Release notes for `(unreleased)` (2021-03-05)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump flake8-bugbear from 20.11.1 to 21.3.1.
+  Bumps [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear) from 20.11.1 to 21.3.1.
+  - [Release notes](https://github.com/PyCQA/flake8-bugbear/releases)
+  - [Commits](https://github.com/PyCQA/flake8-bugbear/commits)
 - ⬆️ Bump api-client from 1.2.2 to 1.3.0.
   Bumps [api-client](https://github.com/MikeWooster/api-client) from 1.2.2 to 1.3.0.
   - [Release notes](https://github.com/MikeWooster/api-client/releases)
