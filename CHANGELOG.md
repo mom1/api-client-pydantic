@@ -3,6 +3,10 @@
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump flake8-bugbear from 21.3.1 to 21.3.2 (#12)
+  Bumps [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear) from 21.3.1 to 21.3.2.
+  - [Release notes](https://github.com/PyCQA/flake8-bugbear/releases)
+  - [Commits](https://github.com/PyCQA/flake8-bugbear/commits)
 - ⬆️ Bump ipdb from 0.13.4 to 0.13.6.
   Bumps [ipdb](https://github.com/gotcha/ipdb) from 0.13.4 to 0.13.6.
   - [Release notes](https://github.com/gotcha/ipdb/releases)
