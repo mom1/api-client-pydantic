@@ -1,8 +1,13 @@
 
-#### Release notes for `(unreleased)` (2021-03-05)
+#### Release notes for `(unreleased)` (2021-03-09)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump pydantic from 1.7.3 to 1.8.1.
+  Bumps [pydantic](https://github.com/samuelcolvin/pydantic) from 1.7.3 to 1.8.1.
+  - [Release notes](https://github.com/samuelcolvin/pydantic/releases)
+  - [Changelog](https://github.com/samuelcolvin/pydantic/blob/master/HISTORY.md)
+  - [Commits](https://github.com/samuelcolvin/pydantic/compare/v1.7.3...v1.8.1)
 - ⬆️ Bump flake8-bugbear from 20.11.1 to 21.3.1.
   Bumps [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear) from 20.11.1 to 21.3.1.
   - [Release notes](https://github.com/PyCQA/flake8-bugbear/releases)
