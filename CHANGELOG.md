@@ -3,6 +3,11 @@
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump ipdb from 0.13.4 to 0.13.6.
+  Bumps [ipdb](https://github.com/gotcha/ipdb) from 0.13.4 to 0.13.6.
+  - [Release notes](https://github.com/gotcha/ipdb/releases)
+  - [Changelog](https://github.com/gotcha/ipdb/blob/master/HISTORY.txt)
+  - [Commits](https://github.com/gotcha/ipdb/compare/0.13.4...0.13.6)
 - ⬆️ Bump pydantic from 1.7.3 to 1.8.1.
   Bumps [pydantic](https://github.com/samuelcolvin/pydantic) from 1.7.3 to 1.8.1.
   - [Release notes](https://github.com/samuelcolvin/pydantic/releases)
