@@ -1,8 +1,12 @@
 
-#### Release notes for `(unreleased)` (2021-03-09)
+#### Release notes for `(unreleased)` (2021-03-16)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump flake8 from 3.8.4 to 3.9.0 (#14)
+  Bumps [flake8](https://gitlab.com/pycqa/flake8) from 3.8.4 to 3.9.0.
+  - [Release notes](https://gitlab.com/pycqa/flake8/tags)
+  - [Commits](https://gitlab.com/pycqa/flake8/compare/3.8.4...3.9.0)
 - ⬆️ Bump flake8-bugbear from 21.3.1 to 21.3.2 (#12)
   Bumps [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear) from 21.3.1 to 21.3.2.
   - [Release notes](https://github.com/PyCQA/flake8-bugbear/releases)
