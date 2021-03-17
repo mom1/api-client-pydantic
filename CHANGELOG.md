@@ -1,8 +1,13 @@
 
-#### Release notes for `(unreleased)` (2021-03-16)
+#### Release notes for `(unreleased)` (2021-03-17)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump ipdb from 0.13.6 to 0.13.7 (#16)
+  Bumps [ipdb](https://github.com/gotcha/ipdb) from 0.13.6 to 0.13.7.
+  - [Release notes](https://github.com/gotcha/ipdb/releases)
+  - [Changelog](https://github.com/gotcha/ipdb/blob/master/HISTORY.txt)
+  - [Commits](https://github.com/gotcha/ipdb/compare/0.13.6...0.13.7)
 - ⬆️ Bump flake8 from 3.8.4 to 3.9.0 (#14)
   Bumps [flake8](https://gitlab.com/pycqa/flake8) from 3.8.4 to 3.9.0.
   - [Release notes](https://gitlab.com/pycqa/flake8/tags)
