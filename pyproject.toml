@@ -38,7 +38,7 @@ pytest-env = "^0.6"
 requests-mock = "^1.8"
 vcrpy = "^4.1"
 # formating
-yapf = "^0.30"
+yapf = "^0.31"
 isort = "^5.7"
 # linting
 flake8 = "^3.9"
