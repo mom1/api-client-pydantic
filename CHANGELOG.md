@@ -3,6 +3,11 @@
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump yapf from 0.30.0 to 0.31.0 (#15)
+  Bumps [yapf](https://github.com/google/yapf) from 0.30.0 to 0.31.0.
+  - [Release notes](https://github.com/google/yapf/releases)
+  - [Changelog](https://github.com/google/yapf/blob/main/CHANGELOG)
+  - [Commits](https://github.com/google/yapf/compare/v0.30.0...v0.31.0)
 - ⬆️ Bump ipdb from 0.13.6 to 0.13.7 (#16)
   Bumps [ipdb](https://github.com/gotcha/ipdb) from 0.13.6 to 0.13.7.
   - [Release notes](https://github.com/gotcha/ipdb/releases)
