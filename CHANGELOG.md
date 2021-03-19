@@ -1,8 +1,13 @@
 
-#### Release notes for `(unreleased)` (2021-03-17)
+#### Release notes for `(unreleased)` (2021-03-19)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump flake8-comprehensions from 3.3.1 to 3.4.0 (#17)
+  Bumps [flake8-comprehensions](https://github.com/adamchainz/flake8-comprehensions) from 3.3.1 to 3.4.0.
+  - [Release notes](https://github.com/adamchainz/flake8-comprehensions/releases)
+  - [Changelog](https://github.com/adamchainz/flake8-comprehensions/blob/main/HISTORY.rst)
+  - [Commits](https://github.com/adamchainz/flake8-comprehensions/compare/3.3.1...3.4.0)
 - ⬆️ Bump yapf from 0.30.0 to 0.31.0 (#15)
   Bumps [yapf](https://github.com/google/yapf) from 0.30.0 to 0.31.0.
   - [Release notes](https://github.com/google/yapf/releases)
