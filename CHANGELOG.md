@@ -3,6 +3,11 @@
 
 ##### Dependencies ⬆️
 
+- ⬆️:lock: Bump urllib3 from 1.26.2 to 1.26.3 (#18)
+  Bumps [urllib3](https://github.com/urllib3/urllib3) from 1.26.2 to 1.26.3. **This update includes a security fix.**
+  - [Release notes](https://github.com/urllib3/urllib3/releases)
+  - [Changelog](https://github.com/urllib3/urllib3/blob/main/CHANGES.rst)
+  - [Commits](https://github.com/urllib3/urllib3/compare/1.26.2...1.26.3)
 - ⬆️ Bump flake8-comprehensions from 3.3.1 to 3.4.0 (#17)
   Bumps [flake8-comprehensions](https://github.com/adamchainz/flake8-comprehensions) from 3.3.1 to 3.4.0.
   - [Release notes](https://github.com/adamchainz/flake8-comprehensions/releases)
