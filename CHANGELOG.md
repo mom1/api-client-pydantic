@@ -1,8 +1,13 @@
 
-#### Release notes for `(unreleased)` (2021-03-19)
+#### Release notes for `(unreleased)` (2021-03-22)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump isort from 5.7.0 to 5.8.0 (#19)
+  Bumps [isort](https://github.com/pycqa/isort) from 5.7.0 to 5.8.0.
+  - [Release notes](https://github.com/pycqa/isort/releases)
+  - [Changelog](https://github.com/PyCQA/isort/blob/develop/CHANGELOG.md)
+  - [Commits](https://github.com/pycqa/isort/compare/5.7.0...5.8.0)
 - ⬆️:lock: Bump urllib3 from 1.26.2 to 1.26.3 (#18)
   Bumps [urllib3](https://github.com/urllib3/urllib3) from 1.26.2 to 1.26.3. **This update includes a security fix.**
   - [Release notes](https://github.com/urllib3/urllib3/releases)
