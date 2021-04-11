@@ -3,6 +3,11 @@
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump pytest from 6.2.2 to 6.2.3 (#22)
+  Bumps [pytest](https://github.com/pytest-dev/pytest) from 6.2.2 to 6.2.3.
+  - [Release notes](https://github.com/pytest-dev/pytest/releases)
+  - [Changelog](https://github.com/pytest-dev/pytest/blob/main/CHANGELOG.rst)
+  - [Commits](https://github.com/pytest-dev/pytest/compare/6.2.2...6.2.3)
 - ⬆️ Bump flake8-bugbear from 21.3.2 to 21.4.3 (#21)
   Bumps [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear) from 21.3.2 to 21.4.3.
   - [Release notes](https://github.com/PyCQA/flake8-bugbear/releases)
