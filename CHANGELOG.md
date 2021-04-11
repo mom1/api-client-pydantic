@@ -3,6 +3,10 @@
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump flake8-bugbear from 21.3.2 to 21.4.3 (#21)
+  Bumps [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear) from 21.3.2 to 21.4.3.
+  - [Release notes](https://github.com/PyCQA/flake8-bugbear/releases)
+  - [Commits](https://github.com/PyCQA/flake8-bugbear/compare/21.3.2...21.4.3)
 - ⬆️:lock: Bump urllib3 from 1.26.3 to 1.26.4 (#23)
   Bumps [urllib3](https://github.com/urllib3/urllib3) from 1.26.3 to 1.26.4. **This update includes a security fix.**
   - [Release notes](https://github.com/urllib3/urllib3/releases)
