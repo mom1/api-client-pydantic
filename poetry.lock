@@ -1,6 +1,6 @@
 [[package]]
 name = "api-client"
-version = "1.3.0"
+version = "1.3.1"
 description = "Separate the high level client implementation from the underlying CRUD."
 category = "main"
 optional = false
@@ -795,7 +795,7 @@ content-hash = "f7a03d5b7d0799f3f3c42680a67982fa713e64374821b6236bd2c1ab40ff5ffb
 
 [metadata.files]
 api-client = [
-    {file = "api-client-1.3.0.tar.gz", hash = "sha256:dd7991ad9e00ccfd7732235a714d14f6a5c1e50b761d684d975fb2b63a5af3c6"},
+    {file = "api-client-1.3.1.tar.gz", hash = "sha256:194e5c8f2b5200540464462a68ea9d06ad85d6f374f03d384f098711572ab946"},
 ]
 appnope = [
     {file = "appnope-0.1.2-py2.py3-none-any.whl", hash = "sha256:93aa393e9d6c54c5cd570ccadd8edad61ea0c4b9ea7a01409020c9aa019eb442"},
