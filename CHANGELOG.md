@@ -3,6 +3,11 @@
 
 ##### Dependencies ⬆️
 
+- ⬆️:lock: Bump urllib3 from 1.26.3 to 1.26.4 (#23)
+  Bumps [urllib3](https://github.com/urllib3/urllib3) from 1.26.3 to 1.26.4. **This update includes a security fix.**
+  - [Release notes](https://github.com/urllib3/urllib3/releases)
+  - [Changelog](https://github.com/urllib3/urllib3/blob/main/CHANGES.rst)
+  - [Commits](https://github.com/urllib3/urllib3/compare/1.26.3...1.26.4)
 - ⬆️ Bump api-client from 1.3.0 to 1.3.1 (#20)
   Bumps [api-client](https://github.com/MikeWooster/api-client) from 1.3.0 to 1.3.1.
   - [Release notes](https://github.com/MikeWooster/api-client/releases)
