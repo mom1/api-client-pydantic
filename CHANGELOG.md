@@ -1,8 +1,12 @@
 
-#### Release notes for `(unreleased)` (2021-03-22)
+#### Release notes for `(unreleased)` (2021-04-11)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump api-client from 1.3.0 to 1.3.1 (#20)
+  Bumps [api-client](https://github.com/MikeWooster/api-client) from 1.3.0 to 1.3.1.
+  - [Release notes](https://github.com/MikeWooster/api-client/releases)
+  - [Commits](https://github.com/MikeWooster/api-client/compare/v1.3.0...v1.3.1)
 - ⬆️ Bump isort from 5.7.0 to 5.8.0 (#19)
   Bumps [isort](https://github.com/pycqa/isort) from 5.7.0 to 5.8.0.
   - [Release notes](https://github.com/pycqa/isort/releases)
