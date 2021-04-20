@@ -1,8 +1,12 @@
 
-#### Release notes for `(unreleased)` (2021-04-11)
+#### Release notes for `(unreleased)` (2021-04-20)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump flake8 from 3.9.0 to 3.9.1 (#24)
+  Bumps [flake8](https://gitlab.com/pycqa/flake8) from 3.9.0 to 3.9.1.
+  - [Release notes](https://gitlab.com/pycqa/flake8/tags)
+  - [Commits](https://gitlab.com/pycqa/flake8/compare/3.9.0...3.9.1)
 - ⬆️ Bump pytest from 6.2.2 to 6.2.3 (#22)
   Bumps [pytest](https://github.com/pytest-dev/pytest) from 6.2.2 to 6.2.3.
   - [Release notes](https://github.com/pytest-dev/pytest/releases)
