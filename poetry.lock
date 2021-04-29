@@ -632,7 +632,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7)", "win-inet-pton"]
 
 [[package]]
 name = "requests-mock"
-version = "1.8.0"
+version = "1.9.1"
 description = "Mock out responses from the requests package"
 category = "dev"
 optional = false
@@ -791,7 +791,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "02f9559dd0b16226210132e02a3d62bf8c7f05598821f5cf8e671127d7fb66f6"
+content-hash = "052ec6fbfe91df8fd3df69e3b822c7c4ffc2a075966c99cb62ace4605def61a9"
 
 [metadata.files]
 api-client = [
@@ -1138,8 +1138,8 @@ requests = [
     {file = "requests-2.25.1.tar.gz", hash = "sha256:27973dd4a904a4f13b263a19c866c13b92a39ed1c964655f025f3f8d3d75b804"},
 ]
 requests-mock = [
-    {file = "requests-mock-1.8.0.tar.gz", hash = "sha256:e68f46844e4cee9d447150343c9ae875f99fa8037c6dcf5f15bf1fe9ab43d226"},
-    {file = "requests_mock-1.8.0-py2.py3-none-any.whl", hash = "sha256:11215c6f4df72702aa357f205cf1e537cffd7392b3e787b58239bde5fb3db53b"},
+    {file = "requests-mock-1.9.1.tar.gz", hash = "sha256:154903e7646b8215fbdccc6898c32a77b87d2fbafad2f43e99d6d7987dc86953"},
+    {file = "requests_mock-1.9.1-py2.py3-none-any.whl", hash = "sha256:705c03efff5c4e38a00eb203e71e9b4381fbce9679870bda3ac533b61a0b8b9d"},
 ]
 safety = [
     {file = "safety-1.10.3-py2.py3-none-any.whl", hash = "sha256:5f802ad5df5614f9622d8d71fedec2757099705c2356f862847c58c6dfe13e84"},
