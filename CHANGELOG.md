@@ -3,6 +3,10 @@
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump requests-mock from 1.8.0 to 1.9.1 (#27)
+  Bumps [requests-mock](https://github.com/jamielennox/requests-mock) from 1.8.0 to 1.9.1.
+  - [Release notes](https://github.com/jamielennox/requests-mock/releases)
+  - [Commits](https://github.com/jamielennox/requests-mock/compare/1.8.0...1.9.1)
 - ⬆️ Bump requests-mock from 1.8.0 to 1.9.1 (#25)
   Bumps [requests-mock](https://github.com/jamielennox/requests-mock) from 1.8.0 to 1.9.1.
   - [Release notes](https://github.com/jamielennox/requests-mock/releases)
