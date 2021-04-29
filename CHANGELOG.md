@@ -1,8 +1,12 @@
 
-#### Release notes for `(unreleased)` (2021-04-20)
+#### Release notes for `(unreleased)` (2021-04-29)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump requests-mock from 1.8.0 to 1.9.1 (#25)
+  Bumps [requests-mock](https://github.com/jamielennox/requests-mock) from 1.8.0 to 1.9.1.
+  - [Release notes](https://github.com/jamielennox/requests-mock/releases)
+  - [Commits](https://github.com/jamielennox/requests-mock/compare/1.8.0...1.9.1)
 - ⬆️ Bump flake8 from 3.9.0 to 3.9.1 (#24)
   Bumps [flake8](https://gitlab.com/pycqa/flake8) from 3.9.0 to 3.9.1.
   - [Release notes](https://gitlab.com/pycqa/flake8/tags)
@@ -91,6 +95,10 @@
   - [Release notes](https://github.com/carpedm20/emoji/releases)
   - [Changelog](https://github.com/carpedm20/emoji/blob/master/CHANGES.md)
   - [Commits](https://github.com/carpedm20/emoji/commits/v.1.1.0)
+
+##### Other 🌱
+
+- Upgrade to GitHub-native Dependabot (#26)
 
 
 #### Release notes for `v1.0.2` (2021-01-21)
