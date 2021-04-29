@@ -1,0 +1,15 @@
+version: 2
+updates:
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "02:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: ipdb
+    versions:
+    - 0.13.5
+  - dependency-name: pydantic
+    versions:
+    - "1.8"
