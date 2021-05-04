@@ -1,8 +1,12 @@
 
-#### Release notes for `(unreleased)` (2021-04-29)
+#### Release notes for `(unreleased)` (2021-05-04)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump requests-mock from 1.9.1 to 1.9.2 (#28)
+  Bumps [requests-mock](https://github.com/jamielennox/requests-mock) from 1.9.1 to 1.9.2.
+  - [Release notes](https://github.com/jamielennox/requests-mock/releases)
+  - [Commits](https://github.com/jamielennox/requests-mock/compare/1.9.1...1.9.2)
 - ⬆️ Bump requests-mock from 1.8.0 to 1.9.1 (#27)
   Bumps [requests-mock](https://github.com/jamielennox/requests-mock) from 1.8.0 to 1.9.1.
   - [Release notes](https://github.com/jamielennox/requests-mock/releases)
