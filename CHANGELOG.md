@@ -1,8 +1,13 @@
 
-#### Release notes for `(unreleased)` (2021-05-04)
+#### Release notes for `(unreleased)` (2021-05-05)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump pytest from 6.2.3 to 6.2.4 (#29)
+  Bumps [pytest](https://github.com/pytest-dev/pytest) from 6.2.3 to 6.2.4.
+  - [Release notes](https://github.com/pytest-dev/pytest/releases)
+  - [Changelog](https://github.com/pytest-dev/pytest/blob/main/CHANGELOG.rst)
+  - [Commits](https://github.com/pytest-dev/pytest/compare/6.2.3...6.2.4)
 - ⬆️ Bump requests-mock from 1.9.1 to 1.9.2 (#28)
   Bumps [requests-mock](https://github.com/jamielennox/requests-mock) from 1.9.1 to 1.9.2.
   - [Release notes](https://github.com/jamielennox/requests-mock/releases)
