@@ -1,8 +1,17 @@
 
-#### Release notes for `(unreleased)` (2021-05-05)
+#### Release notes for `(unreleased)` (2021-05-12)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump flake8-comprehensions from 3.4.0 to 3.5.0 (#31)
+  Bumps [flake8-comprehensions](https://github.com/adamchainz/flake8-comprehensions) from 3.4.0 to 3.5.0.
+  - [Release notes](https://github.com/adamchainz/flake8-comprehensions/releases)
+  - [Changelog](https://github.com/adamchainz/flake8-comprehensions/blob/main/HISTORY.rst)
+  - [Commits](https://github.com/adamchainz/flake8-comprehensions/compare/3.4.0...3.5.0)
+- ⬆️ Bump flake8 from 3.9.1 to 3.9.2 (#30)
+  Bumps [flake8](https://gitlab.com/pycqa/flake8) from 3.9.1 to 3.9.2.
+  - [Release notes](https://gitlab.com/pycqa/flake8/tags)
+  - [Commits](https://gitlab.com/pycqa/flake8/compare/3.9.1...3.9.2)
 - ⬆️ Bump pytest from 6.2.3 to 6.2.4 (#29)
   Bumps [pytest](https://github.com/pytest-dev/pytest) from 6.2.3 to 6.2.4.
   - [Release notes](https://github.com/pytest-dev/pytest/releases)
