@@ -3,6 +3,11 @@
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump pydantic from 1.8.1 to 1.8.2.
+  Bumps [pydantic](https://github.com/samuelcolvin/pydantic) from 1.8.1 to 1.8.2.
+  - [Release notes](https://github.com/samuelcolvin/pydantic/releases)
+  - [Changelog](https://github.com/samuelcolvin/pydantic/blob/master/HISTORY.md)
+  - [Commits](https://github.com/samuelcolvin/pydantic/compare/v1.8.1...v1.8.2)
 - ⬆️ Bump flake8-comprehensions from 3.4.0 to 3.5.0 (#31)
   Bumps [flake8-comprehensions](https://github.com/adamchainz/flake8-comprehensions) from 3.4.0 to 3.5.0.
   - [Release notes](https://github.com/adamchainz/flake8-comprehensions/releases)
