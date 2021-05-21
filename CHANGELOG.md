@@ -1,8 +1,13 @@
 
-#### Release notes for `(unreleased)` (2021-05-12)
+#### Release notes for `(unreleased)` (2021-05-21)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump pytest-cov from 2.11.1 to 2.12.0 (#33)
+  Bumps [pytest-cov](https://github.com/pytest-dev/pytest-cov) from 2.11.1 to 2.12.0.
+  - [Release notes](https://github.com/pytest-dev/pytest-cov/releases)
+  - [Changelog](https://github.com/pytest-dev/pytest-cov/blob/master/CHANGELOG.rst)
+  - [Commits](https://github.com/pytest-dev/pytest-cov/compare/v2.11.1...v2.12.0)
 - ⬆️ Bump pydantic from 1.8.1 to 1.8.2.
   Bumps [pydantic](https://github.com/samuelcolvin/pydantic) from 1.8.1 to 1.8.2.
   - [Release notes](https://github.com/samuelcolvin/pydantic/releases)
