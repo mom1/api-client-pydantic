@@ -1,8 +1,17 @@
 
-#### Release notes for `(unreleased)` (2021-05-21)
+#### Release notes for `(unreleased)` (2021-06-01)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump requests-mock from 1.9.2 to 1.9.3 (#35)
+  Bumps [requests-mock](https://github.com/jamielennox/requests-mock) from 1.9.2 to 1.9.3.
+  - [Release notes](https://github.com/jamielennox/requests-mock/releases)
+  - [Commits](https://github.com/jamielennox/requests-mock/compare/1.9.2...1.9.3)
+- ⬆️ Bump ipdb from 0.13.7 to 0.13.8 (#34)
+  Bumps [ipdb](https://github.com/gotcha/ipdb) from 0.13.7 to 0.13.8.
+  - [Release notes](https://github.com/gotcha/ipdb/releases)
+  - [Changelog](https://github.com/gotcha/ipdb/blob/master/HISTORY.txt)
+  - [Commits](https://github.com/gotcha/ipdb/compare/0.13.7...0.13.8)
 - ⬆️ Bump pytest-cov from 2.11.1 to 2.12.0 (#33)
   Bumps [pytest-cov](https://github.com/pytest-dev/pytest-cov) from 2.11.1 to 2.12.0.
   - [Release notes](https://github.com/pytest-dev/pytest-cov/releases)
