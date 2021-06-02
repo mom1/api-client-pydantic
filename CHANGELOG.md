@@ -1,8 +1,20 @@
 
-#### Release notes for `(unreleased)` (2021-06-01)
+#### Release notes for `(unreleased)` (2021-06-02)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump pytest-cov from 2.12.0 to 2.12.1 (#36)
+  Bumps [pytest-cov](https://github.com/pytest-dev/pytest-cov) from 2.12.0 to 2.12.1.
+  - [Release notes](https://github.com/pytest-dev/pytest-cov/releases)
+  - [Changelog](https://github.com/pytest-dev/pytest-cov/blob/master/CHANGELOG.rst)
+  - [Commits](https://github.com/pytest-dev/pytest-cov/compare/v2.12.0...v2.12.1)
+
+  ---
+  updated-dependencies:
+  - dependency-name: pytest-cov
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+  ...
 - ⬆️ Bump requests-mock from 1.9.2 to 1.9.3 (#35)
   Bumps [requests-mock](https://github.com/jamielennox/requests-mock) from 1.9.2 to 1.9.3.
   - [Release notes](https://github.com/jamielennox/requests-mock/releases)
