@@ -1,8 +1,20 @@
 
-#### Release notes for `(unreleased)` (2021-06-02)
+#### Release notes for `(unreleased)` (2021-06-07)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump ipdb from 0.13.8 to 0.13.9 (#37)
+  Bumps [ipdb](https://github.com/gotcha/ipdb) from 0.13.8 to 0.13.9.
+  - [Release notes](https://github.com/gotcha/ipdb/releases)
+  - [Changelog](https://github.com/gotcha/ipdb/blob/master/HISTORY.txt)
+  - [Commits](https://github.com/gotcha/ipdb/compare/0.13.8...0.13.9)
+
+  ---
+  updated-dependencies:
+  - dependency-name: ipdb
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+  ...
 - ⬆️ Bump pytest-cov from 2.12.0 to 2.12.1 (#36)
   Bumps [pytest-cov](https://github.com/pytest-dev/pytest-cov) from 2.12.0 to 2.12.1.
   - [Release notes](https://github.com/pytest-dev/pytest-cov/releases)
