@@ -1,8 +1,20 @@
 
-#### Release notes for `(unreleased)` (2021-06-07)
+#### Release notes for `(unreleased)` (2021-06-28)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump isort from 5.8.0 to 5.9.1 (#38)
+  Bumps [isort](https://github.com/pycqa/isort) from 5.8.0 to 5.9.1.
+  - [Release notes](https://github.com/pycqa/isort/releases)
+  - [Changelog](https://github.com/PyCQA/isort/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/pycqa/isort/compare/5.8.0...5.9.1)
+
+  ---
+  updated-dependencies:
+  - dependency-name: isort
+    dependency-type: direct:development
+    update-type: version-update:semver-minor
+  ...
 - ⬆️ Bump ipdb from 0.13.8 to 0.13.9 (#37)
   Bumps [ipdb](https://github.com/gotcha/ipdb) from 0.13.8 to 0.13.9.
   - [Release notes](https://github.com/gotcha/ipdb/releases)
