@@ -3,6 +3,11 @@
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump flake8-eradicate from 1.0.0 to 1.1.0 (#39)
+  Bumps [flake8-eradicate](https://github.com/wemake-services/flake8-eradicate) from 1.0.0 to 1.1.0.
+  - [Release notes](https://github.com/wemake-services/flake8-eradicate/releases)
+  - [Changelog](https://github.com/wemake-services/flake8-eradicate/blob/master/CHANGELOG.md)
+  - [Commits](https://github.com/wemake-services/flake8-eradicate/compare/1.0.0...1.1.0)
 - ⬆️ Bump isort from 5.8.0 to 5.9.1 (#38)
   Bumps [isort](https://github.com/pycqa/isort) from 5.8.0 to 5.9.1.
   - [Release notes](https://github.com/pycqa/isort/releases)
