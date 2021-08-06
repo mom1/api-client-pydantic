@@ -1,8 +1,32 @@
 
-#### Release notes for `(unreleased)` (2021-06-28)
+#### Release notes for `(unreleased)` (2021-08-06)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump isort from 5.9.1 to 5.9.3 (#43)
+  Bumps [isort](https://github.com/pycqa/isort) from 5.9.1 to 5.9.3.
+  - [Release notes](https://github.com/pycqa/isort/releases)
+  - [Changelog](https://github.com/PyCQA/isort/blob/main/CHANGELOG.md)
+  - [Commits](https://github.com/pycqa/isort/compare/5.9.1...5.9.3)
+
+  ---
+  updated-dependencies:
+  - dependency-name: isort
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+  ...
+- ⬆️ Bump pep8-naming from 0.11.1 to 0.12.0 (#40)
+  Bumps [pep8-naming](https://github.com/PyCQA/pep8-naming) from 0.11.1 to 0.12.0.
+  - [Release notes](https://github.com/PyCQA/pep8-naming/releases)
+  - [Changelog](https://github.com/PyCQA/pep8-naming/blob/master/CHANGELOG.rst)
+  - [Commits](https://github.com/PyCQA/pep8-naming/compare/0.11.1...0.12.0)
+
+  ---
+  updated-dependencies:
+  - dependency-name: pep8-naming
+    dependency-type: direct:development
+    update-type: version-update:semver-minor
+  ...
 - ⬆️ Bump flake8-eradicate from 1.0.0 to 1.1.0 (#39)
   Bumps [flake8-eradicate](https://github.com/wemake-services/flake8-eradicate) from 1.0.0 to 1.1.0.
   - [Release notes](https://github.com/wemake-services/flake8-eradicate/releases)
