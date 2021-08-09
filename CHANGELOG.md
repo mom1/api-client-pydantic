@@ -1,5 +1,5 @@
 
-#### Release notes for `(unreleased)` (2021-08-09)
+#### Release notes for `v1.1.0` (2021-08-09)
 
 ##### Changes ♻️
 
@@ -232,6 +232,7 @@
 
 ##### Other 🌱
 
+- Release 1.1.0.
 - Upgrade to GitHub-native Dependabot (#26)
 
 
