@@ -1,8 +1,32 @@
 
-#### Release notes for `(unreleased)` (2021-08-06)
+#### Release notes for `(unreleased)` (2021-08-09)
 
 ##### Dependencies ⬆️
 
+- ⬆️ Bump pep8-naming from 0.12.0 to 0.12.1 (#45)
+  Bumps [pep8-naming](https://github.com/PyCQA/pep8-naming) from 0.12.0 to 0.12.1.
+  - [Release notes](https://github.com/PyCQA/pep8-naming/releases)
+  - [Changelog](https://github.com/PyCQA/pep8-naming/blob/master/CHANGELOG.rst)
+  - [Commits](https://github.com/PyCQA/pep8-naming/compare/0.12.0...0.12.1)
+
+  ---
+  updated-dependencies:
+  - dependency-name: pep8-naming
+    dependency-type: direct:development
+    update-type: version-update:semver-patch
+  ...
+- ⬆️ Bump emoji from 1.2.0 to 1.4.2 (#44)
+  Bumps [emoji](https://github.com/carpedm20/emoji) from 1.2.0 to 1.4.2.
+  - [Release notes](https://github.com/carpedm20/emoji/releases)
+  - [Changelog](https://github.com/carpedm20/emoji/blob/master/CHANGES.md)
+  - [Commits](https://github.com/carpedm20/emoji/compare/v.1.2.0...v.1.4.2)
+
+  ---
+  updated-dependencies:
+  - dependency-name: emoji
+    dependency-type: direct:development
+    update-type: version-update:semver-minor
+  ...
 - ⬆️ Bump isort from 5.9.1 to 5.9.3 (#43)
   Bumps [isort](https://github.com/pycqa/isort) from 5.9.1 to 5.9.3.
   - [Release notes](https://github.com/pycqa/isort/releases)
