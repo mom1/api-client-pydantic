@@ -232,6 +232,7 @@
 
 ##### Other 🌱
 
+- Release 1.1.0.
 - Upgrade to GitHub-native Dependabot (#26)
 
 
