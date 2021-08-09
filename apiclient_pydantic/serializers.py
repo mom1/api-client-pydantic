@@ -1,3 +1,4 @@
+import inspect
 from functools import wraps
 from typing import Callable, Optional, Type, get_type_hints
 
@@ -76,8 +77,8 @@ def serialize(
 
 def serialize_all_methods(decorator=serialize):
     def decorate(cls):
-        for attr, value in cls.__dict__.items():
-            if callable(value) and not attr.startswith('_'):
+        for attr, value in vars(cls).items():
+            if not attr.startswith('_') and (inspect.ismethod(value) or inspect.isfunction(value)):
                 setattr(cls, attr, decorator()(value))
         return cls
 

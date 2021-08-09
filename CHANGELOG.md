@@ -1,6 +1,10 @@
 
 #### Release notes for `(unreleased)` (2021-08-09)
 
+##### Changes ♻️
+
+- Correct recognition of functions.
+
 ##### Dependencies ⬆️
 
 - ⬆️ Bump pep8-naming from 0.12.0 to 0.12.1 (#45)
