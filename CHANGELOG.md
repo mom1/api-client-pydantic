@@ -3,7 +3,7 @@
 
 ##### Changes ♻️
 
-- Correct recognition of functions.
+- Correct recognition of functions (#46)
 
 ##### Dependencies ⬆️
 
