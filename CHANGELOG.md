@@ -3,7 +3,12 @@
 
 ##### Dependencies ⬆️
 
-- ⬆️ Bump flake8-bugbear from 21.4.3 to 21.9.2.
+- ⬆️ Bump pytest-cov from 2.12.1 to 3.0.0.
+  Bumps [pytest-cov](https://github.com/pytest-dev/pytest-cov) from 2.12.1 to 3.0.0.
+  - [Release notes](https://github.com/pytest-dev/pytest-cov/releases)
+  - [Changelog](https://github.com/pytest-dev/pytest-cov/blob/master/CHANGELOG.rst)
+  - [Commits](https://github.com/pytest-dev/pytest-cov/compare/v2.12.1...v3.0.0)
+- ⬆️ Bump flake8-bugbear from 21.4.3 to 21.9.2 (#53)
   Bumps [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear) from 21.4.3 to 21.9.2.
   - [Release notes](https://github.com/PyCQA/flake8-bugbear/releases)
   - [Commits](https://github.com/PyCQA/flake8-bugbear/compare/21.4.3...21.9.2)
