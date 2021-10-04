@@ -255,7 +255,7 @@ flake8 = "*"
 
 [[package]]
 name = "flake8-quotes"
-version = "3.2.0"
+version = "3.3.0"
 description = "Flake8 lint for quotes."
 category = "dev"
 optional = false
@@ -795,7 +795,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "73b80080cac3dfd748907892fabd4a50cd227bbbfbd50821014dd46461dfa4ea"
+content-hash = "65fb128cb9c6ebdd31d1bf54733d64bc9b607e24900c289a4e11c9d5a7ad40d2"
 
 [metadata.files]
 api-client = [
@@ -938,7 +938,7 @@ flake8-polyfill = [
     {file = "flake8_polyfill-1.0.2-py2.py3-none-any.whl", hash = "sha256:12be6a34ee3ab795b19ca73505e7b55826d5f6ad7230d31b18e106400169b9e9"},
 ]
 flake8-quotes = [
-    {file = "flake8-quotes-3.2.0.tar.gz", hash = "sha256:3f1116e985ef437c130431ac92f9b3155f8f652fda7405ac22ffdfd7a9d1055e"},
+    {file = "flake8-quotes-3.3.0.tar.gz", hash = "sha256:f1dd87830ed77ff2ce47fc0ee0fd87ae20e8f045355354ffbf4dcaa18d528217"},
 ]
 gitchangelog = [
     {file = "gitchangelog-3.0.4-py2.py3-none-any.whl", hash = "sha256:45f8b8e64cece0d9bb03a35ecd8ee62c1c7157f8dac0ef3cb68381bfcc1bde29"},

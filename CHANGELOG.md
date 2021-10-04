@@ -1,3 +1,31 @@
+#### Release notes for `(unreleased)` (2021-08-24)
+
+##### Dependencies ⬆️
+
+- ⬆️ Bump flake8-quotes from 3.2.0 to 3.3.0.
+  Bumps [flake8-quotes](https://github.com/zheller/flake8-quotes) from 3.2.0 to 3.3.0.
+  - [Release notes](https://github.com/zheller/flake8-quotes/releases)
+  - [Commits](https://github.com/zheller/flake8-quotes/compare/3.2.0...3.3.0)
+
+  ---
+  updated-dependencies:
+  - dependency-name: flake8-quotes
+    dependency-type: direct:development
+    update-type: version-update:semver-minor
+  ...
+- ⬆️ Bump flake8-comprehensions from 3.5.0 to 3.6.1 (#48)
+  Bumps [flake8-comprehensions](https://github.com/adamchainz/flake8-comprehensions) from 3.5.0 to 3.6.1.
+  - [Release notes](https://github.com/adamchainz/flake8-comprehensions/releases)
+  - [Changelog](https://github.com/adamchainz/flake8-comprehensions/blob/main/HISTORY.rst)
+  - [Commits](https://github.com/adamchainz/flake8-comprehensions/compare/3.5.0...3.6.1)
+
+  ---
+  updated-dependencies:
+  - dependency-name: flake8-comprehensions
+    dependency-type: direct:development
+    update-type: version-update:semver-minor
+  ...
+
 
 #### Release notes for `v1.1.0` (2021-08-09)
 
