@@ -31,7 +31,7 @@ jobs:
           key: venv-${{ hashFiles('poetry.lock') }}
       - name: Install dependencies
         run: |
-          poetry config virtualenvs.in-project true
+          poetry config virtualenvs.create false
           poetry install
       - name: Generate changelog
         continue-on-error: true
