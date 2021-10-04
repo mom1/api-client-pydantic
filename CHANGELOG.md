@@ -1,30 +1,31 @@
-#### Release notes for `(unreleased)` (2021-08-24)
+
+#### Release notes for `(unreleased)` (2021-10-04)
 
 ##### Dependencies ⬆️
 
-- ⬆️ Bump flake8-quotes from 3.2.0 to 3.3.0.
+- ⬆️ Bump flake8-bugbear from 21.4.3 to 21.9.2.
+  Bumps [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear) from 21.4.3 to 21.9.2.
+  - [Release notes](https://github.com/PyCQA/flake8-bugbear/releases)
+  - [Commits](https://github.com/PyCQA/flake8-bugbear/compare/21.4.3...21.9.2)
+- ⬆️ Bump emoji from 1.4.2 to 1.5.0 (#52)
+  Bumps [emoji](https://github.com/carpedm20/emoji) from 1.4.2 to 1.5.0.
+  - [Release notes](https://github.com/carpedm20/emoji/releases)
+  - [Changelog](https://github.com/carpedm20/emoji/blob/master/CHANGES.md)
+  - [Commits](https://github.com/carpedm20/emoji/compare/v.1.4.2...v1.5.0)
+- ⬆️ Bump pytest from 6.2.4 to 6.2.5 (#50)
+  Bumps [pytest](https://github.com/pytest-dev/pytest) from 6.2.4 to 6.2.5.
+  - [Release notes](https://github.com/pytest-dev/pytest/releases)
+  - [Changelog](https://github.com/pytest-dev/pytest/blob/main/CHANGELOG.rst)
+  - [Commits](https://github.com/pytest-dev/pytest/compare/6.2.4...6.2.5)
+- ⬆️ Bump flake8-quotes from 3.2.0 to 3.3.0 (#49)
   Bumps [flake8-quotes](https://github.com/zheller/flake8-quotes) from 3.2.0 to 3.3.0.
   - [Release notes](https://github.com/zheller/flake8-quotes/releases)
   - [Commits](https://github.com/zheller/flake8-quotes/compare/3.2.0...3.3.0)
-
-  ---
-  updated-dependencies:
-  - dependency-name: flake8-quotes
-    dependency-type: direct:development
-    update-type: version-update:semver-minor
-  ...
 - ⬆️ Bump flake8-comprehensions from 3.5.0 to 3.6.1 (#48)
   Bumps [flake8-comprehensions](https://github.com/adamchainz/flake8-comprehensions) from 3.5.0 to 3.6.1.
   - [Release notes](https://github.com/adamchainz/flake8-comprehensions/releases)
   - [Changelog](https://github.com/adamchainz/flake8-comprehensions/blob/main/HISTORY.rst)
   - [Commits](https://github.com/adamchainz/flake8-comprehensions/compare/3.5.0...3.6.1)
-
-  ---
-  updated-dependencies:
-  - dependency-name: flake8-comprehensions
-    dependency-type: direct:development
-    update-type: version-update:semver-minor
-  ...
 
 
 #### Release notes for `v1.1.0` (2021-08-09)
