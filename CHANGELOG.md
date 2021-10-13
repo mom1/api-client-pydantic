@@ -1,5 +1,10 @@
 
-#### Release notes for `(unreleased)` (2021-10-04)
+#### Release notes for `(unreleased)` (2021-10-13)
+
+##### Bugs 🐛
+
+- Fix case with typing.
+  `def function(q: Optional[str]):`
 
 ##### Dependencies ⬆️
 
