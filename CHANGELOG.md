@@ -37,6 +37,10 @@
   - [Changelog](https://github.com/adamchainz/flake8-comprehensions/blob/main/HISTORY.rst)
   - [Commits](https://github.com/adamchainz/flake8-comprehensions/compare/3.5.0...3.6.1)
 
+##### Other 🌱
+
+- Release 1.1.1.
+
 
 #### Release notes for `v1.1.0` (2021-08-09)
 
