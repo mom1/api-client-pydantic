@@ -91,3 +91,11 @@ into the required dict for the endpoint:
         def decorated_func_holder(self, data: AccountHolder) -> List[Account]:
             ...
     ```
+
+## Related projects
+
+### apiclient-pydantic-generator
+
+This code generator creates a [ApiClient](https://github.com/MikeWooster/api-client) app from an openapi file.
+
+[apiclient-pydantic-generator](https://github.com/mom1/apiclient-pydantic-generator)
