@@ -1,5 +1,12 @@
 
-#### Release notes for `(unreleased)` (2021-10-13)
+#### Release notes for `(unreleased)` (2021-10-18)
+
+##### Documentation 📝
+
+- Update README.md.
+
+
+#### Release notes for `v1.1.1` (2021-10-13)
 
 ##### Bugs 🐛
 
