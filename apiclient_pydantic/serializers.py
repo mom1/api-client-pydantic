@@ -10,12 +10,19 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: di
 
     def decorator(func: Callable) -> Callable:
         nonlocal schema
-        map_schemas = None
+        map_schemas = {}
+        parameters = []
+
         if not schema:
-            map_schemas = {
-                arg_name: arg_type
-                for arg_name, arg_type in get_type_hints(func).items() if arg_name != 'return'
-            }
+            for arg_name, arg_type in get_type_hints(func).items():
+                if arg_name == 'return':
+                    continue
+                map_schemas[arg_name] = arg_type
+
+                if inspect.isclass(arg_type) and issubclass(arg_type, BaseModel):
+                    parameters.extend(list(inspect.signature(arg_type).parameters.values()))
+        else:
+            parameters.extend(list(inspect.signature(schema).parameters.values()))
 
         @wraps(func)
         def wrap(*args, **kwargs):
@@ -37,6 +44,12 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: di
                 return func(*args, **new_kwargs)
             return func(*args, **kwargs)
 
+        # Override signature
+        if parameters:
+            sig = inspect.signature(func)
+            self_param = [param] if (param := sig.parameters.get('self')) else []
+            sig = sig.replace(parameters=tuple(self_param + parameters))
+            wrap.__signature__ = sig
         return wrap
 
     return decorator
