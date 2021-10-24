@@ -1,4 +1,11 @@
 
+#### api-client-pydantic `v1.2.1` (2021-10-24)
+
+##### ♻️ Changes
+
+- Changelog generation job because now pre-commit generate changelog.
+
+
 #### api-client-pydantic `v1.2.0` (2021-10-24)
 
 ##### ✨ New
