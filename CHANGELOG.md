@@ -12,6 +12,10 @@
 
 ##### ⬆️ Dependencies
 
+- ⬆️ Bumps [emoji](https://github.com/carpedm20/emoji) from 1.5.0 to 1.6.1.
+  - [Release notes](https://github.com/carpedm20/emoji/releases)
+  - [Changelog](https://github.com/carpedm20/emoji/blob/master/CHANGES.md)
+  - [Commits](carpedm20/emoji@v1.5.0...v1.6.1)
 - ⬆️ Bump all for flake8 4.
 
 ##### 📝 Docs
