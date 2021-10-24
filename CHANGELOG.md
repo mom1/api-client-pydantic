@@ -1,11 +1,14 @@
 
-#### api-client-pydantic `1.1.2` (2021-10-24)
+#### api-client-pydantic `1.2.0` (2021-10-24)
+
+##### ✨ New
+
+- Set a new signature for function.
 
 ##### ♻️ Changes
 
 - New changelog generation.
 - New configs and pre-commit.
-- Set a new signature for function.
 
 ##### ⬆️ Dependencies
 

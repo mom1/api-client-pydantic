@@ -13,16 +13,15 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: di
         map_schemas = {}
         parameters = []
 
-        if not schema:
+        if schema:
+            parameters.extend(list(inspect.signature(schema).parameters.values()))
+        else:
             for arg_name, arg_type in get_type_hints(func).items():
                 if arg_name == 'return':
                     continue
                 map_schemas[arg_name] = arg_type
-
                 if inspect.isclass(arg_type) and issubclass(arg_type, BaseModel):
                     parameters.extend(list(inspect.signature(arg_type).parameters.values()))
-        else:
-            parameters.extend(list(inspect.signature(schema).parameters.values()))
 
         @wraps(func)
         def wrap(*args, **kwargs):
