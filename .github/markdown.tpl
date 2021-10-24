@@ -4,7 +4,7 @@
 
 {{/general_title}}
 {{#versions}}
-#### Release notes for `{{#tag}}{{{tag}}}{{/tag}}{{^tag}}{{{label}}}{{/tag}}` ({{{date}}})
+#### api-client-pydantic `{{#tag}}{{{tag}}}{{/tag}}{{^tag}}{{{label}}}{{/tag}}` ({{{date}}})
 
 {{#sections}}
 ##### {{{label}}}

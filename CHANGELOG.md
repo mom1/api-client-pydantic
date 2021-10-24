@@ -1,19 +1,25 @@
 
-#### Release notes for `(unreleased)` (2021-10-18)
+#### api-client-pydantic `1.1.2` (2021-10-24)
 
-##### Documentation 📝
+##### ♻️ Changes
+
+- New changelog generation.
+- New configs and pre-commit.
+- Set a new signature for function.
+
+##### 📝 Docs
 
 - Update README.md.
 
 
-#### Release notes for `v1.1.1` (2021-10-13)
+#### api-client-pydantic `v1.1.1` (2021-10-13)
 
-##### Bugs 🐛
+##### 🐛 Bugs
 
 - Fix case with typing.
   `def function(q: Optional[str]):`
 
-##### Dependencies ⬆️
+##### ⬆️ Dependencies
 
 - ⬆️ Bump pytest-cov from 2.12.1 to 3.0.0 (#54)
   Bumps [pytest-cov](https://github.com/pytest-dev/pytest-cov) from 2.12.1 to 3.0.0.
@@ -44,18 +50,18 @@
   - [Changelog](https://github.com/adamchainz/flake8-comprehensions/blob/main/HISTORY.rst)
   - [Commits](https://github.com/adamchainz/flake8-comprehensions/compare/3.5.0...3.6.1)
 
-##### Other 🌱
+##### 🌱 Other
 
 - Release 1.1.1.
 
 
-#### Release notes for `v1.1.0` (2021-08-09)
+#### api-client-pydantic `v1.1.0` (2021-08-09)
 
-##### Changes ♻️
+##### ♻️ Changes
 
 - Correct recognition of functions (#46)
 
-##### Dependencies ⬆️
+##### ⬆️ Dependencies
 
 - ⬆️ Bump pep8-naming from 0.12.0 to 0.12.1 (#45)
   Bumps [pep8-naming](https://github.com/PyCQA/pep8-naming) from 0.12.0 to 0.12.1.
@@ -280,19 +286,19 @@
   - [Changelog](https://github.com/carpedm20/emoji/blob/master/CHANGES.md)
   - [Commits](https://github.com/carpedm20/emoji/commits/v.1.1.0)
 
-##### Other 🌱
+##### 🌱 Other
 
 - Release 1.1.0.
 - Upgrade to GitHub-native Dependabot (#26)
 
 
-#### Release notes for `v1.0.2` (2021-01-21)
+#### api-client-pydantic `v1.0.2` (2021-01-21)
 
-##### Changes ♻️
+##### ♻️ Changes
 
 - Refactoring use args and kwargs.
 
-##### Dependencies ⬆️
+##### ⬆️ Dependencies
 
 - ⬆️ Bump pytest-cov from 2.11.0 to 2.11.1.
   Bumps [pytest-cov](https://github.com/pytest-dev/pytest-cov) from 2.11.0 to 2.11.1.
@@ -305,57 +311,57 @@
   - [Changelog](https://github.com/pytest-dev/pytest-cov/blob/master/CHANGELOG.rst)
   - [Commits](https://github.com/pytest-dev/pytest-cov/compare/v2.10.1...v2.11.0)
 
-##### Other 🌱
+##### 🌱 Other
 
 - Bumping version from 1.0.0 to 1.0.1.
 
 
-#### Release notes for `v1.0.0` (2021-01-17)
+#### api-client-pydantic `v1.0.0` (2021-01-17)
 
-##### Changes ♻️
+##### ♻️ Changes
 
 - Publish job.
 
-##### Other 🌱
+##### 🌱 Other
 
 - Bumping version from 0.1.0 to 1.0.0.
 - Move api_client_pydantic to apiclient_pydantic.
   now import `from apiclient_pydantic import *`
 
 
-#### Release notes for `v0.1.1` (2021-01-16)
+#### api-client-pydantic `v0.1.1` (2021-01-16)
 
-##### Changes ♻️
+##### ♻️ Changes
 
 - Auto generate changelog.
 - Fix Changelog template.
 
-##### Documentation 📝
+##### 📝 Docs
 
 - Update README.md.
 - Prepare for generate CHANGELOG.md.
 
 
-#### Release notes for `v0.1.0` (2021-01-15)
+#### api-client-pydantic `v0.1.0` (2021-01-15)
 
 ##### New ✨
 
 - Basic functionality.
 
-##### Changes ♻️
+##### ♻️ Changes
 
 - Configs.
 
-##### Dependencies ⬆️
+##### ⬆️ Dependencies
 
 - ➕ dependencies and pyproject.
 
-##### Documentation 📝
+##### 📝 Documentation
 
 - Common files.
 - Init readme.
 
-##### Other 🌱
+##### 🌱 Other
 
 - CI Actions.
 - Add tests.
