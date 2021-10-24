@@ -7,6 +7,10 @@
 - New configs and pre-commit.
 - Set a new signature for function.
 
+##### ⬆️ Dependencies
+
+- ⬆️ Bump all for flake8 4.
+
 ##### 📝 Docs
 
 - Update README.md.
