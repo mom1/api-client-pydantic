@@ -1,5 +1,5 @@
 
-#### api-client-pydantic `1.2.0` (2021-10-24)
+#### api-client-pydantic `v1.2.0` (2021-10-24)
 
 ##### ✨ New
 
