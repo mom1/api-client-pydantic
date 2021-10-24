@@ -1,0 +1,18 @@
+[flake8]
+# flake8 configuration:
+# https://flake8.pycqa.org/en/latest/user/configuration.html
+statistics = false
+exclude = .git,__pycache__,*/migrations/*,manage.py,doc/*,build,dist,.tox,*.pyi
+ignore =
+  D413
+  W503 # Line break occurred after a binary operator (opposite of W504)
+  D107 # Missing docstring in __init__
+  D301 # Use r""" if any backslashes in a docstring
+  C101 # Coding magic comment not found
+  E121 # Continuation line under-indented for hanging indent
+max-complexity = 15
+max-line-length = 119
+
+# flake8-quotes configuration:
+# https://github.com/zheller/flake8-quotes/#configuration
+inline-quotes = single

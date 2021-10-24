@@ -1,5 +1,56 @@
 # -*- coding: utf-8; mode: python -*-
+import os
+import re
+from pathlib import Path
+
+import chevron
 import emoji
+from gitchangelog.gitchangelog import GitRepos
+
+
+repos = GitRepos('.')
+major_emoji = {':boom:'}
+minor_emoji = {':sparkles:'}
+emj_re = re.compile(r'(:\w+:)')
+
+
+def indent(text, chars='  ', first=None):
+    split_text = text.split('\n')
+    if first:
+        first_line = split_text[0]
+        rest = '\n'.join(split_text[1:])
+        return '\n'.join(((f'{first}{first_line}').rstrip(), indent(rest, chars=chars)))
+    return '\n'.join((f'{chars}{line}').rstrip() for line in split_text)
+
+
+def mustache_chevron(template_name):
+    template = Path(template_name).read_text()
+
+    def stuffed_versions(versions, opts):
+        for version in versions:
+            title = f"{version['tag']} ({version['date']})" if version['tag'] else opts['unreleased_version_label']
+            version['label'] = title
+            version['label_chars'] = list(version['label'])
+            for section in version['sections']:
+                section['label_chars'] = list(section['label'])
+                section['display_label'] = not (section['label'] == 'Other' and len(version['sections']) == 1)
+                for commit in section['commits']:
+                    commit['author_names_joined'] = ', '.join(commit['authors'])
+                    commit['body_indented'] = indent(commit['body'])
+            yield version
+
+    def renderer(data, opts):
+        data['general_title'] = False
+        data['title_chars'] = []
+        if data['title']:
+            data['general_title'] = True
+            data['title_chars'] = list(data['title'])
+
+        data['versions'] = stuffed_versions(data['versions'], opts)
+
+        return chevron.render(template, data)
+
+    return renderer
 
 
 ignore_regexps = [
@@ -8,36 +59,35 @@ ignore_regexps = [
     r'(🚨|:rotating_light:)',
     r'(🚧|:construction:)',
     r'(💚|:green_heart:)',
+    r'(👌|:ok_hand:)',
     r'(📝|:memo:)\s*(Update CHANGELOG\.md)',
 ]
 
 section_regexps = [
-    ('New ✨', [
-        r"""(?x)^([nN]ew:?|[Ff]eat:?|
-          ✨|:sparkles:
-        )\s*([^\n]*)$""",
+    ('💥 Breaking changes', [
+        r"""(?x)^(💥|:boom:)\s*([^\n]*)$""",
     ]),
-    ('Changes ♻️', [
-        r"""(?x)^([cC]hg:?
-          |🗃|:card_file_box:
+    ('✨ New', [
+        r"""(?x)^(✨|:sparkles: )\s*([^\n]*)$""",
+    ]),
+    ('♻️ Changes', [
+        r"""(?x)^(
+           🗃|:card_file_box:
           |✏️|:pencil[2]?:
           |🔥|:fire:
           |⚡️|:zap:
           |🎨|:art:
           |👽|:alien:
-          |💥|:boom:
           |🔧|:wrench:
           |🏷️|:label:
           |♻️|:recycle:
           |🚸|:children_crossing:
           )\s*([^\n]*)$""",
     ]),
-    ('Bugs 🐛', [
-        r"""(?x)^([fF]ix:?
-          |🐛|:bug:
-        )\s*([^\n]*)$""",
+    ('🐛 Bugs', [
+        r"""(?x)^(🐛|:bug:)\s*([^\n]*)$""",
     ]),
-    ('Dependencies ⬆️', [
+    ('⬆️ Dependencies', [
         r"""(?x)^(
           ⬆️|:arrow_up:|
           ⬇️|:arrow_down:|
@@ -46,8 +96,8 @@ section_regexps = [
           📌|:pushpin:
         )\s*([^\n]*)$""",
     ]),
-    ('Documentation 📝', [r'^(📝|:memo:)\s*([^\n]*)$']),
-    ('Other 🌱', None),  # Match all lines
+    ('📝 Docs', [r'^(📝|:memo:)\s*([^\n]*)$']),
+    ('🌱 Other', None),
 ]
 
 body_process = ReSub(r'((^|\n)[A-Z]\w+(-\w+)*: .*(\n\s+.*)*)+$', r'') | strip
@@ -61,20 +111,38 @@ subject_process = (strip
                    | ReSub(r'^(:(\w+):)?\s*([^\n@]*)(@[a-z]+\s+)*$', r'\3')
                    | ucfirst | final_dot)
 
-tag_filter_regexp = r'^v[0-9]+\.[0-9]+(\.[0-9]+)?$'
-unreleased_version_label = '(unreleased)'
-output_engine = mustache('./markdown.tpl')  # Путь к шаблону
+
+def unreleased_version_label(cache=[]):
+    if cache:
+        return cache[0]
+
+    tags = repos.tags()
+    major, minor, patch, *_ = tags[-1].identifier.lstrip('v').split('.') if tags else (0, 0, 0)
+
+    level_bump = {(0, 0, 1)}  # patch
+    for commit in repos.log(excludes=tags):
+        primary_emoji = m.group(0) if (m := emj_re.search(commit.subject)) else None
+        if primary_emoji in major_emoji:
+            level_bump.add((1, -int(minor), -int(patch)))  # major
+        elif primary_emoji in minor_emoji:
+            level_bump.add((0, 1, -int(patch)))  # minor
+
+    major_bump, minor_bump, patch_bump = max(level_bump)
+    cache.append(f'{int(major) + major_bump}.{int(minor) + minor_bump}.{int(patch) + patch_bump}')
+    return cache[0]
+
+
+output_engine = mustache_chevron('.github/markdown.tpl')
 include_merge = True
 
+tag_filter_regexp = r'^v?\d+\.\d+(\.\d+)?$'
+
 OUTPUT_FILE = 'CHANGELOG.md'
-release_title = r'\#\#\#\#\sRelease\snotes\sfor'
-REV = r'v[0-9]+\.[0-9]+(\.[0-9]+)?'
-DATE = r'\([0-9]+-[0-9]{2}-[0-9]{2}\)'
 INSERT_POINT_REGEX = r"""(?isx)
 ^
 (
-  \s*%(release_title)s\s`\(%(label_unreleased)s\)`\s+%(date)s\s*(\n|\r\n|\r)
-)?
+  \s*%(release_title)s\s`%(rev)s`\s+%(date)s\s*(\n|\r\n|\r)
+)
 
 (                                                              ## Match all between Release notes and release rev
     (
@@ -84,14 +152,13 @@ INSERT_POINT_REGEX = r"""(?isx)
       )
       .
     )*
-)?
+)
 
 (?P<tail>%(release_title)s\s`(?P<rev>%(rev)s)`\s+%(date)s)
 """ % {
-    'rev': REV,
-    'date': DATE,
-    'release_title': release_title,
-    'label_unreleased': unreleased_version_label.strip('()'),
+    'rev': tag_filter_regexp.lstrip('^').rstrip('$'),
+    'date': r'\([0-9]{4}-[0-9]{2}-[0-9]{2}\)',
+    'release_title': r'\#\#\#\#\sRelease\snotes\sfor',
 }
 
 revs = [
@@ -99,4 +166,4 @@ revs = [
     'HEAD',
 ]
 
-publish = FileRegexSubst(OUTPUT_FILE, INSERT_POINT_REGEX, r'\2\o\g<tail>')
+publish = FileRegexSubst(OUTPUT_FILE, INSERT_POINT_REGEX, r'\3\o\g<tail>')

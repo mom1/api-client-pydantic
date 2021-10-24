@@ -1,0 +1,50 @@
+---
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-merge-conflict
+      - id: check-toml
+      - id: check-yaml
+        args:
+          - --allow-multiple-documents
+      - id: debug-statements
+      - id: double-quote-string-fixer
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v2.29.0
+    hooks:
+      - id: pyupgrade
+        args:
+          - --py3-plus
+          - --py38-plus
+          - --keep-runtime-typing
+  - repo: https://github.com/myint/docformatter
+    rev: v1.4
+    hooks:
+      - id: docformatter
+        args: [--in-place, --wrap-summaries, "119", --wrap-descriptions, "119"]
+  - repo: https://github.com/hadialqattan/pycln
+    rev: v1.0.3
+    hooks:
+      - id: pycln
+        args: [-a]
+  - repo: local
+    hooks:
+      - id: format
+        name: formating
+        entry: make format
+        language: system
+        files: \.py$
+      - id: flake8
+        name: flake8
+        entry: make lint
+        language: system
+        files: \.py$
+        exclude: '.*/migrations/.*\.py$'
+      - id: post-commit-local
+        name: generate changelog
+        always_run: true
+        stages: [post-commit]
+        pass_filenames: false
+        language: system
+        entry: make change

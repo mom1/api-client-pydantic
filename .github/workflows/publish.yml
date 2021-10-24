@@ -1,25 +1,35 @@
----
-name: Publish to PyPI
+name: Publish
+
 on:
-  workflow_dispatch:
-  release:
-    types: [created]
+  push:
+    tags:
+      - '**'
+
 jobs:
-  publish:
+  build-n-publish:
+    name: Build and publish Python 🐍 distributions 📦 to PyPI
+    if: "success() && startsWith(github.ref, 'refs/tags/')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python
+      - uses: actions/cache@v1
+        with:
+          path: |
+            ~/.cache/pypoetry
+            ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Set up Python 3.8
         uses: actions/setup-python@v1
         with:
-          python-version: "3.8"
+          python-version: 3.8
       - name: Install poetry
         run: |
-          curl -sSL "https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py" | python
-          # Adding `poetry` to `$PATH`:
-          echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+          python -m pip install --upgrade pip
+          python -m pip install poetry poetry-dynamic-versioning
       - name: Build and publish
         env:
           PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
-          poetry publish --build -u __token__ -p $PYPI_TOKEN
+          poetry publish -u __token__ -p $PYPI_TOKEN --build
