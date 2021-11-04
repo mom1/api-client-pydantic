@@ -39,7 +39,7 @@ requests-mock = "^1.9"
 vcrpy = "^4.1"
 # formating
 yapf = "^0.31"
-isort = "^5.9"
+isort = "^5.10"
 # linting
 flake8 = "^4.0"
 flake8-broken-line = "^0.4"
