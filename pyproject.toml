@@ -54,7 +54,7 @@ pep8-naming = "^0.12"
 mccabe = "^0.6"
 # changelog
 gitchangelog = "^3.0"
-emoji = "^1.5"
+emoji = "^1.6"
 chevron = "^0.14"
 # debug
 ipdb = "^0.13"
