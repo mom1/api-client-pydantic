@@ -4,29 +4,30 @@ from typing import List, Optional
 
 import pytest
 from apiclient import APIClient
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Extra, Field
 
 from apiclient_pydantic import serialize, serialize_all_methods
 
 
-class Address(BaseModel):
+class Base(BaseModel):
+    class Config:
+        allow_population_by_field_name = True
+        # forbid extra to test that only correct args are passed to schemas
+        extra = Extra.forbid
+
+
+class Address(Base):
     house_number: str = Field(alias='houseNumber')
     post_code: str = Field(alias='postCode')
     street: Optional[str]
 
-    class Config:
-        allow_population_by_field_name = True
 
-
-class AccountHolder(BaseModel):
+class AccountHolder(Base):
     first_name: str = Field(alias='firstName')
     last_name: str = Field(alias='lastName')
     middle_names: Optional[List[str]] = Field(alias='middleNames')
     address: Address
     date_of_birth: date = Field(alias='dob')
-
-    class Config:
-        allow_population_by_field_name = True
 
 
 class AccountType(Enum):
@@ -35,7 +36,7 @@ class AccountType(Enum):
     ISA = 'ISA'
 
 
-class Account(BaseModel):
+class Account(Base):
     account_number: int = Field(alias='accountNumber')
     sort_code: int = Field(alias='sortCode')
     account_type: AccountType = Field(alias='accountType')
@@ -43,11 +44,16 @@ class Account(BaseModel):
     date_opened: datetime = Field(alias='dateOpened')
 
     class Config:
-        allow_population_by_field_name = True
         use_enum_values = True
 
 
-@pytest.fixture()
+@pytest.fixture
+class User(Base):
+    user_id: int = Field(alias="userId")
+    user_name: str = Field(alias="userName")
+
+
+@pytest.fixture
 def unserialized():
     return {
         'accountHolder': {
@@ -66,12 +72,25 @@ def unserialized():
     }
 
 
-@pytest.fixture()
+@pytest.fixture
+def unserialized_user():
+    return {
+        "userId": 1,
+        "user_name": "John",
+    }
+
+
+@pytest.fixture
 def serialized(unserialized):
     return Account(**unserialized)
 
 
-def test_serialize_request(unserialized, serialized):
+@pytest.fixture
+def serialized_user(unserialized_user):
+    return User(**unserialized_user)
+
+
+def test_serialize_request(unserialized, unserialized_user, serialized, serialized_user):
     @serialize()
     def decorated_func(endpoint: str, custom: str, data: Account):
         return data
@@ -92,8 +111,13 @@ def test_serialize_request(unserialized, serialized):
     def decorated_func_no_schema(endpoint: str, **kwargs):
         return kwargs  # data as is
 
+    @serialize()
+    def decorated_func_two_schemas(endpoint: str, user: User, data: Account):
+        return user, data
+
+    extra_kw = dict(by_alias=True, exclude_none=True)
     got = decorated_func('', 'test', **unserialized)
-    assert got == serialized.dict(by_alias=True, exclude_none=True)
+    assert got == serialized.dict(**extra_kw)
 
     text = decorated_func_args('', custom='test', **unserialized)
     assert text == 'test'
@@ -102,10 +126,14 @@ def test_serialize_request(unserialized, serialized):
     assert text == 'test'
 
     got = decorated_func_schema('', **unserialized)
-    assert got == serialized.dict(by_alias=True, exclude_none=True)
+    assert got == serialized.dict(**extra_kw)
 
     got = decorated_func_no_schema('', **unserialized)
     assert got == unserialized
+
+    got_user, got_data = decorated_func_two_schemas("", **unserialized, **unserialized_user)
+    assert got_user == serialized_user.dict(**extra_kw)
+    assert got_data == serialized.dict(**extra_kw)
 
 
 def test_serialize_response(unserialized, serialized):
