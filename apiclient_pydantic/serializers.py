@@ -25,7 +25,7 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: Di
                     # the model's signature contains only aliases
                     arg_fields = list(arg_type.__fields__.keys())
                     arg_params = inspect.signature(arg_type).parameters
-                    map_params[arg_name] = list(set(list(arg_params.keys()) + arg_fields))
+                    map_params[arg_name] = set(list(arg_params.keys()) + arg_fields)
                     parameters.extend(list(arg_params.values()))
 
         @wraps(func)
