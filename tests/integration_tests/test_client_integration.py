@@ -152,37 +152,6 @@ def test_client_response_with_pydantic(cassette):
     assert updated_user == User(user_id=4, first_name='Lucy', last_name='Qux')
     assert cassette.play_count == 7
 
-    # paginated responds with a generator, so need to cast to list.
-    # Need fix pagination in api-client
-    # pages = list(client.list_user_accounts_paginated(user_id=1))
-    # assert len(pages) == 3
-    # assert pages == [
-    #     AccountPage(
-    #         results=[
-    #             Account(account_name='business', number='1234'),
-    #             Account(account_name='expense', number='2345'),
-    #         ],
-    #         page=1,
-    #         next_page=2,
-    #     ),
-    #     AccountPage(
-    #         results=[
-    #             Account(account_name='fun', number='6544'),
-    #             Account(account_name='holiday', number='9283'),
-    #         ],
-    #         page=2,
-    #         next_page=3,
-    #     ),
-    #     AccountPage(
-    #         results=[
-    #             Account(account_name='gifts', number='7827'),
-    #             Account(account_name='home', number='1259'),
-    #         ],
-    #         page=3,
-    #         next_page=None,
-    #     ),
-    # ]
-
     # Fails to connect when connecting to non-existent url.
     with pytest.raises(UnexpectedError) as exc_info:
         client.get('mock://testserver')
