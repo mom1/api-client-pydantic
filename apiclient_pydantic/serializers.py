@@ -46,7 +46,8 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: di
         # Override signature
         if parameters:
             sig = inspect.signature(func)
-            self_param = [param] if (param := sig.parameters.get('self')) else []
+            _self_param = sig.parameters.get('self')
+            self_param = [_self_param] if _self_param else []
             sig = sig.replace(parameters=tuple(self_param + parameters))
             wrap.__signature__ = sig
         return wrap
