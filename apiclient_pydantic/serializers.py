@@ -11,6 +11,7 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: Di
     def decorator(func: Callable) -> Callable:
         nonlocal schema
         map_schemas = {}
+        map_params = {}
         parameters = []
 
         if schema:
@@ -21,7 +22,11 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: Di
                     continue
                 map_schemas[arg_name] = arg_type
                 if inspect.isclass(arg_type) and issubclass(arg_type, BaseModel):
-                    parameters.extend(list(inspect.signature(arg_type).parameters.values()))
+                    # the model's signature contains only aliases
+                    arg_fields = list(arg_type.__fields__.keys())
+                    arg_params = inspect.signature(arg_type).parameters
+                    map_params[arg_name] = list(set(list(arg_params.keys()) + arg_fields))
+                    parameters.extend(list(arg_params.values()))
 
         @wraps(func)
         def wrap(*args, **kwargs):
@@ -33,7 +38,10 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: Di
                 data, origin_kwargs = {}, {}
                 for arg_name, arg_type in map_schemas.items():
                     if inspect.isclass(arg_type) and issubclass(arg_type, BaseModel):
-                        data[arg_name] = parse_obj_as(arg_type, kwargs).dict(**extra_kw)
+                        arg_kwargs = {
+                            k: v for k, v in kwargs.items() if k in map_params[arg_name]
+                        }
+                        data[arg_name] = parse_obj_as(arg_type, arg_kwargs).dict(**extra_kw)
                     else:
                         val = kwargs.get(arg_name)
                         if val is not None:
