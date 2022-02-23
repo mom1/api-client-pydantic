@@ -9,17 +9,16 @@ list:
 #* Poetry
 .PHONY: poetry-download
 poetry-download:
-	curl -sSL https://install.python-poetry.org | $(PYTHON) -
+	curl -sSL https://install.python-poetry.org | python
 
 .PHONY: poetry-remove
 poetry-remove:
-	curl -sSL https://install.python-poetry.org | $(PYTHON) - --uninstall
+	curl -sSL https://install.python-poetry.org | python --uninstall
 
 #* Installation
 .PHONY: install
 install:
 	poetry install -n --remove-untracked
-	poetry run mypy --install-types --non-interactive .
 
 .PHONY: pre-commit-install
 pre-commit-install:

@@ -1,35 +1,42 @@
+---
 name: Publish
 
-on:
+"on":
   push:
-    tags:
-      - '**'
+    branches:
+      - main
 
 jobs:
-  build-n-publish:
+  build-and-publish:
+    if: github.repository == 'mom1/api-client-pydantic'
     name: Build and publish Python 🐍 distributions 📦 to PyPI
-    if: "success() && startsWith(github.ref, 'refs/tags/')"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v1
+      - uses: actions/setup-node@v2
         with:
-          path: |
-            ~/.cache/pypoetry
-            ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v1
+          node-version: '16'
+      - uses: actions/setup-python@v2
         with:
           python-version: 3.8
+      - name: Set up cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
       - name: Install poetry
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install poetry poetry-dynamic-versioning
-      - name: Build and publish
+        run: make poetry-download
+      - name: Install Semantic Release
+        run: >-
+          npm install --save-dev
+          semantic-release
+          @semantic-release/changelog
+          @semantic-release/git
+          @semantic-release/exec
+          @semantic-release/github
+          semantic-release-gitmoji
+      - name: Release package
         env:
-          PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
-        run: |
-          poetry publish -u __token__ -p $PYPI_TOKEN --build
+          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release

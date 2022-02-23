@@ -1,6 +1,6 @@
 import inspect
 from functools import wraps
-from typing import Any, Callable, Dict, Optional, Tuple, Type, get_type_hints
+from typing import Any, Callable, Dict, Optional, Tuple, Type, Union, get_type_hints
 
 from pydantic import BaseModel, parse_obj_as
 
@@ -61,7 +61,7 @@ def serialize_response(schema: Optional[Type[BaseModel]] = None) -> Callable:
             schema = get_type_hints(func).get('return')
 
         @wraps(func)
-        def wrap(*args: Tuple[Any], **kwargs: Dict[str, Any]) -> BaseModel:
+        def wrap(*args: Tuple[Any], **kwargs: Dict[str, Any]) -> Union[BaseModel, Any]:
             response = func(*args, **kwargs)
             if isinstance(response, (list, dict, tuple, set)) and schema:
                 return parse_obj_as(schema, response)
