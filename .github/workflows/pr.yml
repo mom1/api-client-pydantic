@@ -1,0 +1,87 @@
+---
+name: Test
+
+"on": [pull_request, workflow_dispatch]
+
+jobs:
+  test:
+    if: "! contains(toJSON(github.event.head_commit.message), ':memo: Update CHANGELOG.md')"
+    name: Python ${{ matrix.python-version }} tests
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.7, 3.8, 3.9]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install poetry
+        run: make poetry-download
+      - name: Set up cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+      - name: Install dependencies
+        run: make install
+      - name: Install dependencies ci
+        run: poetry run pip install pytest-github-actions-annotate-failures
+      - name: Run tests
+        run: make test
+  lint:
+    if: "! contains(toJSON(github.event.head_commit.message), ':memo: Update CHANGELOG.md')"
+    name: Python lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+      - name: Install poetry
+        run: make poetry-download
+      - name: Set up cache
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/poetry.lock') }}
+      - name: Install dependencies
+        run: make install
+      - name: Run tests
+        run: make lint
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: npm i -D commitlint-config-gitmoji commitlint
+      - uses: suisei-cn/actions-download-file@v1
+        id: downloadfile
+        name: Download the file gitmojis.json
+        with:
+          url: "https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/data/gitmojis.json"
+          target: node_modules/commitlint-plugin-gitmoji/lib
+      - uses: wagoid/commitlint-github-action@v4
+        with:
+          configFile: .github/workflows/commitlint.config.js
+  merge:
+    if: contains(github.event.pull_request.labels.*.name, 'dependencies')
+    name: Dependabot Auto Merge
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+        with:
+          command: merge
+          target: minor
+          github-token: ${{ secrets.GITHUB_TOKEN }}
