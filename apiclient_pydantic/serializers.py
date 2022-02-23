@@ -1,11 +1,11 @@
 import inspect
 from functools import wraps
-from typing import Callable, Optional, Type, get_type_hints
+from typing import Any, Callable, Dict, Optional, Tuple, Type, get_type_hints
 
 from pydantic import BaseModel, parse_obj_as
 
 
-def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: dict = None):
+def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: Dict[str, Any] = None) -> Callable:
     extra_kw = extra_kwargs or {'by_alias': True, 'exclude_none': True}
 
     def decorator(func: Callable) -> Callable:
@@ -49,20 +49,20 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: di
             _self_param = sig.parameters.get('self')
             self_param = [_self_param] if _self_param else []
             sig = sig.replace(parameters=tuple(self_param + parameters))
-            wrap.__signature__ = sig
+            wrap.__signature__ = sig  # type: ignore
         return wrap
 
     return decorator
 
 
-def serialize_response(schema: Optional[Type[BaseModel]] = None):
+def serialize_response(schema: Optional[Type[BaseModel]] = None) -> Callable:
     def decorator(func: Callable) -> Callable:
         nonlocal schema
         if not schema:
             schema = get_type_hints(func).get('return')
 
         @wraps(func)
-        def wrap(*args, **kwargs) -> BaseModel:
+        def wrap(*args: Tuple[Any], **kwargs: Dict[str, Any]) -> BaseModel:
             response = func(*args, **kwargs)
             if isinstance(response, (list, dict, tuple, set)) and schema:
                 return parse_obj_as(schema, response)
@@ -76,8 +76,8 @@ def serialize_response(schema: Optional[Type[BaseModel]] = None):
 def serialize(
     schema_request: Optional[Type[BaseModel]] = None,
     schema_response: Optional[Type[BaseModel]] = None,
-    **base_kwargs,
-):
+    **base_kwargs: Dict[str, Any],
+) -> Callable:
     def decorator(func: Callable) -> Callable:
         response = func
         response = serialize_request(schema_request, extra_kwargs=base_kwargs)(func)

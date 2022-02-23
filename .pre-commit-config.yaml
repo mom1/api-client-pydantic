@@ -1,7 +1,7 @@
 ---
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v4.1.0
     hooks:
       - id: check-merge-conflict
       - id: check-toml
@@ -10,41 +10,35 @@ repos:
           - --allow-multiple-documents
       - id: debug-statements
       - id: double-quote-string-fixer
+      - id: end-of-file-fixer
+        exclude: LICENSE
   - repo: https://github.com/asottile/pyupgrade
-    rev: v2.29.0
+    rev: v2.31.0
     hooks:
       - id: pyupgrade
         args:
-          - --py3-plus
-          - --py38-plus
+          - --py37-plus
           - --keep-runtime-typing
+  - repo: https://github.com/hadialqattan/pycln
+    rev: v1.2.0
+    hooks:
+      - id: pycln
+        args: [-a]
   - repo: https://github.com/myint/docformatter
     rev: v1.4
     hooks:
       - id: docformatter
         args: [--in-place, --wrap-summaries, "119", --wrap-descriptions, "119"]
-  - repo: https://github.com/hadialqattan/pycln
-    rev: v1.0.3
-    hooks:
-      - id: pycln
-        args: [-a]
   - repo: local
     hooks:
-      - id: format
-        name: formating
+      - id: py-format
+        name: Formatting python
         entry: make format
         language: system
+        require_serial: true
         files: \.py$
-      - id: flake8
-        name: flake8
+      - id: py-lint
+        name: Linting python
         entry: make lint
         language: system
-        files: \.py$
-        exclude: '.*/migrations/.*\.py$'
-      - id: post-commit-local
-        name: generate changelog
-        always_run: true
-        stages: [post-commit]
-        pass_filenames: false
-        language: system
-        entry: make change
+        files: \.pyi?$

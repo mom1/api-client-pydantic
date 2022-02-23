@@ -10,9 +10,14 @@ ignore =
   D301 # Use r""" if any backslashes in a docstring
   C101 # Coding magic comment not found
   E121 # Continuation line under-indented for hanging indent
-max-complexity = 15
-max-line-length = 119
+  E203 # whitespace around slice operators
+max-complexity = 14
+max-line-length = 120
 
 # flake8-quotes configuration:
 # https://github.com/zheller/flake8-quotes/#configuration
 inline-quotes = single
+
+# flake8-tidy-imports
+# https://github.com/adamchainz/flake8-tidy-imports#ban-relative-imports
+ban-relative-imports = parents

@@ -2,9 +2,7 @@
 # real world api client with all methods implemented
 
 import pytest
-from apiclient import (
-    JsonRequestFormatter, JsonResponseHandler, NoAuthentication,
-)
+from apiclient import JsonRequestFormatter, JsonResponseHandler, NoAuthentication
 from apiclient.exceptions import UnexpectedError
 
 from .client import Client, ClientWithPydantic, User

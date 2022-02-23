@@ -47,7 +47,7 @@ class Account(BaseModel):
         use_enum_values = True
 
 
-@pytest.fixture
+@pytest.fixture()
 def unserialized():
     return {
         'accountHolder': {
@@ -66,7 +66,7 @@ def unserialized():
     }
 
 
-@pytest.fixture
+@pytest.fixture()
 def serialized(unserialized):
     return Account(**unserialized)
 

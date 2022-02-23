@@ -21,13 +21,13 @@ error_cassette_vcr = vcr.VCR(
 )
 
 
-@pytest.fixture
+@pytest.fixture()
 def cassette():
     with api_client_vcr.use_cassette('cassette.yaml') as cassette:
         yield cassette
 
 
-@pytest.fixture
+@pytest.fixture()
 def error_cassette():
     with error_cassette_vcr.use_cassette('error_cassette.yaml') as cassette:
         yield cassette

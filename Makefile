@@ -6,29 +6,55 @@ list:
 %:
 	@:
 
-.PHONY: pyclean
-pyclean:
-	# Cleaning cache
-	find . | grep -E '(__pycache__|\.hypothesis|htmlcov|\.pytest_cache|\.coverage|\.perm|\.cache|\.static|\.py[cod]$$)' | xargs rm -rf
+#* Poetry
+.PHONY: poetry-download
+poetry-download:
+	curl -sSL https://install.python-poetry.org | $(PYTHON) -
 
+.PHONY: poetry-remove
+poetry-remove:
+	curl -sSL https://install.python-poetry.org | $(PYTHON) - --uninstall
+
+#* Installation
 .PHONY: install
 install:
-	poetry install --remove-untracked
+	poetry install -n --remove-untracked
+	poetry run mypy --install-types --non-interactive .
 
+.PHONY: pre-commit-install
+pre-commit-install:
+	poetry run pre-commit install
+
+#* Formatters
+.PHONY: format
+fmt format:
+	poetry run black --config pyproject.toml $(filter-out $@,$(MAKECMDGOALS))
+	poetry run isort --settings-path pyproject.toml $(filter-out $@,$(MAKECMDGOALS))
+
+#* Linting
 .PHONY: test
 test:
-	poetry run pytest tests
+	poetry run pytest -c pyproject.toml tests
+
+.PHONY: check-codestyle
+check-codestyle:
+	poetry run flake8 --count .
+	poetry run black --diff --check --config pyproject.toml .
+	poetry run isort --diff --check-only --settings-path pyproject.toml .
+
+.PHONY: mypy
+mypy:
+	poetry run mypy --config-file pyproject.toml apiclient_pydantic
+
+.PHONY: check-safety
+check-safety:
+	poetry check
+	poetry run safety check --full-report
 
 .PHONY: lint
-lint:
-	poetry run flake8 --count $(filter-out $@,$(MAKECMDGOALS))
+lint: test check-codestyle mypy check-safety
 
-.PHONY: format
-format:
-	poetry run yapf -i $(filter-out $@,$(MAKECMDGOALS))
-	poetry run isort $(filter-out $@,$(MAKECMDGOALS))
-
-.PHONY: change
-change:
-	poetry run gitchangelog
-
+#* Cleaning
+.PHONY: clean
+clean:
+	find . | grep -E '(.DS_Store|.mypy_cache|__pycache__|\.hypothesis|htmlcov|\.pytest_cache|\.coverage|\.perm|\.cache|\.static|\.py[cod]$$)' | xargs rm -rf
