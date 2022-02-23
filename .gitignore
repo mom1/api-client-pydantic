@@ -766,3 +766,5 @@ FodyWeavers.xsd
 
 /local
 /.vscode
+cspell.json
+.python-version
