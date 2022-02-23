@@ -52,7 +52,7 @@ check-safety:
 	poetry run safety check --full-report
 
 .PHONY: lint
-lint: test check-codestyle mypy check-safety
+lint: check-codestyle mypy check-safety
 
 #* Cleaning
 .PHONY: clean

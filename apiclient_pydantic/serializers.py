@@ -27,8 +27,7 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: Di
         def wrap(*args, **kwargs):
             if schema:
                 instance = data = parse_obj_as(schema, kwargs)
-                if isinstance(instance, BaseModel):
-                    data = instance.dict(**extra_kw)
+                data = instance.dict(**extra_kw)
                 return func(*args, data)
             elif map_schemas:
                 data, origin_kwargs = {}, {}
@@ -58,7 +57,7 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: Di
 def serialize_response(schema: Optional[Type[BaseModel]] = None) -> Callable:
     def decorator(func: Callable) -> Callable:
         nonlocal schema
-        if not schema:
+        if not schema:  # pragma: no cover
             schema = get_type_hints(func).get('return')
 
         @wraps(func)

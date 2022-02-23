@@ -62,13 +62,8 @@ ipdb = "^0.13"
 safety = "^1.10"
 pre-commit = "^2.15"
 
-[tool.poetry-dynamic-versioning]
-enable = true
-vcs = "git"
-pattern = "^v?(?P<base>\\d+\\.\\d+\\.\\d+)(-?((?P<stage>[a-zA-Z]+)\\.?(?P<revision>\\d+)?))?$"
-
 [build-system]
-requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.isort]
@@ -110,11 +105,14 @@ warn_unused_ignores = true
 # Coverage configuration:
 # https://coverage.readthedocs.io/en/latest/config.html
 # https://coverage.readthedocs.io/en/latest/config.html#run
+branch = true
 source = ["apiclient_pydantic"]
 omit = ["tests", ".github"]
 
 [tool.coverage.report]
 # https://coverage.readthedocs.io/en/latest/config.html#report
+fail_under = 100
+show_missing = true
 exclude_lines =[
   "pragma: no cover",
   "raise AssertionError",
