@@ -47,7 +47,6 @@ class Account(Base):
         use_enum_values = True
 
 
-@pytest.fixture()
 class User(Base):
     user_id: int = Field(alias='userId')
     user_name: str = Field(alias='userName')
