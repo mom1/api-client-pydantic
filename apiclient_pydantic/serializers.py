@@ -38,9 +38,7 @@ def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: Di
                 data, origin_kwargs = {}, {}
                 for arg_name, arg_type in map_schemas.items():
                     if inspect.isclass(arg_type) and issubclass(arg_type, BaseModel):
-                        arg_kwargs = {
-                            k: v for k, v in kwargs.items() if k in map_params[arg_name]
-                        }
+                        arg_kwargs = {k: v for k, v in kwargs.items() if k in map_params[arg_name]}
                         data[arg_name] = parse_obj_as(arg_type, arg_kwargs).dict(**extra_kw)
                     else:
                         val = kwargs.get(arg_name)
