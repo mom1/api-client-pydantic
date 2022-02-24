@@ -1,12 +1,8 @@
-{{#if compareUrl}}
-# [v{{nextRelease.version}}]({{compareUrl}}) ({{datetime "UTC:yyyy-mm-dd"}})
-{{else}}
-# v{{nextRelease.version}} ({{datetime "UTC:yyyy-mm-dd"}})
-{{/if}}
+## v{{nextRelease.version}} ({{datetime "UTC:yyyy-mm-dd"}})
 
-{{#each (sections commits) }}
-## {{label}}
-{{#each this.commits}}
-{{> commitTemplate}}
+{{#each (sections commits) as |section| }}
+### {{section.label}}
+{{#each section.commits}}
+{{> commitTemplate is_dep=section.is_dep}}
 {{/each}}
 {{/each}}

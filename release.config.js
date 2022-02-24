@@ -50,6 +50,7 @@ function makeGroups(commits) {
       .map(({ group, emojis, label }) => ({
         group,
         label,
+        is_dep: group === 'dependencies',
         commits: commits
           .filter((commit) => emojis.indexOf(commit.gitmoji) >= 0)
           .sort((first, second) => new Date(second.committerDate) - new Date(first.committerDate)),
@@ -69,7 +70,7 @@ module.exports = {
         releaseRules: {
           patch: {
             include: [...sections[2].emojis, ...sections[3].emojis, ...sections[4].emojis, ...sections[5].emojis, ...sections[6].emojis],
-            exclude: ['⬆️'],
+            exclude: ['⬆️', '📝'],
           },
         },
         releaseNotes: {
