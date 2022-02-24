@@ -9,6 +9,9 @@
 [![PyPI](https://img.shields.io/pypi/pyversions/api-client-pydantic.svg)]()
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/api-client-pydantic.svg?label=pip%20installs&logo=python)
 
+<a href="https://gitmoji.dev"><img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg" alt="Gitmoji"></a>
+<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="black"></a>
+
 # Python API Client Pydantic Extension
 
 ## Installation
