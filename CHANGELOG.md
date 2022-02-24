@@ -1,3 +1,23 @@
+# Changelog
+
+# [v1.2.1](https://github.com/mom1/api-client-pydantic/compare/v1.2.0...1.2.1) (2022-02-24)
+
+## :recycle: Changes
+  -  fix release template
+  -  Improve &#x60;.gitignore&#x60;
+  -  Improved all dev things
+    - Changed formater to black
+    - Reformat code
+    - Added checks
+    - pre-commit autoupdate
+    
+  -  commitlint is off, need research
+  -  Upgrading a dependency doesn&#x27;t increase the version
+  -  Small changes due to coverage analysis
+  -  remove walrus operator for python 3.7 compatibility (#73) (Issues: [`#73`](https://github.com/mom1/api-client-pydantic/issues/73))
+  -  Changelog generation job because now pre-commit generate changelog
+## :memo: Documentation
+  -  Update CHANGELOG.md
 
 #### api-client-pydantic `v1.2.0` (2021-10-24)
 
