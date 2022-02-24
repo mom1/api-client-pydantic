@@ -47,13 +47,13 @@ class Account(Base):
         use_enum_values = True
 
 
-@pytest.fixture
+@pytest.fixture()
 class User(Base):
-    user_id: int = Field(alias="userId")
-    user_name: str = Field(alias="userName")
+    user_id: int = Field(alias='userId')
+    user_name: str = Field(alias='userName')
 
 
-@pytest.fixture
+@pytest.fixture()
 def unserialized():
     return {
         'accountHolder': {
@@ -72,20 +72,20 @@ def unserialized():
     }
 
 
-@pytest.fixture
+@pytest.fixture()
 def unserialized_user():
     return {
-        "userId": 1,
-        "user_name": "John",
+        'userId': 1,
+        'user_name': 'John',
     }
 
 
-@pytest.fixture
+@pytest.fixture()
 def serialized(unserialized):
     return Account(**unserialized)
 
 
-@pytest.fixture
+@pytest.fixture()
 def serialized_user(unserialized_user):
     return User(**unserialized_user)
 
@@ -115,7 +115,7 @@ def test_serialize_request(unserialized, unserialized_user, serialized, serializ
     def decorated_func_two_schemas(endpoint: str, user: User, data: Account):
         return user, data
 
-    extra_kw = dict(by_alias=True, exclude_none=True)
+    extra_kw = {'by_alias': True, 'exclude_none': True}
     got = decorated_func('', 'test', **unserialized)
     assert got == serialized.dict(**extra_kw)
 
@@ -131,7 +131,7 @@ def test_serialize_request(unserialized, unserialized_user, serialized, serializ
     got = decorated_func_no_schema('', **unserialized)
     assert got == unserialized
 
-    got_user, got_data = decorated_func_two_schemas("", **unserialized, **unserialized_user)
+    got_user, got_data = decorated_func_two_schemas('', **unserialized, **unserialized_user)
     assert got_user == serialized_user.dict(**extra_kw)
     assert got_data == serialized.dict(**extra_kw)
 
