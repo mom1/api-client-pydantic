@@ -1,5 +1,80 @@
 # Changelog
 
+# [v1.2.2](https://github.com/mom1/api-client-pydantic/compare/1.2.1...1.2.2) (2022-02-24)
+
+## :arrow_up: Dependencies
+  -  Bump pytest from 6.2.5 to 7.0.1
+    Bumps [pytest](https://github.com/pytest-dev/pytest) from 6.2.5 to 7.0.1.
+    - [Release notes](https://github.com/pytest-dev/pytest/releases)
+    - [Changelog](https://github.com/pytest-dev/pytest/blob/main/CHANGELOG.rst)
+    - [Commits](https://github.com/pytest-dev/pytest/compare/6.2.5...7.0.1)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: pytest
+      dependency-type: direct:development
+      update-type: version-update:semver-major
+    ...
+    
+    Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+  -  Bump pre-commit from 2.15.0 to 2.17.0
+    Bumps [pre-commit](https://github.com/pre-commit/pre-commit) from 2.15.0 to 2.17.0.
+    - [Release notes](https://github.com/pre-commit/pre-commit/releases)
+    - [Changelog](https://github.com/pre-commit/pre-commit/blob/master/CHANGELOG.md)
+    - [Commits](https://github.com/pre-commit/pre-commit/compare/v2.15.0...v2.17.0)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: pre-commit
+      dependency-type: direct:development
+      update-type: version-update:semver-minor
+    ...
+    
+    Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+  -  Bump flake8-comprehensions from 3.7.0 to 3.8.0
+    Bumps [flake8-comprehensions](https://github.com/adamchainz/flake8-comprehensions) from 3.7.0 to 3.8.0.
+    - [Release notes](https://github.com/adamchainz/flake8-comprehensions/releases)
+    - [Changelog](https://github.com/adamchainz/flake8-comprehensions/blob/main/HISTORY.rst)
+    - [Commits](https://github.com/adamchainz/flake8-comprehensions/compare/3.7.0...3.8.0)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: flake8-comprehensions
+      dependency-type: direct:development
+      update-type: version-update:semver-minor
+    ...
+    
+    Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+  -  Bump flake8-bugbear from 21.9.2 to 22.1.11
+    Bumps [flake8-bugbear](https://github.com/PyCQA/flake8-bugbear) from 21.9.2 to 22.1.11.
+    - [Release notes](https://github.com/PyCQA/flake8-bugbear/releases)
+    - [Commits](https://github.com/PyCQA/flake8-bugbear/compare/21.9.2...22.1.11)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: flake8-bugbear
+      dependency-type: direct:development
+      update-type: version-update:semver-major
+    ...
+    
+    Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+  -  Bump isort from 5.9.3 to 5.10.1
+    Bumps [isort](https://github.com/pycqa/isort) from 5.9.3 to 5.10.1.
+    - [Release notes](https://github.com/pycqa/isort/releases)
+    - [Changelog](https://github.com/PyCQA/isort/blob/main/CHANGELOG.md)
+    - [Commits](https://github.com/pycqa/isort/compare/5.9.3...5.10.1)
+    
+    ---
+    updated-dependencies:
+    - dependency-name: isort
+      dependency-type: direct:development
+      update-type: version-update:semver-minor
+    ...
+    
+    Signed-off-by: dependabot[bot] &lt;support@github.com&gt;
+## :memo: Documentation
+  -  Update README.md
+
 # [v1.2.1](https://github.com/mom1/api-client-pydantic/compare/v1.2.0...1.2.1) (2022-02-24)
 
 ## :recycle: Changes
