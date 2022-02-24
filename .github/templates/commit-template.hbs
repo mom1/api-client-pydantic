@@ -1,5 +1,6 @@
-{{subject}} {{#if issues}}(Issues:{{#each issues}} [`{{text}}`]({{link}}){{/each}}){{/if}}
-
+  - {{subject}}{{#if issues}} (Issues:{{#each issues}} [`{{text}}`]({{link}}){{/each}}){{/if}}
 {{#if body}}
-  {{body}}
+  {{# each (split_by_line body) as |body_line|}}
+    {{#if body_line}}{{body_line}}{{/if}}
+  {{/each}}
 {{/if}}

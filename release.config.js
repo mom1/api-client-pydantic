@@ -52,7 +52,7 @@ function makeGroups(commits) {
         label,
         commits: commits
           .filter((commit) => emojis.indexOf(commit.gitmoji) >= 0)
-          .sort((first, second) => second.committerDate.localeCompare(first.committerDate)),
+          .sort((first, second) => new Date(second.committerDate) - new Date(first.committerDate)),
       }))
       .filter(group => group.commits.length)
   }
@@ -82,7 +82,8 @@ module.exports = {
                 flat_commits.push(...value);
               }
               return makeGroups(flat_commits);
-            }
+            },
+            split_by_line: (text) => text.split('\n'),
           },
         }
       }
