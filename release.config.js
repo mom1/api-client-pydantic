@@ -68,7 +68,8 @@ module.exports = {
       {
         releaseRules: {
           patch: {
-            include: [...sections[2].emojis, ...sections[3].emojis, ...sections[4].emojis, ...sections[5].emojis, ...sections[6].emojis]
+            include: [...sections[2].emojis, ...sections[3].emojis, ...sections[4].emojis, ...sections[5].emojis, ...sections[6].emojis],
+            exclude: ['⬆️'],
           },
         },
         releaseNotes: {
