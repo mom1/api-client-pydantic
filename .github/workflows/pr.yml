@@ -54,25 +54,6 @@ jobs:
         run: make install
       - name: Run tests
         run: make lint
-  commitlint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-      - run: npm i -D commitlint-config-gitmoji commitlint
-      - uses: suisei-cn/actions-download-file@v1
-        id: downloadfile
-        name: Download the file gitmojis.json
-        with:
-          url: "https://raw.githubusercontent.com/carloscuesta/gitmoji/master/src/data/gitmojis.json"
-          target: node_modules/commitlint-plugin-gitmoji/lib
-      - uses: wagoid/commitlint-github-action@v4
-        with:
-          configFile: .github/workflows/commitlint.config.js
   merge:
     if: contains(github.event.pull_request.labels.*.name, 'dependencies')
     name: Dependabot Auto Merge
