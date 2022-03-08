@@ -1,5 +1,22 @@
 # Changelog
 
+## v2.0.0 (2022-03-08)
+
+### :boom: Breaking Changes
+  -  Global refactoring. (Issues: [`#72`](https://github.com/mom1/api-client-pydantic/issues/72))
+
+    - support for more use cases (fix #72).
+    - &#x60;serialize_response&#x60; and &#x60;serialize_request&#x60; and &#x60;serialize&#x60; call signature changed.
+    - &#x60;serialize_response&#x60; and &#x60;serialize_request&#x60; names are left for compatibility,
+       it is better to use &#x60;params_serializer&#x60; and &#x60;response_serializer&#x60; instead.
+    - Removed unnecessary dependencies.
+    - Tests completely rewritten.
+    - Decorating will only be done if necessary, which will positively affect performance.
+    
+
+### :arrow_up: Dependencies
+  -  Bump pycln from 1.2.0 to 1.2.4
+
 # [v1.2.2](https://github.com/mom1/api-client-pydantic/compare/1.2.1...1.2.2) (2022-02-24)
 
 ## :arrow_up: Dependencies
