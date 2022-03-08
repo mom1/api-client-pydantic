@@ -1,88 +1,199 @@
 import inspect
 from functools import wraps
-from typing import Any, Callable, Dict, Optional, Tuple, Type, Union, get_type_hints
+from typing import Any, Callable, Dict, ForwardRef, Optional, Type, get_type_hints
 
-from pydantic import BaseModel, parse_obj_as
+from pydantic import BaseModel, create_model, parse_obj_as
+from pydantic.config import BaseConfig as PydanticBaseConfig, Extra
+from pydantic.typing import evaluate_forwardref
+
+from .utils import is_pydantic_model
+
+DictStrAny = Dict[str, Any]
 
 
-def serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: Dict[str, Any] = None) -> Callable:
-    extra_kw = extra_kwargs or {'by_alias': True, 'exclude_none': True}
+class BaseConfig(PydanticBaseConfig):
+    orm_mode = True
 
-    def decorator(func: Callable) -> Callable:
-        nonlocal schema
-        map_schemas = {}
-        parameters = []
 
-        if schema:
-            parameters.extend(list(inspect.signature(schema).parameters.values()))
-        else:
-            for arg_name, arg_type in get_type_hints(func).items():
-                if arg_name == 'return':
-                    continue
-                map_schemas[arg_name] = arg_type
-                if inspect.isclass(arg_type) and issubclass(arg_type, BaseModel):
-                    parameters.extend(list(inspect.signature(arg_type).parameters.values()))
+class ParamsObject:
+    def __init__(self, **kwargs: DictStrAny) -> None:
+        for attr, param in kwargs.items():
+            setattr(self, attr, param)
+
+
+def get_typed_signature(call: Callable) -> inspect.Signature:
+    """Finds call signature and resolves all forwardrefs"""
+    signature = inspect.signature(call)
+    globalns = getattr(call, '__globals__', {})
+    typed_params = [
+        inspect.Parameter(
+            name=param.name,
+            kind=param.kind,
+            default=param.default,
+            annotation=get_typed_annotation(param, globalns),
+        )
+        for param in signature.parameters.values()
+    ]
+    typed_signature = inspect.Signature(typed_params)
+    return typed_signature
+
+
+def get_typed_annotation(param: inspect.Parameter, globalns: DictStrAny) -> Any:
+    annotation = param.annotation
+    if isinstance(annotation, str):
+        annotation = make_forwardref(annotation, globalns)
+    return annotation
+
+
+def make_forwardref(annotation: str, globalns: DictStrAny) -> Any:
+    forward_ref = ForwardRef(annotation)
+    return evaluate_forwardref(forward_ref, globalns, globalns)
+
+
+class ParamsSerializer:
+    __slot__ = (
+        'signature',
+        'by_alias',
+        'exclude_unset',
+        'exclude_defaults',
+        'exclude_none',
+        'has_kwargs',
+        'model_param',
+    )
+
+    def __init__(
+        self,
+        by_alias: bool = True,
+        exclude_unset: bool = False,
+        exclude_defaults: bool = False,
+        exclude_none: bool = True,
+    ):
+        self.by_alias = by_alias
+        self.exclude_unset = exclude_unset
+        self.exclude_defaults = exclude_defaults
+        self.exclude_none = exclude_none
+        self.has_kwargs = False
+
+    def __call__(self, func: Callable) -> Callable:
+        attrs, self.signature = {}, get_typed_signature(func)
+        new_signature_parameters: DictStrAny = {}
+
+        for name, arg in self.signature.parameters.items():
+            if name == 'self':
+                new_signature_parameters.setdefault(arg.name, arg)
+                continue
+
+            if arg.kind == arg.VAR_KEYWORD:
+                # Skipping **kwargs
+                self.has_kwargs = True
+                continue
+
+            if arg.kind == arg.VAR_POSITIONAL:
+                # Skipping *args
+                continue
+
+            arg_type = self._get_param_type(arg)
+
+            if name not in new_signature_parameters:
+                if is_pydantic_model(arg_type):
+                    new_signature_parameters.update(
+                        {argument.name: argument for argument in inspect.signature(arg_type).parameters.values()}
+                    )
+                else:
+                    new_signature_parameters.setdefault(arg.name, arg)
+
+            attrs[name] = (arg_type, ...)
+
+        if attrs:
+            self.model_param = create_model(f'{func.__name__}Params', __config__=BaseConfig, **attrs)  # type: ignore
 
         @wraps(func)
         def wrap(*args, **kwargs):
-            if schema:
-                instance = data = parse_obj_as(schema, kwargs)
-                data = instance.dict(**extra_kw)
-                return func(*args, data)
-            elif map_schemas:
-                data, origin_kwargs = {}, {}
-                for arg_name, arg_type in map_schemas.items():
-                    if inspect.isclass(arg_type) and issubclass(arg_type, BaseModel):
-                        data[arg_name] = parse_obj_as(arg_type, kwargs).dict(**extra_kw)
-                    else:
-                        val = kwargs.get(arg_name)
-                        if val is not None:
-                            origin_kwargs[arg_name] = val
-                new_kwargs = {**origin_kwargs, **data} or kwargs
-                return func(*args, **new_kwargs)
-            return func(*args, **kwargs)
+            object_params = {}
+            for name, fld in self.model_param.__fields__.items():
+                kw = kwargs if name not in kwargs else kwargs[name]
+
+                object_params[name] = kw
+                if is_pydantic_model(fld.type_) and fld.type_.Config.extra == Extra.forbid and isinstance(kw, dict):
+                    object_params[name] = {k: v for k, v in kw.items() if k in fld.type_.__fields__}
+
+            params_object = ParamsObject(**object_params)
+
+            result = self.model_param.from_orm(params_object).dict(
+                by_alias=self.by_alias,
+                exclude_unset=self.exclude_unset,
+                exclude_defaults=self.exclude_defaults,
+                exclude_none=self.exclude_none,
+            )
+
+            return func(*args, **result)
 
         # Override signature
-        if parameters:
+        if new_signature_parameters and attrs:
             sig = inspect.signature(func)
-            _self_param = sig.parameters.get('self')
-            self_param = [_self_param] if _self_param else []
-            sig = sig.replace(parameters=tuple(self_param + parameters))
+            sig = sig.replace(parameters=tuple(sorted(new_signature_parameters.values(), key=lambda x: x.kind)))
             wrap.__signature__ = sig  # type: ignore
-        return wrap
 
-    return decorator
+        return wrap if attrs else func
+
+    def _get_param_type(self, arg: inspect.Parameter) -> Any:
+        annotation = arg.annotation
+
+        if annotation == self.signature.empty:
+            if arg.default == self.signature.empty:
+                annotation = str
+            else:
+                annotation = type(arg.default)
+
+        if annotation is type(None) or annotation is type(Ellipsis):  # noqa: E721
+            annotation = str
+
+        return annotation
 
 
-def serialize_response(schema: Optional[Type[BaseModel]] = None) -> Callable:
-    def decorator(func: Callable) -> Callable:
-        nonlocal schema
-        if not schema:  # pragma: no cover
-            schema = get_type_hints(func).get('return')
+serialize_request = params_serializer = ParamsSerializer
+
+
+class ResponseSerializer:
+    __slot__ = ('response',)
+
+    def __init__(self, response: Optional[Type[BaseModel]] = None):
+        self.response = response
+
+    def __call__(self, func: Callable) -> Callable:
+        self.response = self.response or get_type_hints(func).get('return')
 
         @wraps(func)
-        def wrap(*args: Tuple[Any], **kwargs: Dict[str, Any]) -> Union[BaseModel, Any]:
-            response = func(*args, **kwargs)
-            if isinstance(response, (list, dict, tuple, set)) and schema:
-                return parse_obj_as(schema, response)
-            return response
+        def wrap(*args, **kwargs):
+            result = func(*args, **kwargs)
+            if result is not None:
+                return parse_obj_as(self.response, result)
+            return result
 
-        return wrap
+        return wrap if self.response else func
 
-    return decorator
+
+serialize_response = response_serializer = ResponseSerializer
 
 
 def serialize(
-    schema_request: Optional[Type[BaseModel]] = None,
-    schema_response: Optional[Type[BaseModel]] = None,
-    **base_kwargs: Dict[str, Any],
+    response: Optional[Type[BaseModel]] = None,
+    by_alias: bool = True,
+    exclude_unset: bool = False,
+    exclude_defaults: bool = False,
+    exclude_none: bool = True,
 ) -> Callable:
     def decorator(func: Callable) -> Callable:
-        response = func
-        response = serialize_request(schema_request, extra_kwargs=base_kwargs)(func)
-        response = serialize_response(schema_response)(response)
+        result_func = func
+        result_func = ParamsSerializer(
+            by_alias=by_alias,
+            exclude_unset=exclude_unset,
+            exclude_defaults=exclude_defaults,
+            exclude_none=exclude_none,
+        )(func)
+        result_func = serialize_response(response=response)(result_func)
 
-        return response
+        return result_func
 
     return decorator
 
