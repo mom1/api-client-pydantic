@@ -1,134 +1,208 @@
-from datetime import date, datetime
-from enum import Enum
-from typing import List, Optional
+from typing import List, Optional, Union
 
-import pytest
 from apiclient import APIClient
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
+from pydantic.config import Extra
+from pydantic.fields import Field
 
-from apiclient_pydantic import serialize, serialize_all_methods
-
-
-class Address(BaseModel):
-    house_number: str = Field(alias='houseNumber')
-    post_code: str = Field(alias='postCode')
-    street: Optional[str]
-
-    class Config:
-        allow_population_by_field_name = True
+from apiclient_pydantic import params_serializer, serialize_all_methods
 
 
-class AccountHolder(BaseModel):
-    first_name: str = Field(alias='firstName')
-    last_name: str = Field(alias='lastName')
-    middle_names: Optional[List[str]] = Field(alias='middleNames')
-    address: Address
-    date_of_birth: date = Field(alias='dob')
-
-    class Config:
-        allow_population_by_field_name = True
+class SimpleModel(BaseModel):
+    test_attr: str = 'Param'
 
 
-class AccountType(Enum):
-    SAVING = 'SAVING'
-    CURRENT = 'CURRENT'
-    ISA = 'ISA'
+class SimpleTestModel(BaseModel):
+    test: str
 
 
-class Account(BaseModel):
-    account_number: int = Field(alias='accountNumber')
-    sort_code: int = Field(alias='sortCode')
-    account_type: AccountType = Field(alias='accountType')
-    account_holder: AccountHolder = Field(alias='accountHolder')
-    date_opened: datetime = Field(alias='dateOpened')
+class ForwardrefModel(BaseModel):
+    test_attr: str = 'Param'
+    this: Optional['ForwardrefModel'] = None
+
+
+class ForbidModel(BaseModel):
+    test_attr: str = 'Param'
 
     class Config:
-        allow_population_by_field_name = True
-        use_enum_values = True
+        extra = Extra.forbid
 
 
-@pytest.fixture()
-def unserialized():
-    return {
-        'accountHolder': {
-            'address': {
-                'houseNumber': '12B',
-                'postCode': 'SW11 1AP',
-            },
-            'dob': '1980-02-28',
-            'firstName': 'John',
-            'lastName': 'Smith',
-        },
-        'account_number': 12345678,
-        'accountType': 'SAVING',
-        'sortCode': 989898,
-        'dateOpened': '2020-11-03T12:32:12',
+@serialize_all_methods()
+class Client(APIClient):
+    def function_without_all(self):
+        return ['test']
+
+    def function_simple_arg(self, pk: int):
+        return pk
+
+    def function_simple_response(self) -> int:
+        return '1'  # type: ignore
+
+    def function_simple_response_and_arg(self, pk: int) -> bool:
+        assert isinstance(pk, int)
+        return pk  # type: ignore
+
+    def function_simple_auto_type_str(self, pk):
+        return pk
+
+    def function_simple_args(self, *args):
+        return args
+
+    def function_simple_kwargs(self, **kwargs):
+        return kwargs
+
+    def function_simple_model(self, param: SimpleModel):
+        return param
+
+    def function_simple_model_args(self, param: SimpleModel, test_attr: str):
+        return test_attr, param
+
+    def function_forbid_model(self, param: ForbidModel):
+        return param
+
+    def function_type_from_default(self, pk=1):
+        return pk
+
+    def function_special_type(self, pk: None.__class__, name: ....__class__):  # type: ignore
+        return pk, name
+
+    def function_return_none(self, pk=1) -> None:
+        pass
+
+    def function_forwardref(self, data: 'ForwardrefModel'):
+        return data
+
+    def function_union(self, data: Union[SimpleTestModel, SimpleModel]):
+        return data
+
+    def function_list_response(self, data: SimpleModel) -> List[SimpleModel]:
+        return [data]
+
+
+def test_function_without_all():
+    client = Client()
+
+    # not wrapped
+    assert '__wrapped__' not in vars(client.function_without_all)
+
+    assert client.function_without_all() == ['test']
+
+
+def test_function_simple_arg():
+    client = Client()
+
+    # wrapped once
+    assert '__wrapped__' in vars(client.function_simple_arg)
+    assert '__wrapped__' not in vars(vars(client.function_simple_arg)['__wrapped__'])
+
+    assert client.function_simple_arg(pk='1') == 1  # type: ignore
+
+
+def test_function_simple_response():
+    client = Client()
+
+    # wrapped once
+    assert '__wrapped__' in vars(client.function_simple_response)
+    assert '__wrapped__' not in vars(vars(client.function_simple_response)['__wrapped__'])
+
+    assert client.function_simple_response() == 1  # type: ignore
+
+
+def test_function_simple_response_and_arg():
+    client = Client()
+
+    # wrapped
+    assert '__wrapped__' in vars(client.function_simple_response_and_arg)
+    assert '__wrapped__' in vars(vars(client.function_simple_response_and_arg)['__wrapped__'])
+    assert '__wrapped__' not in vars(vars(vars(client.function_simple_response_and_arg)['__wrapped__'])['__wrapped__'])
+
+    assert client.function_simple_response_and_arg(pk='0') is False  # type: ignore
+
+
+def test_function_simple_auto_type_str():
+    client = Client()
+
+    assert client.function_simple_auto_type_str(pk=0) == '0'
+
+
+def test_function_simple_args():
+    client = Client()
+
+    assert client.function_simple_args('test') == ('test',)
+
+
+def test_function_simple_kwargs():
+    client = Client()
+
+    assert client.function_simple_kwargs(test='test') == {'test': 'test'}
+
+
+def test_function_simple_model():
+    client = Client()
+
+    assert client.function_simple_model() == {'test_attr': 'Param'}  # type: ignore
+    assert client.function_simple_model(test_attr='test') == {'test_attr': 'test'}  # type: ignore
+
+
+def test_function_simple_model_args():
+    client = Client()
+
+    assert client.function_simple_model_args(test_attr='test') == ('test', {'test_attr': 'test'})  # type: ignore
+
+
+def test_function_forbid_model():
+    client = Client()
+
+    assert client.function_forbid_model(test_attr='test') == {'test_attr': 'test'}  # type: ignore
+    assert client.function_forbid_model(test_attr='test', test='bla') == {'test_attr': 'test'}  # type: ignore
+
+
+def test_function_type_from_default():
+    client = Client()
+    assert client.function_type_from_default(pk='2') == 2  # type: ignore
+
+
+def test_function_special_type():
+    client = Client()
+    assert client.function_special_type(pk=2, name=True) == ('2', 'True')  # type: ignore
+
+
+def test_function_return_none():
+    client = Client()
+    assert client.function_return_none(pk=2) is None  # type: ignore
+
+
+def test_function_forwardref():
+    client = Client()
+    assert client.function_forwardref(test_attr='123', this={'test_attr': 456}) == {  # type: ignore
+        'test_attr': '123',
+        'this': {'test_attr': '456'},
     }
 
 
-@pytest.fixture()
-def serialized(unserialized):
-    return Account(**unserialized)
+def test_function_union():
+    client = Client()
+    assert client.function_union(test='bla') == {'test': 'bla'}  # type: ignore
+    assert client.function_union(test_attr='bla') == {'test_attr': 'bla'}  # type: ignore
 
 
-def test_serialize_request(unserialized, serialized):
-    @serialize()
-    def decorated_func(endpoint: str, custom: str, data: Account):
+def test_function_list_response():
+    client = Client()
+    assert client.function_list_response(test_attr='bla') == [{'test_attr': 'bla'}]  # type: ignore
+
+
+def test_param_for_model():
+    class MyModel(BaseModel):
+        test: str = Field(alias='TesT')
+
+    @params_serializer()
+    def function_by_alias(data: MyModel):
         return data
 
-    @serialize()
-    def decorated_func_args(endpoint: str, custom: str, data: Account):
-        return custom
-
-    @serialize()
-    def decorated_func_kwargs(endpoint: str, data: Account, custom: str = 'tests'):
-        return custom
-
-    @serialize(Account)
-    def decorated_func_schema(endpoint: str, data):
+    @params_serializer(by_alias=False)
+    def function(data: MyModel):
         return data
 
-    @serialize()
-    def decorated_func_no_schema(endpoint: str, **kwargs):
-        return kwargs  # data as is
-
-    got = decorated_func('', 'test', **unserialized)
-    assert got == serialized.dict(by_alias=True, exclude_none=True)
-
-    text = decorated_func_args('', custom='test', **unserialized)
-    assert text == 'test'
-
-    text = decorated_func_kwargs('', custom='test', **unserialized)
-    assert text == 'test'
-
-    got = decorated_func_schema('', **unserialized)
-    assert got == serialized.dict(by_alias=True, exclude_none=True)
-
-    got = decorated_func_no_schema('', **unserialized)
-    assert got == unserialized
-
-
-def test_serialize_response(unserialized, serialized):
-    @serialize()
-    def decorated_func(endpoint: str) -> Account:
-        return unserialized
-
-    got = decorated_func('')
-    assert got == serialized
-
-
-def test_serialize_all_methods(unserialized, serialized):
-    @serialize_all_methods()
-    class MyApiClient(APIClient):
-        def decorated_func(self, data: Account) -> Account:
-            return data
-
-        def decorated_func_holder(self, data: AccountHolder) -> AccountHolder:
-            return data
-
-    client = MyApiClient()
-    got = client.decorated_func(**unserialized)
-    assert got == serialized
-
-    got = client.decorated_func_holder(**unserialized.get('accountHolder'))
-    assert got == serialized.account_holder
+    assert function_by_alias(TesT='bla') == {'TesT': 'bla'}
+    assert function(TesT='bla') == {'test': 'bla'}

@@ -25,16 +25,16 @@ pip install api-client-pydantic
 The following decorators have been provided to validate request data and converting json straight to pydantic class.
 
 ```python
-from apiclient_pydantic import serialize, serialize_all_methods, serialize_request, serialize_response
+from apiclient_pydantic import params_serializer, response_serializer, serialize, serialize_all_methods
 
 # serialize incoming kwargs
-@serialize_request(schema: Optional[Type[BaseModel]] = None, extra_kwargs: dict = None)
+@params_serializer(by_alias: bool = True, exclude_unset: bool = False, exclude_defaults: bool = False, exclude_none: bool = True)
 
 # serialize response in pydantic class
-@serialize_response(schema: Optional[Type[BaseModel]] = None)
+@response_serializer(response: Optional[Type[BaseModel]] = None)
 
 # serialize request and response data
-@serialize(schema_request: Optional[Type[BaseModel]] = None, schema_response: Optional[Type[BaseModel]] = None, **base_kwargs)
+@serialize(response: Optional[Type[BaseModel]] = None, by_alias: bool = True, exclude_unset: bool = False, exclude_defaults: bool = False, exclude_none: bool = True)
 
 # wraps all local methods of a class with a specified decorator. default 'serialize'
 @serialize_all_methods(decorator=serialize)
@@ -51,37 +51,38 @@ Usage:
         sort_code: int = Field(alias='sortCode')
         date_opened: datetime = Field(alias='dateOpened')
     ```
-2. Add the `@serialize_response` decorator to the api client method to transform the response
+
+2. Add the `@response_serializer` decorator to the api client method to transform the response
 directly into your defined schema.
    ```python
-   @serialize_response(List[Account])
-   def get_accounts():
-       ...
-   # or
-   @serialize_response()
-   def get_accounts() -> List[Account]:
-       ...
-   ```
-3. Add the `@serialize_request` decorator to the api client method to translate the incoming kwargs
+    @response_serializer(List[Account])
+    def get_accounts():
+        ...
+    # or
+    @response_serializer()
+    def get_accounts() -> List[Account]:
+        ...
+    ```
+3. Add the `@params_serializer` decorator to the api client method to translate the incoming kwargs
 into the required dict for the endpoint:
    ```python
-   @serialize_request(AccountHolder)
-   def create_account(data: dict):
-      ...
-   # or
-   @serialize_request()
-   def create_account(data: AccountHolder):
-    # data will be exactly a dict
-      ...
-   create_account(last_name='Smith', first_name='John')
-   # data will be a dict {"last_name": "Smith", "first_name": "John"}
-   ```
-4. `@serialize` - It is a combination of the two decorators `@serialize_response` and`@serialize_request`.
+    @params_serializer(AccountHolder)
+    def create_account(data: dict):
+        ...
+    # or
+    @params_serializer()
+    def create_account(data: AccountHolder):
+        # data will be exactly a dict
+        ...
+    create_account(last_name='Smith', first_name='John')
+    # data will be a dict {"last_name": "Smith", "first_name": "John"}
+    ```
+4. `@serialize` - It is a combination of the two decorators `@response_serializer` and`@params_serializer`.
 5. For more convenient use, you can wrap all APIClient methods with `@serialize_all_methods`.
    ```python
-   from apiclient import APIClient
-   from apiclient_pydantic import serialize_all_methods
-   from typing import List
+    from apiclient import APIClient
+    from apiclient_pydantic import serialize_all_methods
+    from typing import List
 
     from .models import Account, AccountHolder
 

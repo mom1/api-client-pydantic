@@ -37,9 +37,9 @@ test:
 
 .PHONY: check-codestyle
 check-codestyle:
-	poetry run flake8 --count .
-	poetry run black --diff --check --config pyproject.toml .
-	poetry run isort --diff --check-only --settings-path pyproject.toml .
+	poetry run flake8 --count apiclient_pydantic tests
+	poetry run black --diff --check --config pyproject.toml apiclient_pydantic tests
+	poetry run isort --diff --check-only --settings-path pyproject.toml apiclient_pydantic tests
 
 .PHONY: mypy
 mypy:
