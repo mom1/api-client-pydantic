@@ -20,7 +20,7 @@ repos:
           - --py37-plus
           - --keep-runtime-typing
   - repo: https://github.com/hadialqattan/pycln
-    rev: v1.2.0
+    rev: v1.2.4
     hooks:
       - id: pycln
         args: [-a]
