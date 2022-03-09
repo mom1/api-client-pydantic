@@ -1,5 +1,13 @@
 # Changelog
 
+## v2.0.1 (2022-03-09)
+
+### :bug: Bugs
+  -  Fixed a bug with working with the config of a model that does not have extra.
+
+### :arrow_up: Dependencies
+  -  Bump types-setuptools from 57.4.9 to 57.4.10
+
 ## v2.0.0 (2022-03-08)
 
 ### :boom: Breaking Changes
