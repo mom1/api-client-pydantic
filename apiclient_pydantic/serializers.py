@@ -77,6 +77,7 @@ class ParamsSerializer:
     def __call__(self, func: Callable) -> Callable:
         attrs, self.signature = {}, get_typed_signature(func)
         new_signature_parameters: DictStrAny = {}
+        forbid_attrs = set()
 
         for name, arg in self.signature.parameters.items():
             if name == 'self':
@@ -103,18 +104,21 @@ class ParamsSerializer:
                     new_signature_parameters.setdefault(arg.name, arg)
 
             attrs[name] = (arg_type, ...)
-
+            if is_pydantic_model(arg_type) and getattr(arg_type.Config, 'extra', None) == Extra.forbid:
+                forbid_attrs.add(name)
         if attrs:
-            self.model_param = create_model(f'{func.__name__}Params', __config__=BaseConfig, **attrs)  # type: ignore
+            config_cls = type(f'{func.__name__}Config', (BaseConfig,), {'forbid_attrs': forbid_attrs})
+            self.model_param = create_model(f'{func.__name__}Params', __config__=config_cls, **attrs)  # type: ignore
 
         @wraps(func)
         def wrap(*args, **kwargs):
             object_params = {}
+            forbid_attrs = getattr(self.model_param.Config, 'forbid_attrs', {})
             for name, fld in self.model_param.__fields__.items():
                 kw = kwargs if name not in kwargs else kwargs[name]
 
                 object_params[name] = kw
-                if is_pydantic_model(fld.type_) and fld.type_.Config.extra == Extra.forbid and isinstance(kw, dict):
+                if is_pydantic_model(fld.type_) and name in forbid_attrs and isinstance(kw, dict):
                     object_params[name] = {k: v for k, v in kw.items() if k in fld.type_.__fields__}
 
             params_object = ParamsObject(**object_params)

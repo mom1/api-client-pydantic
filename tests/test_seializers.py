@@ -12,6 +12,13 @@ class SimpleModel(BaseModel):
     test_attr: str = 'Param'
 
 
+class SimpleConfigModel(BaseModel):
+    test_attr: str = Field(alias='TestAttr')
+
+    class Config:
+        allow_population_by_field_name = True
+
+
 class SimpleTestModel(BaseModel):
     test: str
 
@@ -78,6 +85,9 @@ class Client(APIClient):
 
     def function_list_response(self, data: SimpleModel) -> List[SimpleModel]:
         return [data]
+
+    def function_config_test(self, data: SimpleConfigModel):
+        return data
 
 
 def test_function_without_all():
@@ -190,6 +200,11 @@ def test_function_union():
 def test_function_list_response():
     client = Client()
     assert client.function_list_response(test_attr='bla') == [{'test_attr': 'bla'}]  # type: ignore
+
+
+def test_function_config_test():
+    client = Client()
+    assert client.function_config_test(test_attr='bla') == {'TestAttr': 'bla'}  # type: ignore
 
 
 def test_param_for_model():
