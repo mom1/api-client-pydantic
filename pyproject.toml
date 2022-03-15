@@ -50,7 +50,7 @@ flake8-pytest-style = "^1.6"
 flake8-tidy-imports = "^4.6"
 pep8-naming = "^0.12"
 mccabe = "^0.6"
-mypy = "^0.940"
+mypy = "^0.941"
 types-setuptools = "^57.4"
 types-toml = "^0.10"
 # debug
