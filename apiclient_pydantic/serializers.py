@@ -1,6 +1,6 @@
 import inspect
 from functools import wraps
-from typing import Any, Callable, Dict, ForwardRef, Optional, Type, get_type_hints
+from typing import Any, Callable, Dict, ForwardRef, Optional, Set, Tuple, Type, get_type_hints
 
 from pydantic import BaseModel, create_model, parse_obj_as
 from pydantic.config import BaseConfig as PydanticBaseConfig, Extra
@@ -59,7 +59,12 @@ class ParamsSerializer:
         'exclude_none',
         'has_kwargs',
         'model_param',
+        'params_object_class',
+        'used_args_index',
     )
+
+    params_object_class = ParamsObject
+    used_args_index: Set = set()
 
     def __init__(
         self,
@@ -72,6 +77,7 @@ class ParamsSerializer:
         self.exclude_unset = exclude_unset
         self.exclude_defaults = exclude_defaults
         self.exclude_none = exclude_none
+        self.has_self = False
         self.has_kwargs = False
 
     def __call__(self, func: Callable) -> Callable:
@@ -82,6 +88,7 @@ class ParamsSerializer:
         for name, arg in self.signature.parameters.items():
             if name == 'self':
                 new_signature_parameters.setdefault(arg.name, arg)
+                self.has_self = True
                 continue
 
             if arg.kind == arg.VAR_KEYWORD:
@@ -112,25 +119,13 @@ class ParamsSerializer:
 
         @wraps(func)
         def wrap(*args, **kwargs):
-            object_params = {}
-            forbid_attrs = getattr(self.model_param.Config, 'forbid_attrs', {})
-            for name, fld in self.model_param.__fields__.items():
-                kw = kwargs if name not in kwargs else kwargs[name]
+            params_object = self.make_object_params(args, kwargs)
+            result = self.make_result(params_object)
 
-                object_params[name] = kw
-                if is_pydantic_model(fld.type_) and name in forbid_attrs and isinstance(kw, dict):
-                    object_params[name] = {k: v for k, v in kw.items() if k in fld.type_.__fields__}
-
-            params_object = ParamsObject(**object_params)
-
-            result = self.model_param.from_orm(params_object).dict(
-                by_alias=self.by_alias,
-                exclude_unset=self.exclude_unset,
-                exclude_defaults=self.exclude_defaults,
-                exclude_none=self.exclude_none,
+            return func(
+                *tuple(v for i, v in enumerate(args) if i not in self.used_args_index),
+                **result,
             )
-
-            return func(*args, **result)
 
         # Override signature
         if new_signature_parameters and attrs:
@@ -139,6 +134,34 @@ class ParamsSerializer:
             wrap.__signature__ = sig  # type: ignore
 
         return wrap if attrs else func
+
+    def make_object_params(self, args: Tuple, kwargs: DictStrAny) -> ParamsObject:
+        object_params = {}
+        used_args_index = self.used_args_index
+        forbid_attrs = getattr(self.model_param.Config, 'forbid_attrs', {})
+        len_args = len(args)
+
+        for index, (name, fld) in enumerate(self.model_param.__fields__.items(), start=int(self.has_self)):
+            kw = kwargs
+            if name in kwargs:
+                kw = kwargs[name]
+            elif len_args > index:
+                kw = args[index]
+                used_args_index.add(index)
+
+            object_params[name] = kw
+            if is_pydantic_model(fld.type_) and name in forbid_attrs and isinstance(kw, dict):
+                object_params[name] = {k: v for k, v in kw.items() if k in fld.type_.__fields__}
+
+        return self.params_object_class(**object_params)
+
+    def make_result(self, params_object: ParamsObject) -> DictStrAny:
+        return self.model_param.from_orm(params_object).dict(
+            by_alias=self.by_alias,
+            exclude_unset=self.exclude_unset,
+            exclude_defaults=self.exclude_defaults,
+            exclude_none=self.exclude_none,
+        )
 
     def _get_param_type(self, arg: inspect.Parameter) -> Any:
         annotation = arg.annotation
@@ -188,7 +211,6 @@ def serialize(
     exclude_none: bool = True,
 ) -> Callable:
     def decorator(func: Callable) -> Callable:
-        result_func = func
         result_func = ParamsSerializer(
             by_alias=by_alias,
             exclude_unset=exclude_unset,

@@ -109,6 +109,12 @@ def test_function_simple_arg():
     assert client.function_simple_arg(pk='1') == 1  # type: ignore
 
 
+def test_send_args():
+    client = Client()
+
+    assert client.function_simple_arg('1') == 1  # type: ignore
+
+
 def test_function_simple_response():
     client = Client()
 
