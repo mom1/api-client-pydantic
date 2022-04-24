@@ -11,8 +11,5 @@ indent_style = space
 [*.{py,pyi}]
 indent_size = 4
 
-[*.cfg]
-indent_size = 8
-
 [Makefile]
 indent_style = tab
