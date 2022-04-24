@@ -36,7 +36,7 @@ coverage = "^6.3"
 pytest = "^7.1"
 pytest-cov = "^3.0"
 # formating
-black = "^22.3"
+black = {version = "^22.3", extras = ["d"]}
 isort = "^5.10"
 # linting
 flake8 = "^4.0"
