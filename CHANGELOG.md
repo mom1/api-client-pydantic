@@ -1,5 +1,52 @@
 # Changelog
 
+## v2.1.0 (2022-04-24)
+
+### :sparkles: New
+  -  Now the parameters passed through &quot;args&quot; are also serialized.
+
+    &#x60;&#x60;&#x60;python
+    def func(i: int):
+        return i
+    
+    assert func(&#x27;1&#x27;) &#x3D;&#x3D; 1
+    &#x60;&#x60;&#x60;
+    
+
+### :recycle: Changes
+  -  Small changes for release config
+
+  -  no need &#x60;cfg&#x60; settings in editorconfig.
+
+### :arrow_up: Dependencies
+  -  Bump types-toml from 0.10.4 to 0.10.5
+
+  -  Upgrade dependency black -&gt; black[d]
+
+  -  Bump types-setuptools from 57.4.12 to 57.4.14
+
+  -  Bump types-setuptools from 57.4.11 to 57.4.12
+
+  -  Bump pre-commit from 2.17.0 to 2.18.1
+
+  -  Bump black from 22.1.0 to 22.3.0
+
+  -  Bump mypy from 0.941 to 0.942
+
+  -  Bump flake8-bugbear from 22.3.20 to 22.3.23
+
+  -  Bump flake8-bugbear from 22.1.11 to 22.3.20
+
+  -  Bump pytest from 7.1.0 to 7.1.1
+
+  -  Bump types-setuptools from 57.4.10 to 57.4.11
+
+  -  Bump mypy from 0.940 to 0.941
+
+  -  Bump mypy from 0.931 to 0.940
+
+  -  Bump pytest from 7.0.1 to 7.1.0
+
 ## v2.0.1 (2022-03-09)
 
 ### :bug: Bugs
