@@ -1,7 +1,8 @@
 from typing import List, Optional, Union
 
+import pytest
 from apiclient import APIClient
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 from pydantic.config import Extra
 from pydantic.fields import Field
 
@@ -88,6 +89,9 @@ class Client(APIClient):
 
     def function_config_test(self, data: SimpleConfigModel):
         return data
+
+    def function_same_name_test(self, test_attr: SimpleModel):
+        return test_attr
 
 
 def test_function_without_all():
@@ -211,6 +215,13 @@ def test_function_list_response():
 def test_function_config_test():
     client = Client()
     assert client.function_config_test(test_attr='bla') == {'TestAttr': 'bla'}  # type: ignore
+
+
+@pytest.mark.xfail()
+def test_function_same_name_test():
+    client = Client()
+    with pytest.raises(ValidationError):
+        assert client.function_same_name_test(test_attr='bla') == {'test_attr': 'bla'}  # type: ignore
 
 
 def test_param_for_model():
