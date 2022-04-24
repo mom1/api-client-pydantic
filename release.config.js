@@ -45,24 +45,24 @@ const sections = [
 function makeGroups(commits) {
   if (!commits.length) return []
 
-  const mapCommits = groups => {
-    return groups
-      .map(({ group, emojis, label }) => ({
-        group,
-        label,
-        is_dep: group === 'dependencies',
-        commits: commits
-          .filter((commit) => emojis.indexOf(commit.gitmoji) >= 0)
-          .sort((first, second) => new Date(second.committerDate) - new Date(first.committerDate)),
-      }))
-      .filter(group => group.commits.length)
-  }
+  function mapCommits(groups) {
+        return groups
+            .map(({ group, emojis, label }) => ({
+                group,
+                label,
+                is_dep: group === 'dependencies',
+                commits: commits
+                    .filter((commit) => emojis.indexOf(commit.gitmoji) >= 0)
+                    .sort((first, second) => new Date(second.committerDate) - new Date(first.committerDate)),
+            }))
+            .filter(group => group.commits.length);
+    }
 
   return mapCommits(sections)
 }
 module.exports = {
   branches: ["main", { name: "develop", prerelease: "rc" }],
-  tagFormat: "${version}",
+  tagFormat: "v${version}",
   plugins: [
     [
       'semantic-release-gitmoji',
