@@ -103,3 +103,10 @@ into the required dict for the endpoint:
 This code generator creates a [ApiClient](https://github.com/MikeWooster/api-client) app from an openapi file.
 
 [apiclient-pydantic-generator](https://github.com/mom1/apiclient-pydantic-generator)
+
+## Mentions
+
+Many thanks to [JetBrains](https://www.jetbrains.com/?from=api-client-pydantic) for supplying me with a license to use their product in the development
+of this tool.
+
+![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)
