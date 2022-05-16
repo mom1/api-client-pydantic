@@ -1,3 +1,4 @@
+import asyncio
 import inspect
 from functools import wraps
 from typing import Any, Callable, Dict, ForwardRef, Optional, Set, Tuple, Type, get_type_hints
@@ -117,15 +118,29 @@ class ParamsSerializer:
             config_cls = type(f'{func.__name__}Config', (BaseConfig,), {'forbid_attrs': forbid_attrs})
             self.model_param = create_model(f'{func.__name__}Params', __config__=config_cls, **attrs)  # type: ignore
 
-        @wraps(func)
-        def wrap(*args, **kwargs):
-            params_object = self.make_object_params(args, kwargs)
-            result = self.make_result(params_object)
+        if asyncio.iscoroutinefunction(func):
 
-            return func(
-                *tuple(v for i, v in enumerate(args) if i not in self.used_args_index),
-                **result,
-            )
+            @wraps(func)
+            async def wrap(*args, **kwargs):
+                params_object = self.make_object_params(args, kwargs)
+                result = self.make_result(params_object)
+
+                return await func(
+                    *tuple(v for i, v in enumerate(args) if i not in self.used_args_index),
+                    **result,
+                )
+
+        else:
+
+            @wraps(func)
+            def wrap(*args, **kwargs):
+                params_object = self.make_object_params(args, kwargs)
+                result = self.make_result(params_object)
+
+                return func(
+                    *tuple(v for i, v in enumerate(args) if i not in self.used_args_index),
+                    **result,
+                )
 
         # Override signature
         if new_signature_parameters and attrs:
@@ -189,13 +204,23 @@ class ResponseSerializer:
 
     def __call__(self, func: Callable) -> Callable:
         self.response = self.response or get_type_hints(func).get('return')
+        if asyncio.iscoroutinefunction(func):
 
-        @wraps(func)
-        def wrap(*args, **kwargs):
-            result = func(*args, **kwargs)
-            if result is not None:
-                return parse_obj_as(self.response, result)
-            return result
+            @wraps(func)
+            async def wrap(*args, **kwargs):
+                result = await func(*args, **kwargs)
+                if result is not None:
+                    return parse_obj_as(self.response, result)
+                return result
+
+        else:
+
+            @wraps(func)
+            def wrap(*args, **kwargs):
+                result = func(*args, **kwargs)
+                if result is not None:
+                    return parse_obj_as(self.response, result)
+                return result
 
         return wrap if self.response else func
 
