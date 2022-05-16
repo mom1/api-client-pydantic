@@ -1,5 +1,38 @@
 # Changelog
 
+## v2.2.0 (2022-05-16)
+
+### :sparkles: New
+  -  Support for async.
+
+### :arrow_up: Dependencies
+  -  Add dep pytest-asyncio for async testing.
+
+  -  Bump coverage from 6.3.2 to 6.3.3
+
+  -  Bump flake8-comprehensions from 3.8.0 to 3.9.0
+
+  -  Bump flake8-tidy-imports from 4.7.0 to 4.8.0
+
+  -  Bump types-toml from 0.10.6 to 0.10.7
+
+  -  Bump pre-commit from 2.18.1 to 2.19.0
+
+  -  Bump flake8-tidy-imports from 4.6.0 to 4.7.0
+
+  -  Bump types-toml from 0.10.5 to 0.10.6
+
+  -  Bump mypy from 0.942 to 0.950
+
+  -  Bump flake8-eradicate from 1.2.0 to 1.2.1
+
+  -  Bump flake8-bugbear from 22.3.23 to 22.4.25
+
+  -  Bump pytest from 7.1.1 to 7.1.2
+
+### :memo: Documentation
+  -  Added &quot;Mentions&quot; in README.md
+
 ## v2.1.0 (2022-04-24)
 
 ### :sparkles: New
