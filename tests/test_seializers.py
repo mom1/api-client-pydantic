@@ -93,6 +93,12 @@ class Client(APIClient):
     def function_same_name_test(self, test_attr: SimpleModel):
         return test_attr
 
+    async def async_function_simple_model(self, param: SimpleModel) -> SimpleTestModel:
+        return {'test': param['test_attr']}  # type: ignore
+
+    async def async_function_return_none(self, param: SimpleModel) -> None:
+        pass
+
 
 def test_function_without_all():
     client = Client()
@@ -215,6 +221,25 @@ def test_function_list_response():
 def test_function_config_test():
     client = Client()
     assert client.function_config_test(test_attr='bla') == {'TestAttr': 'bla'}  # type: ignore
+
+
+@pytest.mark.asyncio()
+async def test_async_function_return_none():
+    client = Client()
+    response = await client.async_function_return_none(test_attr='test')  # type: ignore
+    assert response is None
+
+
+@pytest.mark.asyncio()
+async def test_async_function_simple_model():
+    client = Client()
+    response = await client.async_function_simple_model()  # type: ignore
+    assert isinstance(response, SimpleTestModel)
+    assert response.dict() == {'test': 'Param'}
+
+    response = await client.async_function_simple_model(test_attr='test')  # type: ignore
+    assert isinstance(response, SimpleTestModel)
+    assert response.dict() == {'test': 'test'}
 
 
 @pytest.mark.xfail()
