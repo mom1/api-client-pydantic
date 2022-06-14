@@ -8,7 +8,6 @@ from pydantic.fields import Field
 
 from apiclient_pydantic import params_serializer, serialize_all_methods
 
-
 class SimpleModel(BaseModel):
     test_attr: str = 'Param'
 
@@ -99,19 +98,19 @@ class Client(APIClient):
     async def async_function_return_none(self, param: SimpleModel) -> None:
         pass
 
+@pytest.fixture
+def client():
+    return Client()
 
-def test_function_without_all():
-    client = Client()
 
+def test_function_without_all(client):
     # not wrapped
     assert '__wrapped__' not in vars(client.function_without_all)
 
     assert client.function_without_all() == ['test']
 
 
-def test_function_simple_arg():
-    client = Client()
-
+def test_function_simple_arg(client):
     # wrapped once
     assert '__wrapped__' in vars(client.function_simple_arg)
     assert '__wrapped__' not in vars(vars(client.function_simple_arg)['__wrapped__'])
@@ -119,15 +118,11 @@ def test_function_simple_arg():
     assert client.function_simple_arg(pk='1') == 1  # type: ignore
 
 
-def test_send_args():
-    client = Client()
-
+def test_send_args(client):
     assert client.function_simple_arg('1') == 1  # type: ignore
 
 
-def test_function_simple_response():
-    client = Client()
-
+def test_function_simple_response(client):
     # wrapped once
     assert '__wrapped__' in vars(client.function_simple_response)
     assert '__wrapped__' not in vars(vars(client.function_simple_response)['__wrapped__'])
@@ -135,9 +130,7 @@ def test_function_simple_response():
     assert client.function_simple_response() == 1  # type: ignore
 
 
-def test_function_simple_response_and_arg():
-    client = Client()
-
+def test_function_simple_response_and_arg(client):
     # wrapped
     assert '__wrapped__' in vars(client.function_simple_response_and_arg)
     assert '__wrapped__' in vars(vars(client.function_simple_response_and_arg)['__wrapped__'])
@@ -146,93 +139,72 @@ def test_function_simple_response_and_arg():
     assert client.function_simple_response_and_arg(pk='0') is False  # type: ignore
 
 
-def test_function_simple_auto_type_str():
-    client = Client()
-
+def test_function_simple_auto_type_str(client):
     assert client.function_simple_auto_type_str(pk=0) == '0'
 
 
-def test_function_simple_args():
-    client = Client()
-
+def test_function_simple_args(client):
     assert client.function_simple_args('test') == ('test',)
 
 
-def test_function_simple_kwargs():
-    client = Client()
-
+def test_function_simple_kwargs(client):
     assert client.function_simple_kwargs(test='test') == {'test': 'test'}
 
 
-def test_function_simple_model():
-    client = Client()
-
+def test_function_simple_model(client):
     assert client.function_simple_model() == {'test_attr': 'Param'}  # type: ignore
     assert client.function_simple_model(test_attr='test') == {'test_attr': 'test'}  # type: ignore
 
 
-def test_function_simple_model_args():
-    client = Client()
-
+def test_function_simple_model_args(client):
     assert client.function_simple_model_args(test_attr='test') == ('test', {'test_attr': 'test'})  # type: ignore
 
 
-def test_function_forbid_model():
-    client = Client()
-
+def test_function_forbid_model(client):
     assert client.function_forbid_model(test_attr='test') == {'test_attr': 'test'}  # type: ignore
     assert client.function_forbid_model(test_attr='test', test='bla') == {'test_attr': 'test'}  # type: ignore
 
 
-def test_function_type_from_default():
-    client = Client()
+def test_function_type_from_default(client):
     assert client.function_type_from_default(pk='2') == 2  # type: ignore
 
 
-def test_function_special_type():
-    client = Client()
+def test_function_special_type(client):
     assert client.function_special_type(pk=2, name=True) == ('2', 'True')  # type: ignore
 
 
-def test_function_return_none():
-    client = Client()
+def test_function_return_none(client):
     assert client.function_return_none(pk=2) is None  # type: ignore
 
 
-def test_function_forwardref():
-    client = Client()
+def test_function_forwardref(client):
     assert client.function_forwardref(test_attr='123', this={'test_attr': 456}) == {  # type: ignore
         'test_attr': '123',
         'this': {'test_attr': '456'},
     }
 
 
-def test_function_union():
-    client = Client()
+def test_function_union(client):
     assert client.function_union(test='bla') == {'test': 'bla'}  # type: ignore
     assert client.function_union(test_attr='bla') == {'test_attr': 'bla'}  # type: ignore
 
 
-def test_function_list_response():
-    client = Client()
+def test_function_list_response(client):
     assert client.function_list_response(test_attr='bla') == [{'test_attr': 'bla'}]  # type: ignore
 
 
-def test_function_config_test():
-    client = Client()
+def test_function_config_test(client):
     assert client.function_config_test(test_attr='bla') == {'TestAttr': 'bla'}  # type: ignore
 
 
 @pytest.mark.asyncio()
-async def test_async_function_return_none():
-    client = Client()
+async def test_async_function_return_none(client):
     response = await client.async_function_return_none(test_attr='test')  # type: ignore
     assert response is None
 
 
 @pytest.mark.asyncio()
-async def test_async_function_simple_model():
-    client = Client()
+async def test_async_function_simple_model(client):
     response = await client.async_function_simple_model()  # type: ignore
     assert isinstance(response, SimpleTestModel)
     assert response.dict() == {'test': 'Param'}
@@ -243,13 +215,13 @@ async def test_async_function_simple_model():
 
 
 @pytest.mark.xfail()
-def test_function_same_name_test():
-    client = Client()
+def test_function_same_name_test(client):
+
     with pytest.raises(ValidationError):
         assert client.function_same_name_test(test_attr='bla') == {'test_attr': 'bla'}  # type: ignore
 
 
-def test_param_for_model():
+def test_param_for_model(client):
     class MyModel(BaseModel):
         test: str = Field(alias='TesT')
 
