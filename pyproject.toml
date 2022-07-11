@@ -58,7 +58,7 @@ types-toml = "^0.10"
 ipdb = "^0.13"
 # checks
 safety = "^1.10"
-pre-commit = "^2.19"
+pre-commit = "^2.20"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
