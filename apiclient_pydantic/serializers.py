@@ -2,6 +2,7 @@ import asyncio
 import inspect
 from functools import wraps
 from typing import Any, Callable, Dict, ForwardRef, Optional, Set, Tuple, Type, get_type_hints
+from xml.etree.ElementTree import Element
 
 from pydantic import BaseModel, create_model, parse_obj_as
 from pydantic.config import BaseConfig as PydanticBaseConfig, Extra
@@ -49,6 +50,22 @@ def get_typed_annotation(param: inspect.Parameter, globalns: DictStrAny) -> Any:
 def make_forwardref(annotation: str, globalns: DictStrAny) -> Any:
     forward_ref = ForwardRef(annotation)
     return evaluate_forwardref(forward_ref, globalns, globalns)
+
+
+def element_tree_to_dict(xml: Element) -> DictStrAny:
+    if type(xml) is Element:
+        return {
+            **xml.attrib,
+            'text': xml.text,
+            **{e.tag: element_tree_to_dict(e) for e in xml}
+        }
+    raise TypeError('Unknown type to convert xml to dict')
+
+
+def prepare_result(result: Any) -> Any:
+    if type(result) is Element:
+        return element_tree_to_dict(result)
+    return result
 
 
 class ParamsSerializer:
@@ -210,7 +227,7 @@ class ResponseSerializer:
             async def wrap(*args, **kwargs):
                 result = await func(*args, **kwargs)
                 if result is not None:
-                    return parse_obj_as(self.response, result)
+                    return parse_obj_as(self.response, prepare_result(result))
                 return result
 
         else:
@@ -219,7 +236,7 @@ class ResponseSerializer:
             def wrap(*args, **kwargs):
                 result = func(*args, **kwargs)
                 if result is not None:
-                    return parse_obj_as(self.response, result)
+                    return parse_obj_as(self.response, prepare_result(result))
                 return result
 
         return wrap if self.response else func

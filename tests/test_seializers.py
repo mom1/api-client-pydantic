@@ -1,4 +1,6 @@
 from typing import List, Optional, Union
+from xml.etree import ElementTree
+from xml.etree.ElementTree import Element
 
 import pytest
 from apiclient import APIClient
@@ -7,6 +9,7 @@ from pydantic.config import Extra
 from pydantic.fields import Field
 
 from apiclient_pydantic import params_serializer, serialize_all_methods
+from apiclient_pydantic.serializers import prepare_result, element_tree_to_dict
 
 
 class SimpleModel(BaseModel):
@@ -204,6 +207,43 @@ def test_function_forwardref():
     assert client.function_forwardref(test_attr='123', this={'test_attr': 456}) == {  # type: ignore
         'test_attr': '123',
         'this': {'test_attr': '456'},
+    }
+
+
+@pytest.fixture()
+def sample_complex_xml_element() -> Element:
+    xml_string = '<?xml version="1.0"?><root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://test.xsd"><sample testattr="123">Test</sample>Test</root>'
+    return ElementTree.fromstring(xml_string)
+
+
+def test_element_tree_to_dict(sample_complex_xml_element: Element):
+
+    assert element_tree_to_dict(sample_complex_xml_element) == {
+        'sample': {'testattr': '123', 'text': 'Test'},
+        'text': None,
+        '{http://www.w3.org/2001/XMLSchema-instance}noNamespaceSchemaLocation': 'http://test.xsd'
+    }
+
+
+def testelement_tree_to_dict_exeption_on_unkown_data_type():
+
+    with pytest.raises(TypeError):
+        element_tree_to_dict({'test': '123'})
+
+
+def test_prepare_results_xml(sample_complex_xml_element: Element):
+
+    assert prepare_result(sample_complex_xml_element) == {
+        'sample': {'testattr': '123', 'text': 'Test'},
+        'text': None,
+        '{http://www.w3.org/2001/XMLSchema-instance}noNamespaceSchemaLocation': 'http://test.xsd'
+    }
+
+
+def test_prepare_results_not_xml_should_not_alter():
+
+    assert prepare_result({'testattr': '123', 'text': 'Test'}) == {
+        'testattr': '123', 'text': 'Test'
     }
 
 
