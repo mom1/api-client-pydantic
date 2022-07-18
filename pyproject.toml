@@ -57,7 +57,7 @@ types-toml = "^0.10"
 # debug
 ipdb = "^0.13"
 # checks
-safety = "^1.10"
+safety = "^2.1"
 pre-commit = "^2.20"
 
 [build-system]
