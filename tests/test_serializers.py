@@ -99,7 +99,7 @@ class Client(APIClient):
         pass
 
 
-@pytest.fixture
+@pytest.fixture()
 def client():
     return Client()
 
