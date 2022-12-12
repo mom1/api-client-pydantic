@@ -37,7 +37,7 @@ pytest = "^7.2"
 pytest-cov = "^4.0"
 pytest-asyncio = "^0.20"
 # formating
-black = {version = "^22.10", extras = ["d"]}
+black = {version = "^22.12", extras = ["d"]}
 isort = "^5.10"
 # linting
 flake8 = "^4.0"
