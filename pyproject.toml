@@ -38,7 +38,7 @@ pytest-cov = "^4.0"
 pytest-asyncio = "^0.20"
 # formating
 black = {version = "^22.10", extras = ["d"]}
-isort = "^5.10"
+isort = "^5.11"
 # linting
 flake8 = "^4.0"
 flake8-broken-line = "^0.6"
