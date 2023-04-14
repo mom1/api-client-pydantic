@@ -34,7 +34,7 @@ jobs:
           @semantic-release/git
           @semantic-release/exec
           @semantic-release/github
-          semantic-release-gitmoji
+          semantic-release-gitmoji@1.5.0
       - name: Release package
         env:
           POETRY_PYPI_TOKEN_PYPI: ${{ secrets.PYPI_TOKEN }}

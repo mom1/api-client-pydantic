@@ -1,4 +1,4 @@
-const { promisify } = require('util')
+const {promisify} = require('util')
 const readFileAsync = promisify(require('fs').readFile)
 
 const template = readFileAsync('.github/templates/template.hbs')
@@ -46,22 +46,23 @@ function makeGroups(commits) {
   if (!commits.length) return []
 
   function mapCommits(groups) {
-        return groups
-            .map(({ group, emojis, label }) => ({
-                group,
-                label,
-                is_dep: group === 'dependencies',
-                commits: commits
-                    .filter((commit) => emojis.indexOf(commit.gitmoji) >= 0)
-                    .sort((first, second) => new Date(second.committerDate) - new Date(first.committerDate)),
-            }))
-            .filter(group => group.commits.length);
-    }
+    return groups
+      .map(({group, emojis, label}) => ({
+        group,
+        label,
+        is_dep: group === 'dependencies',
+        commits: commits
+          .filter((commit) => emojis.indexOf(commit.gitmoji) >= 0)
+          .sort((first, second) => new Date(second.committerDate) - new Date(first.committerDate)),
+      }))
+      .filter(group => group.commits.length);
+  }
 
   return mapCommits(sections)
 }
+
 module.exports = {
-  branches: ["main", { name: "develop", prerelease: "rc" }],
+  branches: ["main", {name: "develop", prerelease: "rc"}],
   tagFormat: "v${version}",
   plugins: [
     [
@@ -75,7 +76,7 @@ module.exports = {
         },
         releaseNotes: {
           template,
-          partials: { commitTemplate },
+          partials: {commitTemplate},
           helpers: {
             sections: (commits) => {
               let flat_commits = [];
@@ -99,7 +100,10 @@ module.exports = {
     [
       "@semantic-release/exec",
       {
-        prepareCmd: "poetry version ${nextRelease.version} && poetry build",
+        prepareCmd:
+          "poetry version ${nextRelease.version} && " +
+          "npm version --no-git-tag-version ${nextRelease.version} && " +
+          "poetry build",
         publishCmd: "poetry publish",
       },
     ],
@@ -117,7 +121,7 @@ module.exports = {
     [
       "@semantic-release/github",
       {
-        assets: [{ path: "dist/*.whl" }, { path: "dist/*.tar.gz" }],
+        assets: [{path: "dist/*.whl"}, {path: "dist/*.tar.gz"}],
       },
     ],
   ],
