@@ -1,4 +1,5 @@
 from typing import List, Optional, Union
+
 import pytest
 from apiclient import APIClient
 from pydantic import BaseModel, ValidationError
@@ -99,7 +100,7 @@ class Client(APIClient):
         pass
 
 
-@pytest.fixture
+@pytest.fixture()
 def client():
     return Client()
 
