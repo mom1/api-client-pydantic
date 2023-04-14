@@ -141,6 +141,8 @@ modules.xml
 # Sonarlint plugin
 .idea/sonarlint
 
+# Fleet
+.fleet/*
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
