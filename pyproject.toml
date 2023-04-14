@@ -54,8 +54,6 @@ mccabe = "^0.6"
 mypy = "^0.991"
 types-setuptools = "^67.6"
 types-toml = "^0.10"
-# debug
-ipdb = "^0.13"
 # checks
 safety = "^2.3"
 pre-commit = "^2.20"
