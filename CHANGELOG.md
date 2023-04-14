@@ -1,5 +1,172 @@
 # Changelog
 
+## v2.2.1 (2023-04-14)
+
+### :arrow_up: Dependencies
+  -  Bump actions
+
+  -  Bump safety from 2.3.1 to 2.3.5
+
+  -  Bump certifi from 2021.10.8 to 2022.12.7
+
+  -  Bump setuptools from 65.3.0 to 67.6.1
+
+  -  Bump ipython from 7.32.0 to 7.34.0
+
+  -  Bump ipdb from 0.13.9 to 0.13.13
+
+  -  Bump types-setuptools from 65.5.0.3 to 67.6.0.7
+
+  -  Bump pytest-asyncio from 0.20.2 to 0.21.0
+
+  -  Bump isort from 5.10.1 to 5.11.5
+
+  -  Bump flake8-quotes from 3.3.1 to 3.3.2
+
+  -  Bump flake8-builtins from 2.0.1 to 2.1.0
+
+  -  Bump flake8-bugbear from 22.10.27 to 23.3.12
+
+  -  Bump coverage from 6.5.0 to 7.2.3
+
+  -  Bump black from 22.10.0 to 23.3.0
+
+  -  Remove dependency ipdb.
+
+  -  Bump pytest-asyncio from 0.20.1 to 0.20.2
+
+  -  Bump types-setuptools from 65.5.0.2 to 65.5.0.3
+
+  -  Bump mypy from 0.990 to 0.991
+
+  -  Bump types-toml from 0.10.8 to 0.10.8.1
+
+  -  Bump pytest-cov from 3.0.0 to 4.0.0
+
+  -  Bump mypy from 0.982 to 0.990
+
+  -  Bump flake8-builtins from 2.0.0 to 2.0.1
+
+  -  Bump flake8-comprehensions from 3.10.0 to 3.10.1
+
+  -  Bump flake8-bugbear from 22.10.25 to 22.10.27
+
+  -  Bump flake8-bugbear from 22.9.23 to 22.10.25
+
+  -  Bump pytest from 7.1.3 to 7.2.0
+
+  -  Bump types-setuptools from 65.5.0.1 to 65.5.0.2
+
+  -  Bump pytest-asyncio from 0.19.0 to 0.20.1
+
+  -  Bump flake8-builtins from 1.5.3 to 2.0.0
+
+  -  Bump types-setuptools from 65.4.0.0 to 65.5.0.1
+
+  -  Bump black from 22.8.0 to 22.10.0
+
+  -  Bump safety from 2.2.1 to 2.3.1
+
+  -  Bump safety from 2.2.0 to 2.2.1
+
+  -  Bump mypy from 0.981 to 0.982
+
+  -  Bump flake8-broken-line from 0.5.0 to 0.6.0
+
+  -  Bump types-setuptools from 65.3.0 to 65.4.0.0
+
+  -  Bump coverage from 6.4.4 to 6.5.0
+
+  -  Bump mypy from 0.971 to 0.981
+
+  -  Bump flake8-bugbear from 22.9.11 to 22.9.23
+
+  -  Bump flake8-eradicate from 1.3.0 to 1.4.0
+
+  -  Bump safety from 2.1.1 to 2.2.0
+
+  -  Bump flake8-bugbear from 22.8.23 to 22.9.11
+
+  -  Bump pydantic from 1.10.1 to 1.10.2
+
+  -  Bump black from 22.6.0 to 22.8.0
+
+  -  Bump pytest from 7.1.2 to 7.1.3
+
+  -  Bump pydantic from 1.10.0 to 1.10.1
+
+  -  Bump types-setuptools from 64.0.1 to 65.3.0
+
+  -  Bump pydantic from 1.9.2 to 1.10.0
+
+  -  Bump flake8-bugbear from 22.8.22 to 22.8.23
+
+  -  Bump flake8-bugbear from 22.7.1 to 22.8.22
+
+  -  Bump pep8-naming from 0.13.1 to 0.13.2
+
+  -  Bump coverage from 6.4.3 to 6.4.4
+
+  -  Bump flake8-broken-line from 0.4.0 to 0.5.0
+
+  -  Bump types-setuptools from 63.4.0 to 64.0.1
+
+  -  Bump pydantic from 1.9.1 to 1.9.2
+
+  -  Bump flake8-eradicate from 1.2.1 to 1.3.0
+
+  -  Bump coverage from 6.4.2 to 6.4.3
+
+  -  Bump types-setuptools from 63.2.3 to 63.4.0
+
+  -  Bump types-setuptools from 63.2.2 to 63.2.3
+
+  -  Bump types-setuptools from 63.2.1 to 63.2.2
+
+  -  Bump types-setuptools from 57.4.18 to 63.2.1
+
+  -  Bump safety from 1.10.3 to 2.1.1
+
+  -  Bump mypy from 0.961 to 0.971
+
+  -  Bump pep8-naming from 0.13.0 to 0.13.1
+
+  -  Bump coverage from 6.4.1 to 6.4.2
+
+  -  Bump pytest-asyncio from 0.18.3 to 0.19.0
+
+  -  Bump types-toml from 0.10.7 to 0.10.8
+
+  -  Bump pre-commit from 2.19.0 to 2.20.0
+
+  -  Bump flake8-bugbear from 22.6.22 to 22.7.1
+
+  -  Bump black from 22.3.0 to 22.6.0
+
+  -  Bump types-setuptools from 57.4.17 to 57.4.18
+
+  -  Bump flake8-bugbear from 22.4.25 to 22.6.22
+
+  -  Bump mypy from 0.960 to 0.961
+
+  -  Bump mypy from 0.950 to 0.960
+
+  -  Bump coverage from 6.4 to 6.4.1
+
+  -  Bump pep8-naming from 0.12.1 to 0.13.0
+
+  -  Bump types-setuptools from 57.4.16 to 57.4.17
+
+  -  Bump types-setuptools from 57.4.15 to 57.4.16
+
+  -  Bump coverage from 6.3.3 to 6.4
+
+  -  Bump types-setuptools from 57.4.14 to 57.4.15
+
+  -  Bump pydantic from 1.9.0 to 1.9.1
+
+  -  Bump flake8-comprehensions from 3.9.0 to 3.10.0
+
 ## v2.2.0 (2022-05-16)
 
 ### :sparkles: New
