@@ -52,7 +52,7 @@ flake8-tidy-imports = "^4.8"
 pep8-naming = "^0.13"
 mccabe = "^0.6"
 mypy = "^1.2"
-types-setuptools = "^67.6"
+types-setuptools = "^67.7"
 types-toml = "^0.10"
 # checks
 safety = "^2.3"
