@@ -34,7 +34,7 @@ pydantic = "^1.7,<2.0"
 # tests
 coverage = "^7.2"
 pytest = "^7.3"
-pytest-cov = "^4.0"
+pytest-cov = "^4.1"
 pytest-asyncio = "^0.21"
 # formating
 black = {version = "^23.3", extras = ["d"]}
