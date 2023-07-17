@@ -1339,13 +1339,13 @@ files = [
 
 [[package]]
 name = "types-setuptools"
-version = "67.8.0.0"
+version = "68.0.0.2"
 description = "Typing stubs for setuptools"
 optional = false
 python-versions = "*"
 files = [
-    {file = "types-setuptools-67.8.0.0.tar.gz", hash = "sha256:95c9ed61871d6c0e258433373a4e1753c0a7c3627a46f4d4058c7b5a08ab844f"},
-    {file = "types_setuptools-67.8.0.0-py3-none-any.whl", hash = "sha256:6df73340d96b238a4188b7b7668814b37e8018168aef1eef94a3b1872e3f60ff"},
+    {file = "types-setuptools-68.0.0.2.tar.gz", hash = "sha256:fede8b46862dd9fe68a12f11a8444c3d240d11178eba7d584d6f22ca3114b894"},
+    {file = "types_setuptools-68.0.0.2-py3-none-any.whl", hash = "sha256:311a14819416716029d1113c7452143e2fa857e6cc19186bb6830aff69379c48"},
 ]
 
 [[package]]
@@ -1512,4 +1512,4 @@ testing = ["func-timeout", "jaraco.itertools", "pytest (>=6)", "pytest-black (>=
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "a3c1af34a628a8a441416e5a7bf7da621b67bcdb5c1343cd36f7fd778d5dfe67"
+content-hash = "c33d7b75aa81f92fec0388aec8fc927b0798f4ccdfb28ca1b95330eb5f45c07b"
