@@ -2,9 +2,9 @@ from typing import List, Optional, Union
 
 import pytest
 from apiclient import APIClient
-from pydantic import BaseModel, ValidationError
-from pydantic.config import Extra
-from pydantic.fields import Field
+from pydantic.v1 import BaseModel, ValidationError
+from pydantic.v1.config import Extra
+from pydantic.v1.fields import Field
 
 from apiclient_pydantic import params_serializer, serialize_all_methods
 

@@ -1,6 +1,6 @@
 from typing import Any
 
-import pydantic
+import pydantic.v1 as pydantic
 
 
 def is_pydantic_model(cls: Any) -> bool:

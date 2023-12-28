@@ -3,9 +3,9 @@ import inspect
 from functools import wraps
 from typing import Any, Callable, Dict, ForwardRef, Optional, Set, Tuple, Type, get_type_hints
 
-from pydantic import BaseModel, create_model, parse_obj_as
-from pydantic.config import BaseConfig as PydanticBaseConfig, Extra
-from pydantic.typing import evaluate_forwardref
+from pydantic.v1 import BaseModel, create_model, parse_obj_as
+from pydantic.v1.config import BaseConfig as PydanticBaseConfig, Extra
+from pydantic.v1.typing import evaluate_forwardref
 
 from .utils import is_pydantic_model
 
