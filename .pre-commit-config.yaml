@@ -12,18 +12,6 @@ repos:
       - id: double-quote-string-fixer
       - id: end-of-file-fixer
         exclude: LICENSE
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v2.31.0
-    hooks:
-      - id: pyupgrade
-        args:
-          - --py37-plus
-          - --keep-runtime-typing
-  - repo: https://github.com/hadialqattan/pycln
-    rev: v1.2.4
-    hooks:
-      - id: pycln
-        args: [-a]
   - repo: https://github.com/myint/docformatter
     rev: v1.4
     hooks:
