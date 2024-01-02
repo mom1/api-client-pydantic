@@ -1,259 +1,159 @@
-import asyncio
 import inspect
-from functools import wraps
-from typing import Any, Callable, Dict, ForwardRef, Optional, Set, Tuple, Type, get_type_hints
+from functools import partial
+from typing import Any, Awaitable, Callable, Optional, Set, Type, TypeVar, Union
 
-from pydantic import BaseModel, create_model, parse_obj_as
-from pydantic.config import BaseConfig as PydanticBaseConfig, Extra
-from pydantic.typing import evaluate_forwardref
+from apiclient import APIClient
+from pydantic import AfterValidator, BaseModel, ConfigDict
+from pydantic._internal import _generate_schema, _typing_extra
+from pydantic._internal._config import ConfigWrapper
+from pydantic._internal._validate_call import ValidateCallWrapper as PydanticValidateCallWrapper
+from pydantic.plugin._schema_validator import create_schema_validator
+from typing_extensions import Annotated
 
-from .utils import is_pydantic_model
+AnyCallableT = TypeVar('AnyCallableT', bound=Callable[..., Any])
+T = TypeVar('T', bound=APIClient)
 
-DictStrAny = Dict[str, Any]
-
-
-class BaseConfig(PydanticBaseConfig):
-    orm_mode = True
-
-
-class ParamsObject:
-    def __init__(self, **kwargs: DictStrAny) -> None:
-        for attr, param in kwargs.items():
-            setattr(self, attr, param)
+TModel = TypeVar('TModel', bound=BaseModel)
+ModelDumped = Annotated[TModel, AfterValidator(lambda v: v.model_dump(exclude_none=True, by_alias=True))]
 
 
-def get_typed_signature(call: Callable) -> inspect.Signature:
-    """Finds call signature and resolves all forwardrefs"""
-    signature = inspect.signature(call)
-    globalns = getattr(call, '__globals__', {})
-    typed_params = [
-        inspect.Parameter(
-            name=param.name,
-            kind=param.kind,
-            default=param.default,
-            annotation=get_typed_annotation(param, globalns),
-        )
-        for param in signature.parameters.values()
-    ]
-    typed_signature = inspect.Signature(typed_params)
-    return typed_signature
-
-
-def get_typed_annotation(param: inspect.Parameter, globalns: DictStrAny) -> Any:
-    annotation = param.annotation
-    if isinstance(annotation, str):
-        annotation = make_forwardref(annotation, globalns)
-    return annotation
-
-
-def make_forwardref(annotation: str, globalns: DictStrAny) -> Any:
-    forward_ref = ForwardRef(annotation)
-    return evaluate_forwardref(forward_ref, globalns, globalns)
-
-
-class ParamsSerializer:
-    __slot__ = (
-        'signature',
-        'by_alias',
-        'exclude_unset',
-        'exclude_defaults',
-        'exclude_none',
-        'has_kwargs',
-        'model_param',
-        'params_object_class',
-        'used_args_index',
-    )
-
-    params_object_class = ParamsObject
-    used_args_index: Set = set()
+class ValidateCallWrapper(PydanticValidateCallWrapper):
+    __slots__ = ('_response',)
 
     def __init__(
         self,
-        by_alias: bool = True,
-        exclude_unset: bool = False,
-        exclude_defaults: bool = False,
-        exclude_none: bool = True,
-    ):
-        self.by_alias = by_alias
-        self.exclude_unset = exclude_unset
-        self.exclude_defaults = exclude_defaults
-        self.exclude_none = exclude_none
-        self.has_self = False
-        self.has_kwargs = False
-
-    def __call__(self, func: Callable) -> Callable:
-        attrs, self.signature = {}, get_typed_signature(func)
-        new_signature_parameters: DictStrAny = {}
-        forbid_attrs = set()
-
-        for name, arg in self.signature.parameters.items():
-            if name == 'self':
-                new_signature_parameters.setdefault(arg.name, arg)
-                self.has_self = True
-                continue
-
-            if arg.kind == arg.VAR_KEYWORD:
-                # Skipping **kwargs
-                self.has_kwargs = True
-                continue
-
-            if arg.kind == arg.VAR_POSITIONAL:
-                # Skipping *args
-                continue
-
-            arg_type = self._get_param_type(arg)
-
-            if name not in new_signature_parameters:
-                if is_pydantic_model(arg_type):
-                    new_signature_parameters.update(
-                        {argument.name: argument for argument in inspect.signature(arg_type).parameters.values()}
-                    )
-                else:
-                    new_signature_parameters.setdefault(arg.name, arg)
-
-            attrs[name] = (arg_type, ...)
-            if is_pydantic_model(arg_type) and getattr(arg_type.Config, 'extra', None) == Extra.forbid:
-                forbid_attrs.add(name)
-        if attrs:
-            config_cls = type(f'{func.__name__}Config', (BaseConfig,), {'forbid_attrs': forbid_attrs})
-            self.model_param = create_model(f'{func.__name__}Params', __config__=config_cls, **attrs)  # type: ignore
-
-        if asyncio.iscoroutinefunction(func):
-
-            @wraps(func)
-            async def wrap(*args, **kwargs):
-                params_object = self.make_object_params(args, kwargs)
-                result = self.make_result(params_object)
-
-                return await func(
-                    *tuple(v for i, v in enumerate(args) if i not in self.used_args_index),
-                    **result,
-                )
-
+        function: Callable[..., Any],
+        config: Optional[ConfigDict],
+        validate_return: bool,
+        response: Optional[Type[BaseModel]] = None,
+    ) -> None:
+        self.raw_function = function
+        self._config = config
+        self._validate_return = validate_return
+        self._response = response
+        self.__signature__ = inspect.signature(function)
+        if isinstance(function, partial):
+            func = function.func
+            schema_type = func
+            self.__name__ = f'partial({func.__name__})'
+            self.__qualname__ = f'partial({func.__qualname__})'
+            self.__annotations__ = func.__annotations__
+            self.__module__ = func.__module__
+            self.__doc__ = func.__doc__
         else:
+            schema_type = function
+            self.__name__ = function.__name__
+            self.__qualname__ = function.__qualname__
+            self.__annotations__ = function.__annotations__
+            self.__module__ = function.__module__
+            self.__doc__ = function.__doc__
 
-            @wraps(func)
-            def wrap(*args, **kwargs):
-                params_object = self.make_object_params(args, kwargs)
-                result = self.make_result(params_object)
+        namespace = _typing_extra.add_module_globals(function, None)
+        config_wrapper = ConfigWrapper(config)
+        gen_schema = _generate_schema.GenerateSchema(config_wrapper, namespace)
+        schema = gen_schema.clean_schema(gen_schema.generate_schema(function))
+        self.__pydantic_core_schema__ = schema
+        core_config = config_wrapper.core_config(self)
 
-                return func(
-                    *tuple(v for i, v in enumerate(args) if i not in self.used_args_index),
-                    **result,
-                )
-
-        # Override signature
-        if new_signature_parameters and attrs:
-            sig = inspect.signature(func)
-            sig = sig.replace(parameters=tuple(sorted(new_signature_parameters.values(), key=lambda x: x.kind)))
-            wrap.__signature__ = sig  # type: ignore
-
-        return wrap if attrs else func
-
-    def make_object_params(self, args: Tuple, kwargs: DictStrAny) -> ParamsObject:
-        object_params = {}
-        used_args_index = self.used_args_index
-        forbid_attrs = getattr(self.model_param.Config, 'forbid_attrs', {})
-        len_args = len(args)
-
-        for index, (name, fld) in enumerate(self.model_param.__fields__.items(), start=int(self.has_self)):
-            kw = kwargs
-            if name in kwargs:
-                kw = kwargs[name]
-            elif len_args > index:
-                kw = args[index]
-                used_args_index.add(index)
-
-            object_params[name] = kw
-            if is_pydantic_model(fld.type_) and name in forbid_attrs and isinstance(kw, dict):
-                object_params[name] = {k: v for k, v in kw.items() if k in fld.type_.__fields__}
-
-        return self.params_object_class(**object_params)
-
-    def make_result(self, params_object: ParamsObject) -> DictStrAny:
-        return self.model_param.from_orm(params_object).dict(
-            by_alias=self.by_alias,
-            exclude_unset=self.exclude_unset,
-            exclude_defaults=self.exclude_defaults,
-            exclude_none=self.exclude_none,
+        self.__pydantic_validator__ = create_schema_validator(
+            schema,
+            schema_type,
+            self.__module__,
+            self.__qualname__,
+            'validate_call',
+            core_config,
+            config_wrapper.plugin_settings,
         )
+        if self._validate_return or self._response:
+            if not (return_type := self._response):
+                return_type = (
+                    self.__signature__.return_annotation is not self.__signature__.empty
+                    and self.__signature__.return_annotation
+                    or Any
+                )
 
-    def _get_param_type(self, arg: inspect.Parameter) -> Any:
-        annotation = arg.annotation
+            gen_schema = _generate_schema.GenerateSchema(config_wrapper, namespace)
+            schema = gen_schema.clean_schema(gen_schema.generate_schema(return_type))
+            self.__return_pydantic_core_schema__ = schema
+            validator = create_schema_validator(
+                schema,
+                schema_type,
+                self.__module__,
+                self.__qualname__,
+                'validate_call',
+                core_config,
+                config_wrapper.plugin_settings,
+            )
+            if inspect.iscoroutinefunction(self.raw_function):
 
-        if annotation == self.signature.empty:
-            if arg.default == self.signature.empty:
-                annotation = str
+                async def return_val_wrapper(aw: Awaitable[Any]) -> None:
+                    return validator.validate_python(await aw)
+
+                self.__return_pydantic_validator__ = return_val_wrapper
             else:
-                annotation = type(arg.default)
-
-        if annotation is type(None) or annotation is type(Ellipsis):  # noqa: E721
-            annotation = str
-
-        return annotation
-
-
-serialize_request = params_serializer = ParamsSerializer
-
-
-class ResponseSerializer:
-    __slot__ = ('response',)
-
-    def __init__(self, response: Optional[Type[BaseModel]] = None):
-        self.response = response
-
-    def __call__(self, func: Callable) -> Callable:
-        self.response = self.response or get_type_hints(func).get('return')
-        if asyncio.iscoroutinefunction(func):
-
-            @wraps(func)
-            async def wrap(*args, **kwargs):
-                result = await func(*args, **kwargs)
-                if result is not None:
-                    return parse_obj_as(self.response, result)
-                return result
-
+                self.__return_pydantic_validator__ = validator.validate_python
         else:
+            self.__return_pydantic_core_schema__ = None
+            self.__return_pydantic_validator__ = None
+        self._name: Optional[str] = None  # set by __get__, used to set the instance attribute when decorating methods)
 
-            @wraps(func)
-            def wrap(*args, **kwargs):
-                result = func(*args, **kwargs)
-                if result is not None:
-                    return parse_obj_as(self.response, result)
-                return result
+    def __get__(self, obj: Any, objtype: Optional[Type[Any]] = None) -> 'ValidateCallWrapper':  # pragma: no cover
+        """Bind the raw function and return another ValidateCallWrapper wrapping that."""
+        # Copy-paste to pass _response to the class
+        if obj is None:
+            try:
+                # Handle the case where a method is accessed as a class attribute
+                return objtype.__getattribute__(objtype, self._name)  # type: ignore
+            except AttributeError:
+                # This will happen the first time the attribute is accessed
+                pass
 
-        return wrap if self.response else func
+        bound_function = self.raw_function.__get__(obj, objtype)
+        result = self.__class__(bound_function, self._config, self._validate_return, self._response)
+
+        # skip binding to instance when obj or objtype has __slots__ attribute
+        if hasattr(obj, '__slots__') or hasattr(objtype, '__slots__'):
+            return result
+
+        if self._name is not None:
+            if obj is not None:
+                object.__setattr__(obj, self._name, result)
+            else:
+                object.__setattr__(objtype, self._name, result)
+        return result
 
 
-serialize_response = response_serializer = ResponseSerializer
+APICLIENT_METHODS: Set[str] = {i[0] for i in inspect.getmembers(APIClient, predicate=inspect.isfunction)}
 
 
 def serialize(
+    __func: Optional[AnyCallableT] = None,
+    *,
+    config: Optional[ConfigDict] = None,
+    validate_return: bool = True,
     response: Optional[Type[BaseModel]] = None,
-    by_alias: bool = True,
-    exclude_unset: bool = False,
-    exclude_defaults: bool = False,
-    exclude_none: bool = True,
 ) -> Callable:
-    def decorator(func: Callable) -> Callable:
-        result_func = ParamsSerializer(
-            by_alias=by_alias,
-            exclude_unset=exclude_unset,
-            exclude_defaults=exclude_defaults,
-            exclude_none=exclude_none,
-        )(func)
-        result_func = serialize_response(response=response)(result_func)
+    def validate(function: AnyCallableT) -> AnyCallableT:
+        if isinstance(function, (classmethod, staticmethod)):
+            name = type(function).__name__
+            msg = f'The `@{name}` decorator should be applied after `@validate_call` (put `@{name}` on top)'
+            raise TypeError(msg)
+        return ValidateCallWrapper(function, config, validate_return, response)
 
-        return result_func
-
-    return decorator
+    if __func:
+        return validate(__func)
+    return validate
 
 
-def serialize_all_methods(decorator=serialize):
-    def decorate(cls):
+def serialize_all_methods(
+    __cls: Optional[Type[T]] = None, config: Optional[ConfigDict] = None
+) -> Union[AnyCallableT, Callable[[AnyCallableT], AnyCallableT]]:
+    def decorate(cls: Type[T]) -> Type[T]:
         for attr, value in vars(cls).items():
-            if not attr.startswith('_') and (inspect.ismethod(value) or inspect.isfunction(value)):
-                setattr(cls, attr, decorator()(value))
+            if not attr.startswith('_') and inspect.isfunction(value) and attr not in APICLIENT_METHODS:
+                setattr(cls, attr, serialize(value, config=config))
         return cls
 
+    if __cls:
+        return decorate(__cls)
     return decorate

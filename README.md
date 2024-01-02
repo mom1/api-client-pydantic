@@ -10,7 +10,7 @@
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/api-client-pydantic.svg?label=pip%20installs&logo=python)
 
 <a href="https://gitmoji.dev"><img src="https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg" alt="Gitmoji"></a>
-<a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="black"></a>
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
 # Python API Client Pydantic Extension
 
@@ -25,22 +25,18 @@ pip install api-client-pydantic
 The following decorators have been provided to validate request data and converting json straight to pydantic class.
 
 ```python
-from apiclient_pydantic import params_serializer, response_serializer, serialize, serialize_all_methods
+from apiclient_pydantic import serialize, serialize_all_methods
 
-# serialize incoming kwargs
-@params_serializer(by_alias: bool = True, exclude_unset: bool = False, exclude_defaults: bool = False, exclude_none: bool = True)
-
-# serialize response in pydantic class
-@response_serializer(response: Optional[Type[BaseModel]] = None)
 
 # serialize request and response data
-@serialize(response: Optional[Type[BaseModel]] = None, by_alias: bool = True, exclude_unset: bool = False, exclude_defaults: bool = False, exclude_none: bool = True)
+@serialize(config: Optional[ConfigDict] = None, validate_return: bool = True, response: Optional[Type[BaseModel]] = None)
 
-# wraps all local methods of a class with a specified decorator. default 'serialize'
-@serialize_all_methods(decorator=serialize)
+# wraps all local methods of a class with a decorator 'serialize'.
+@serialize_all_methods(config: Optional[ConfigDict] = None)
 ```
 
 Usage:
+
 1. Define the schema for your api in pydantic classes.
     ```python
     from pydantic import BaseModel, Field
@@ -52,33 +48,39 @@ Usage:
         date_opened: datetime = Field(alias='dateOpened')
     ```
 
-2. Add the `@response_serializer` decorator to the api client method to transform the response
-directly into your defined schema.
+2. Add the `@serialize` decorator to the api client method to transform the response
+   directly into your defined schema.
    ```python
-    @response_serializer(List[Account])
+    @serialize(response=List[Account])
     def get_accounts():
         ...
     # or
-    @response_serializer()
+    @serialize
     def get_accounts() -> List[Account]:
         ...
     ```
-3. Add the `@params_serializer` decorator to the api client method to translate the incoming kwargs
-into the required dict for the endpoint:
+3. Add the `@serialize` decorator to the api client method to translate the incoming kwargs
+   into the required dict or instance for the endpoint:
    ```python
-    @params_serializer(AccountHolder)
-    def create_account(data: dict):
-        ...
-    # or
-    @params_serializer()
+    from apiclient_pydantic import ModelDumped
+
+    @serialize
     def create_account(data: AccountHolder):
+        # data will be AccountHolder instance
+        ...
+
+    create_account(data={'last_name' : 'Smith','first_name' : 'John'})
+    # data will be a AccountHolder(last_name="Smith", first_name="John")
+
+    @serialize
+    def create_account(data: ModelDumped[AccountHolder]):
         # data will be exactly a dict
         ...
-    create_account(last_name='Smith', first_name='John')
+
+    create_account(data={'last_name' : 'Smith','first_name' : 'John'})
     # data will be a dict {"last_name": "Smith", "first_name": "John"}
     ```
-4. `@serialize` - It is a combination of the two decorators `@response_serializer` and`@params_serializer`.
-5. For more convenient use, you can wrap all APIClient methods with `@serialize_all_methods`.
+4. For more convenient use, you can wrap all APIClient methods with `@serialize_all_methods`.
    ```python
     from apiclient import APIClient
     from apiclient_pydantic import serialize_all_methods
@@ -87,7 +89,7 @@ into the required dict for the endpoint:
     from .models import Account, AccountHolder
 
 
-    @serialize_all_methods()
+    @serialize_all_methods
     class MyApiClient(APIClient):
         def decorated_func(self, data: Account) -> Account:
             ...
@@ -98,15 +100,8 @@ into the required dict for the endpoint:
 
 ## Related projects
 
-### apiclient-pydantic-generator
+### apiclient-pydantic-generator - Now deprecated.
 
 This code generator creates a [ApiClient](https://github.com/MikeWooster/api-client) app from an openapi file.
 
 [apiclient-pydantic-generator](https://github.com/mom1/apiclient-pydantic-generator)
-
-## Mentions
-
-Many thanks to [JetBrains](https://www.jetbrains.com/?from=api-client-pydantic) for supplying me with a license to use their product in the development
-of this tool.
-
-![JetBrains Logo (Main) logo](https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg)

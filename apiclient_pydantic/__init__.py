@@ -1,21 +1,13 @@
 from .serializers import (
-    ParamsSerializer,
-    ResponseSerializer,
-    params_serializer,
-    response_serializer,
+    ModelDumped,
+    TModel,
     serialize,
     serialize_all_methods,
-    serialize_request,
-    serialize_response,
 )
 
 __all__ = (
-    'params_serializer',
-    'ParamsSerializer',
-    'response_serializer',
-    'ResponseSerializer',
+    'ModelDumped',
+    'TModel',
     'serialize',
     'serialize_all_methods',
-    'serialize_request',
-    'serialize_response',
 )
