@@ -107,6 +107,7 @@ extend-ignore = [
   "Q003",     # avoidable-escaped-quote
   "W191",     # tab-indentation
 ]
+extend-exclude = ["apiclient_pydantic/v1"]
 flake8-quotes = { inline-quotes = "single" }
 
 [tool.ruff.per-file-ignores]
@@ -133,7 +134,7 @@ known-local-folder = ["."]
 pretty = true
 show_traceback = true
 color_output = true
-
+exclude = ["apiclient_pydantic/v1"]
 
 plugins = ["pydantic.mypy"]
 
