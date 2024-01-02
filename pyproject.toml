@@ -9,25 +9,25 @@ homepage = 'https://github.com/mom1/api-client-pydantic'
 keywords = ['api-client', 'api-client-extension']
 readme = 'README.md'
 classifiers = [
-    'Development Status :: 5 - Production/Stable',
-    'Environment :: Web Environment',
-    'Intended Audience :: Developers',
-    'License :: OSI Approved :: MIT License',
-    'Operating System :: OS Independent',
-    'Programming Language :: Python',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
-    'Programming Language :: Python :: 3.10',
-    'Programming Language :: Python :: 3.11',
-    'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+  'Development Status :: 5 - Production/Stable',
+  'Environment :: Web Environment',
+  'Intended Audience :: Developers',
+  'License :: OSI Approved :: MIT License',
+  'Operating System :: OS Independent',
+  'Programming Language :: Python',
+  'Programming Language :: Python :: 3.8',
+  'Programming Language :: Python :: 3.9',
+  'Programming Language :: Python :: 3.10',
+  'Programming Language :: Python :: 3.11',
+  'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
 ]
 include = ['AUTHORS']
 packages = [
-    { include = 'apiclient_pydantic' },
+  { include = 'apiclient_pydantic' },
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8"
+python = ">=3.8.4,<4"
 api-client = ">1.2.1"
 pydantic = ">=1.7,<3.0"
 
@@ -61,9 +61,9 @@ line-length = 120
 fixable = ["ALL"]
 select = ["ALL"]
 extend-ignore = [
-  "ANN101",
-  "FBT",
-  "FA",
+  "ANN101",   # missing-type-self
+  "FBT",      # flake8-boolean-trap
+  "FA",       # flake8-future-annotations
   "D100",     # Missing docstring in public module
   "D101",     # Missing docstring in public class
   "D102",     # Missing docstring in public method
@@ -134,19 +134,31 @@ pretty = true
 show_traceback = true
 color_output = true
 
-ignore_missing_imports = true
-strict_optional = true
-disallow_incomplete_defs = true
 
-allow_redefinition = false
-implicit_reexport = false
-show_column_numbers = true
-show_error_codes = true
-show_error_context = true
-strict_equality = true
-warn_unreachable = true
-warn_unused_configs = true
+plugins = ["pydantic.mypy"]
+
+follow_imports = "silent"
+strict_optional = true
+warn_redundant_casts = true
 warn_unused_ignores = true
+disallow_any_generics = true
+check_untyped_defs = true
+no_implicit_reexport = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[[tool.mypy.overrides]]
+module = [
+  'pydantic_core.*',
+  'apiclient.*',
+]
+follow_imports = "skip"
+
 
 [tool.coverage.run]
 # Coverage configuration:
@@ -160,7 +172,7 @@ omit = ["tests", ".github"]
 # https://coverage.readthedocs.io/en/latest/config.html#report
 fail_under = 100
 show_missing = true
-exclude_lines =[
+exclude_lines = [
   "pragma: no cover",
   "raise AssertionError",
   "raise NotImplementedError",
@@ -186,7 +198,7 @@ norecursedirs = [
   ".git",
   "__pycache__",
 ]
-addopts =[
+addopts = [
   "-v",
   "--strict-markers",
   "--strict-config",
