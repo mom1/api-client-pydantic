@@ -65,6 +65,7 @@ class ValidateCallWrapper(PydanticValidateCallWrapper):
             config_wrapper.plugin_settings,
         )
         if self._validate_return or self._response:
+            return_type: Any
             if not (return_type := self._response):
                 return_type = (
                     self.__signature__.return_annotation is not self.__signature__.empty
@@ -94,16 +95,20 @@ class ValidateCallWrapper(PydanticValidateCallWrapper):
                 self.__return_pydantic_validator__ = validator.validate_python
         else:
             self.__return_pydantic_core_schema__ = None
-            self.__return_pydantic_validator__ = None
+            self.__return_pydantic_validator__ = None  # type: ignore[assignment]
         self._name: Optional[str] = None  # set by __get__, used to set the instance attribute when decorating methods)
 
-    def __get__(self, obj: Any, objtype: Optional[Type[Any]] = None) -> 'ValidateCallWrapper':  # pragma: no cover
+    def __get__(
+        self,
+        obj: Any,  # noqa: ANN401
+        objtype: Optional[Type[Any]] = None,
+    ) -> 'ValidateCallWrapper':  # pragma: no cover
         """Bind the raw function and return another ValidateCallWrapper wrapping that."""
         # Copy-paste to pass _response to the class
         if obj is None:
             try:
                 # Handle the case where a method is accessed as a class attribute
-                return objtype.__getattribute__(objtype, self._name)  # type: ignore
+                return objtype.__getattribute__(objtype, self._name)  # type: ignore[call-arg, arg-type]
             except AttributeError:
                 # This will happen the first time the attribute is accessed
                 pass
@@ -132,8 +137,8 @@ def serialize(
     config: Optional[ConfigDict] = None,
     validate_return: bool = True,
     response: Optional[Type[BaseModel]] = None,
-) -> Callable:
-    def validate(function: AnyCallableT) -> AnyCallableT:
+) -> Union[Callable[[AnyCallableT], ValidateCallWrapper], ValidateCallWrapper]:
+    def validate(function: AnyCallableT) -> ValidateCallWrapper:
         if isinstance(function, (classmethod, staticmethod)):
             name = type(function).__name__
             msg = f'The `@{name}` decorator should be applied after `@validate_call` (put `@{name}` on top)'
@@ -147,7 +152,7 @@ def serialize(
 
 def serialize_all_methods(
     __cls: Optional[Type[T]] = None, config: Optional[ConfigDict] = None
-) -> Union[AnyCallableT, Callable[[AnyCallableT], AnyCallableT]]:
+) -> Union[AnyCallableT, Callable[[AnyCallableT], AnyCallableT], Callable[[Type[T]], Type[T]]]:
     def decorate(cls: Type[T]) -> Type[T]:
         for attr, value in vars(cls).items():
             if not attr.startswith('_') and inspect.isfunction(value) and attr not in APICLIENT_METHODS:

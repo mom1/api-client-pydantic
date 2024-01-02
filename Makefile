@@ -48,7 +48,10 @@ check-safety:
 	poetry run safety --disable-telemetry check --full-report --disable-audit-and-monitor
 
 .PHONY: lint
-lint: check-codestyle mypy check-safety
+lint:
+	@$(MAKE) -s check-codestyle $(filter-out $@,$(MAKECMDGOALS))
+	@$(MAKE) -s mypy $(filter-out $@,$(MAKECMDGOALS))
+	@$(MAKE) -s check-safety
 
 #* Cleaning
 .PHONY: clean
