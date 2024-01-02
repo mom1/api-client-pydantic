@@ -141,7 +141,7 @@ def serialize(
     def validate(function: AnyCallableT) -> ValidateCallWrapper:
         if isinstance(function, (classmethod, staticmethod)):
             name = type(function).__name__
-            msg = f'The `@{name}` decorator should be applied after `@validate_call` (put `@{name}` on top)'
+            msg = f'The `@{name}` decorator should be applied after `@serialize` (put `@{name}` on top)'
             raise TypeError(msg)
         return ValidateCallWrapper(function, config, validate_return, response)
 
