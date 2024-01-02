@@ -18,7 +18,7 @@ poetry-remove:
 #* Installation
 .PHONY: install
 install:
-	poetry install -n --remove-untracked
+	poetry install -n --sync
 
 .PHONY: pre-commit-install
 pre-commit-install:
@@ -27,8 +27,7 @@ pre-commit-install:
 #* Formatters
 .PHONY: format
 fmt format:
-	poetry run black --config pyproject.toml $(filter-out $@,$(MAKECMDGOALS))
-	poetry run isort --settings-path pyproject.toml $(filter-out $@,$(MAKECMDGOALS))
+	poetry run ruff format $(filter-out $@,$(MAKECMDGOALS))
 
 #* Linting
 .PHONY: test
@@ -37,18 +36,16 @@ test:
 
 .PHONY: check-codestyle
 check-codestyle:
-	poetry run flake8 --count apiclient_pydantic tests
-	poetry run black --diff --check --config pyproject.toml apiclient_pydantic tests
-	poetry run isort --diff --check-only --settings-path pyproject.toml apiclient_pydantic tests
+	poetry run ruff check --exit-non-zero-on-fix $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: mypy
 mypy:
-	poetry run mypy --config-file pyproject.toml apiclient_pydantic
+	poetry run mypy --config-file pyproject.toml $(filter-out $@,$(MAKECMDGOALS))
 
 .PHONY: check-safety
 check-safety:
 	poetry check
-	poetry run safety check --full-report
+	poetry run safety --disable-telemetry check --full-report --disable-audit-and-monitor
 
 .PHONY: lint
 lint: check-codestyle mypy check-safety
