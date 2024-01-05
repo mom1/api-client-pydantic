@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "api-client-pydantic"
-version = "2.2.1"
+version = "3.0.0"
 description = "API Client extension for validate and transform requests / responses using pydantic."
 authors = ["MaxST <mstolpasov@gmail.com>"]
 license = "MIT"

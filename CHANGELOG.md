@@ -1,5 +1,62 @@
 # Changelog
 
+## v3.0.0 (2024-01-05)
+
+### :boom: Breaking Changes
+  -  Pydantic V2 and new signature.
+
+### :recycle: Changes
+  -  Old logic moved to v1 namespace.
+
+### :arrow_up: Dependencies
+  -  Upgrade dependencies.
+
+  -  Bump pytest from 7.3.2 to 7.4.0
+
+  -  Bump mypy from 1.3.0 to 1.4.0
+
+  -  Bump flake8-comprehensions from 3.12.0 to 3.13.0
+
+  -  Bump flake8-tidy-imports from 4.8.0 to 4.9.0
+
+  -  Bump pytest from 7.3.1 to 7.3.2
+
+  -  Bump pydantic from 1.10.8 to 1.10.9
+
+  -  Bump coverage from 7.2.6 to 7.2.7
+
+  -  Bump pytest-cov from 4.0.0 to 4.1.0
+
+  -  Bump pydantic from 1.10.7 to 1.10.8
+
+  -  Bump coverage from 7.2.5 to 7.2.6
+
+  -  Bump types-setuptools from 67.7.0.2 to 67.8.0.0
+
+  -  Bump types-setuptools from 67.7.0.1 to 67.7.0.2
+
+  -  Bump mypy from 1.2.0 to 1.3.0
+
+  -  Bump types-setuptools from 67.7.0.0 to 67.7.0.1
+
+  -  Bump coverage from 7.2.3 to 7.2.5
+
+  -  Bump types-setuptools from 67.6.0.8 to 67.7.0.0
+
+  -  Bump mypy from 0.991 to 1.2.0
+
+  -  Bump pre-commit from 2.20.0 to 2.21.0
+
+  -  Bump flake8-comprehensions from 3.10.1 to 3.12.0
+
+  -  Bump types-setuptools from 67.6.0.7 to 67.6.0.8
+
+  -  Bump pydantic from 1.10.2 to 1.10.7
+
+  -  Bump types-toml from 0.10.8.1 to 0.10.8.6
+
+  -  Bump pytest from 7.2.0 to 7.3.1
+
 ## v2.2.1 (2023-04-14)
 
 ### :arrow_up: Dependencies
