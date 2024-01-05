@@ -102,7 +102,6 @@ module.exports = {
       {
         prepareCmd:
           "poetry version ${nextRelease.version} && " +
-          "npm version --no-git-tag-version ${nextRelease.version} && " +
           "poetry build",
         publishCmd: "poetry publish",
       },
