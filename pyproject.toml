@@ -41,7 +41,7 @@ pytest-asyncio = "^0.23"
 ruff = "^0.4"
 ruff-lsp = "^0.0"
 mypy = "^1.10"
-types-setuptools = "^69.5"
+types-setuptools = "^70.0"
 types-toml = "^0.10"
 # checks
 safety = "^2.3"
