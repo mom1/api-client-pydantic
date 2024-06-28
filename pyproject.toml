@@ -38,7 +38,7 @@ pytest = "^8.2"
 pytest-cov = "^5.0"
 pytest-asyncio = "^0.23"
 # formating
-ruff = "^0.4"
+ruff = "^0.5"
 ruff-lsp = "^0.0"
 mypy = "^1.10"
 types-setuptools = "^69.5"
