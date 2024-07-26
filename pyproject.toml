@@ -34,7 +34,7 @@ pydantic = ">=2.0,<3.0"
 [tool.poetry.dev-dependencies]
 # tests
 coverage = "^7.5"
-pytest = "^8.2"
+pytest = "^8.3"
 pytest-cov = "^5.0"
 pytest-asyncio = "^0.23"
 # formating
