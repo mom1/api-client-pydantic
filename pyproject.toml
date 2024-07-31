@@ -40,7 +40,7 @@ pytest-asyncio = "^0.23"
 # formating
 ruff = "^0.4"
 ruff-lsp = "^0.0"
-mypy = "^1.10"
+mypy = "^1.11"
 types-setuptools = "^69.5"
 types-toml = "^0.10"
 # checks
