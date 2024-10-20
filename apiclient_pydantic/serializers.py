@@ -4,11 +4,17 @@ from typing import Any, Awaitable, Callable, Optional, Set, Type, TypeVar, Union
 
 from apiclient import APIClient
 from pydantic import AfterValidator, BaseModel, ConfigDict
-from pydantic._internal import _generate_schema, _typing_extra
+from pydantic._internal import _generate_schema
 from pydantic._internal._config import ConfigWrapper
 from pydantic._internal._validate_call import ValidateCallWrapper as PydanticValidateCallWrapper
 from pydantic.plugin._schema_validator import create_schema_validator
 from typing_extensions import Annotated
+
+try:  # pragma: no cover
+    from pydantic._internal._typing_extra import get_module_ns_of as get_module
+except ImportError:  # pragma: no cover
+    from pydantic._internal._typing_extra import add_module_globals as get_module  # type: ignore[attr-defined,no-redef]
+
 
 AnyCallableT = TypeVar('AnyCallableT', bound=Callable[..., Any])
 T = TypeVar('T', bound=APIClient)
@@ -48,7 +54,7 @@ class ValidateCallWrapper(PydanticValidateCallWrapper):
             self.__module__ = function.__module__
             self.__doc__ = function.__doc__
 
-        namespace = _typing_extra.add_module_globals(function, None)
+        namespace = get_module(function)
         config_wrapper = ConfigWrapper(config)
         gen_schema = _generate_schema.GenerateSchema(config_wrapper, namespace)
         schema = gen_schema.clean_schema(gen_schema.generate_schema(function))
