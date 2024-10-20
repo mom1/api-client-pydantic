@@ -1,5 +1,131 @@
 # Changelog
 
+## v3.0.1 (2024-10-20)
+
+### :bug: Bugs
+  -  fix new pydantic imports fix #406 (Issues: [`#406`](https://github.com/mom1/api-client-pydantic/issues/406))
+
+### :arrow_up: Dependencies
+  -  Update dependencies.
+
+  -  Bump ruff from 0.4.3 to 0.4.4
+
+  -  Bump ruff from 0.4.2 to 0.4.3
+
+  -  Bump coverage from 7.5.0 to 7.5.1
+
+  -  Bump pytest-cov from 4.1.0 to 5.0.0
+
+  -  Bump pytest from 7.4.4 to 8.2.0
+
+  -  Bump ruff from 0.4.1 to 0.4.2
+
+  -  Bump mypy from 1.9.0 to 1.10.0
+
+  -  Bump coverage from 7.4.4 to 7.5.0
+
+  -  Bump types-setuptools from 69.5.0.20240415 to 69.5.0.20240423
+
+  -  Bump pydantic from 2.7.0 to 2.7.1
+
+  -  Bump ruff from 0.4.0 to 0.4.1
+
+  -  Bump ruff from 0.3.7 to 0.4.0
+
+  -  Bump types-setuptools from 69.2.0.20240317 to 69.5.0.20240415
+
+  -  Bump ruff from 0.3.6 to 0.3.7
+
+  -  Bump ruff from 0.3.5 to 0.3.6
+
+  -  Bump pydantic from 2.6.4 to 2.7.0
+
+  -  Bump ruff from 0.3.4 to 0.3.5
+
+  -  Bump ruff from 0.3.3 to 0.3.4
+
+  -  Bump pytest-asyncio from 0.23.5.post1 to 0.23.6
+
+  -  Bump ruff from 0.3.2 to 0.3.3
+
+  -  Bump types-setuptools from 69.1.0.20240310 to 69.2.0.20240317
+
+  -  Bump coverage from 7.4.3 to 7.4.4
+
+  -  Bump pydantic from 2.6.3 to 2.6.4
+
+  -  Bump ruff from 0.3.1 to 0.3.2
+
+  -  Bump mypy from 1.8.0 to 1.9.0
+
+  -  Bump types-setuptools from 69.1.0.20240308 to 69.1.0.20240310
+
+  -  Bump types-toml from 0.10.8.7 to 0.10.8.20240310
+
+  -  Bump pytest-asyncio from 0.23.5 to 0.23.5.post1
+
+  -  Bump types-setuptools from 69.1.0.20240302 to 69.1.0.20240308
+
+  -  Bump ruff from 0.3.0 to 0.3.1
+
+  -  Bump types-setuptools from 69.1.0.20240301 to 69.1.0.20240302
+
+  -  Bump ruff from 0.2.2 to 0.3.0
+
+  -  Bump types-setuptools from 69.1.0.20240229 to 69.1.0.20240301
+
+  -  Bump types-setuptools from 69.1.0.20240223 to 69.1.0.20240229
+
+  -  Bump pydantic from 2.6.2 to 2.6.3
+
+  -  Bump coverage from 7.4.2 to 7.4.3
+
+  -  Bump pydantic from 2.6.1 to 2.6.2
+
+  -  Bump types-setuptools from 69.1.0.20240217 to 69.1.0.20240223
+
+  -  Bump coverage from 7.4.1 to 7.4.2
+
+  -  Bump types-setuptools from 69.1.0.20240215 to 69.1.0.20240217
+
+  -  Bump ruff from 0.2.1 to 0.2.2
+
+  -  Bump types-setuptools from 69.0.0.20240125 to 69.1.0.20240215
+
+  -  Bump pytest-asyncio from 0.23.4 to 0.23.5
+
+  -  Bump pydantic from 2.6.0 to 2.6.1
+
+  -  Bump ruff from 0.2.0 to 0.2.1
+
+  -  Bump ruff from 0.1.15 to 0.2.0
+
+  -  Bump ruff from 0.1.14 to 0.1.15
+
+  -  Bump pydantic from 2.5.3 to 2.6.0
+
+  -  Bump pytest-asyncio from 0.23.3 to 0.23.4
+
+  -  Bump coverage from 7.4.0 to 7.4.1
+
+  -  Bump types-setuptools from 69.0.0.20240115 to 69.0.0.20240125
+
+  -  Bump ruff from 0.1.13 to 0.1.14
+
+  -  Bump types-setuptools from 69.0.0.20240106 to 69.0.0.20240115
+
+  -  Bump ruff from 0.1.12 to 0.1.13
+
+  -  Bump ruff from 0.1.11 to 0.1.12
+
+  -  Bump ruff from 0.1.9 to 0.1.11
+
+  -  Bump types-setuptools from 69.0.0.0 to 69.0.0.20240106
+
+  -  Bump types-setuptools from 67.8.0.0 to 69.0.0.0
+
+  -  Bump pytest-asyncio from 0.21.1 to 0.23.3
+
 ## v3.0.0 (2024-01-05)
 
 ### :boom: Breaking Changes
