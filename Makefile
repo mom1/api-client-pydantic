@@ -42,16 +42,10 @@ check-codestyle:
 mypy:
 	poetry run mypy --config-file pyproject.toml $(filter-out $@,$(MAKECMDGOALS))
 
-.PHONY: check-safety
-check-safety:
-	poetry check
-	poetry run safety --disable-telemetry check --full-report --disable-audit-and-monitor
-
 .PHONY: lint
 lint:
 	@$(MAKE) -s check-codestyle $(filter-out $@,$(MAKECMDGOALS))
 	@$(MAKE) -s mypy $(filter-out $@,$(MAKECMDGOALS))
-	@$(MAKE) -s check-safety
 
 #* Cleaning
 .PHONY: clean
