@@ -1,5 +1,15 @@
 # Changelog
 
+## v3.1.0 (2024-12-15)
+
+### :sparkles: New
+  -  Now only pydantic 2.10+ and python 3.9+ are supported
+
+### :arrow_up: Dependencies
+  -  Remove safety.
+
+  -  Update dependencies.
+
 ## v3.0.2 (2024-12-15)
 
 ### :arrow_up: Dependencies
