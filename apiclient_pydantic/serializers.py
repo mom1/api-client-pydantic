@@ -1,7 +1,8 @@
+from __future__ import annotations
+
 import inspect
-from collections.abc import Awaitable
 from functools import partial
-from typing import Annotated, Any, Callable, Optional, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Annotated, Any, Callable, TypeVar, cast
 
 from apiclient import APIClient
 from pydantic import AfterValidator, BaseModel, ConfigDict
@@ -15,6 +16,9 @@ from pydantic._internal._validate_call import (
 )
 from pydantic.plugin._schema_validator import create_schema_validator
 from pydantic.validate_call_decorator import _check_function_type
+
+if TYPE_CHECKING:
+    from collections.abc import Awaitable
 
 T = TypeVar('T', bound=APIClient)
 AnyCallableT = TypeVar('AnyCallableT', bound=Callable[..., Any])
@@ -72,12 +76,12 @@ APICLIENT_METHODS: set[str] = {i[0] for i in inspect.getmembers(APIClient, predi
 
 
 def serialize(
-    __func: Optional[AnyCallableT] = None,
+    __func: AnyCallableT | None = None,
     /,
     *,
-    config: Optional[ConfigDict] = None,
+    config: ConfigDict | None = None,
     validate_return: bool = True,
-    response: Optional[type[BaseModel]] = None,
+    response: type[BaseModel] | None = None,
 ) -> AnyCallableT | Callable[[AnyCallableT], AnyCallableT]:
     parent_namespace = _typing_extra.parent_frame_namespace()
 
@@ -98,8 +102,8 @@ def serialize(
 
 
 def serialize_all_methods(
-    __cls: Optional[type[T]] = None, /, *, config: Optional[ConfigDict] = None
-) -> Union[AnyCallableT, Callable[[AnyCallableT], AnyCallableT], Callable[[type[T]], type[T]]]:
+    __cls: type[T] | None = None, /, *, config: ConfigDict | None = None
+) -> AnyCallableT | Callable[[AnyCallableT], AnyCallableT] | Callable[[type[T]], type[T]]:
     def decorate(cls: type[T]) -> type[T]:
         for attr, value in vars(cls).items():
             if not attr.startswith('_') and inspect.isfunction(value) and attr not in APICLIENT_METHODS:
