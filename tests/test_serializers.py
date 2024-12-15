@@ -1,10 +1,9 @@
 from functools import partial
-from typing import Dict, List, Union
+from typing import Annotated, Union
 
 import pytest
 from apiclient import APIClient
 from pydantic import AfterValidator, BaseModel, BeforeValidator, ConfigDict, Field, ValidationError
-from typing_extensions import Annotated
 
 from apiclient_pydantic import ModelDumped, TModel, serialize, serialize_all_methods
 
@@ -52,7 +51,6 @@ class Client(APIClient):
     def function_simple_auto_type_str(self, pk):
         return pk
 
-    #
     def function_simple_args(self, *args):
         return args
 
@@ -85,7 +83,7 @@ class Client(APIClient):
     def function_union(self, data: ModelDumped[Union[SimpleTestModel, SimpleModel]]):
         return data
 
-    def function_list_response(self, data: ModelDumped[SimpleModel]) -> List[Dict[str, str]]:
+    def function_list_response(self, data: ModelDumped[SimpleModel]) -> list[dict[str, str]]:
         return [data]
 
     def function_config_test(self, data: ModelDumped[SimpleConfigModel]):
@@ -104,7 +102,7 @@ class Client(APIClient):
         pass
 
 
-@pytest.fixture()
+@pytest.fixture
 def client() -> Client:
     return Client()
 
@@ -191,13 +189,13 @@ def test_function_config_test(client):
     assert client.function_config_test(data={'test_attr': 'bla'}) == {'TestAttr': 'bla'}
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_async_function_return_none(client):
     response = await client.async_function_return_none(param={'test_attr': 'test'})
     assert response is None
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_async_function_simple_model(client):
     response = await client.async_function_simple_model()
     assert isinstance(response, SimpleTestModel)
@@ -208,7 +206,7 @@ async def test_async_function_simple_model(client):
     assert response.model_dump(by_alias=True, exclude_none=True) == {'test': 'test'}
 
 
-@pytest.mark.xfail()
+@pytest.mark.xfail
 def test_function_same_name_test(client):
     with pytest.raises(ValidationError):
         assert client.function_same_name_test(test_attr='bla') == {'test_attr': 'bla'}
