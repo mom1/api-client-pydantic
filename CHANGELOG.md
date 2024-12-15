@@ -1,5 +1,10 @@
 # Changelog
 
+## v3.0.2 (2024-12-15)
+
+### :arrow_up: Dependencies
+  -  Pin pydantic less 2.10.
+
 ## v3.0.1 (2024-10-20)
 
 ### :bug: Bugs
