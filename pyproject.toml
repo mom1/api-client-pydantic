@@ -27,9 +27,9 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.8.4,<4"
+python = ">=3.9,<4"
 api-client = ">1.2.1"
-pydantic = ">=2.0,<2.10"
+pydantic = ">=2.10,<3.0"
 
 [tool.poetry.dev-dependencies]
 # tests
@@ -54,7 +54,7 @@ build-backend = "poetry.core.masonry.api"
 [tool.ruff]
 # ruff configuration:
 # https://docs.astral.sh/ruff/settings/#top-level
-target-version = "py38"
+target-version = "py39"
 fix = true
 unsafe-fixes = true
 line-length = 120

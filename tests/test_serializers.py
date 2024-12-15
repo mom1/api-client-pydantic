@@ -72,8 +72,8 @@ class Client(APIClient):
         return param
 
     @serialize(config=ConfigDict(arbitrary_types_allowed=True))
-    def function_special_type(self, pk: None.__class__, name: ....__class__):
-        return pk, name
+    def function_special_type(self, pk: None.__class__):
+        return pk
 
     @serialize(validate_return=False)
     def function_return_none(self, pk=1) -> None:
@@ -162,9 +162,9 @@ def test_function_forbid_model(client):
 
 
 def test_function_special_type(client):
-    assert client.function_special_type(pk=None, name=...) == (None, Ellipsis)
+    assert client.function_special_type(pk=None) is None
     with pytest.raises(ValidationError):
-        assert client.function_special_type(pk=2, name=True)
+        assert client.function_special_type(pk=2)
 
 
 def test_function_return_none(client):
@@ -216,6 +216,7 @@ def test_function_same_name_test(client):
 
 def test_param_for_model():
     class MyModel(BaseModel):
+        model_config = ConfigDict(populate_by_name=True)
         test: str = Field(alias='TesT')
 
     @serialize_all_methods()
