@@ -1,4 +1,4 @@
-from typing import List, Optional, Union
+from typing import Optional, Union
 
 import pytest
 from apiclient import APIClient
@@ -84,7 +84,7 @@ class Client(APIClient):
     def function_union(self, data: Union[SimpleTestModel, SimpleModel]):
         return data
 
-    def function_list_response(self, data: SimpleModel) -> List[SimpleModel]:
+    def function_list_response(self, data: SimpleModel) -> list[SimpleModel]:
         return [data]
 
     def function_config_test(self, data: SimpleConfigModel):
@@ -100,7 +100,7 @@ class Client(APIClient):
         pass
 
 
-@pytest.fixture()
+@pytest.fixture
 def client():
     return Client()
 
@@ -199,13 +199,13 @@ def test_function_config_test(client):
     assert client.function_config_test(test_attr='bla') == {'TestAttr': 'bla'}  # type: ignore
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_async_function_return_none(client):
     response = await client.async_function_return_none(test_attr='test')  # type: ignore
     assert response is None
 
 
-@pytest.mark.asyncio()
+@pytest.mark.asyncio
 async def test_async_function_simple_model(client):
     response = await client.async_function_simple_model()  # type: ignore
     assert isinstance(response, SimpleTestModel)
@@ -216,7 +216,7 @@ async def test_async_function_simple_model(client):
     assert response.dict() == {'test': 'test'}
 
 
-@pytest.mark.xfail()
+@pytest.mark.xfail
 def test_function_same_name_test(client):
     with pytest.raises(ValidationError):
         assert client.function_same_name_test(test_attr='bla') == {'test_attr': 'bla'}  # type: ignore
